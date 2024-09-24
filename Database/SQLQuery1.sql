@@ -1,4 +1,10 @@
-﻿Create database KoiShipping
+﻿-- Tạo database KoiShipping
+CREATE DATABASE KoiShipping;
+GO
+
+USE KoiShipping;
+GO
+
 -- Tạo bảng Customer
 CREATE TABLE Customer (
     CustomerID INT PRIMARY KEY, -- Không có IDENTITY
@@ -9,7 +15,7 @@ CREATE TABLE Customer (
     Address NVARCHAR(255),
     RegistrationDate DATETIME NOT NULL,
     Status NVARCHAR(100) NOT NULL,
-    DeleteStatus NVARCHAR(100) NOT NULL
+    DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
 );
 
 -- Tạo bảng Staffs
@@ -21,7 +27,7 @@ CREATE TABLE Staffs (
     Role NVARCHAR(50),
     Phone NVARCHAR(15),
     Status NVARCHAR(100) NOT NULL,
-    DeleteStatus NVARCHAR(100) NOT NULL
+    DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
 );
 
 -- Tạo bảng Order
@@ -36,7 +42,7 @@ CREATE TABLE [Order] (
     TotalWeight DECIMAL(10, 2),
     TotalKoiFish INT,
     StaffID INT NOT NULL, -- Khóa ngoại tới bảng Staffs
-    DeleteStatus NVARCHAR(100) NOT NULL,
+    DeleteStatus BIT NOT NULL, -- Chỉ có giá trị 0 hoặc 1
     CONSTRAINT FK_Order_Staffs FOREIGN KEY (StaffID) REFERENCES Staffs(StaffID)
 );
 
@@ -48,7 +54,7 @@ CREATE TABLE Service (
     FastDelivery DECIMAL(10, 2) NOT NULL, -- Giao Nhanh (VNĐ)
     EconomyDelivery DECIMAL(10, 2) NOT NULL, -- Giao Tiết Kiệm (VNĐ)
     ExpressDelivery DECIMAL(10, 2) NOT NULL, -- Hỏa Tốc (VNĐ)
-    DeleteStatus NVARCHAR(100) NOT NULL
+    DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
 );
 
 -- Tạo bảng Advanced_Service
@@ -56,7 +62,7 @@ CREATE TABLE Advanced_Service (
     AdvancedServiceID INT PRIMARY KEY, -- Không có IDENTITY
     ServiceName NVARCHAR(100) NOT NULL,
     Price DECIMAL(10, 2) NOT NULL,
-    DeleteStatus NVARCHAR(100) NOT NULL
+    DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
 );
 
 -- Tạo bảng Order_Detail
@@ -71,7 +77,11 @@ CREATE TABLE Order_Detail (
     KoiStatus NVARCHAR(50) NOT NULL,
     AttachedItem NVARCHAR(255),
     Status NVARCHAR(50) NOT NULL,
-    DeleteStatus NVARCHAR(100) NOT NULL,
+    DeleteStatus BIT NOT NULL, -- Chỉ có giá trị 0 hoặc 1
+    ReceiverName NVARCHAR(255) NOT NULL, -- Tên người nhận
+    ReceiverPhone NVARCHAR(20) NOT NULL, -- SĐT người nhận
+    Rating INT, -- Đánh giá từ 1 đến 5 sao
+    Feedback NVARCHAR(500), -- Phản hồi từ khách hàng
     CONSTRAINT FK_OrderDetail_Order FOREIGN KEY (OrderID) REFERENCES [Order](OrderID),
     CONSTRAINT FK_OrderDetail_Customer FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
     CONSTRAINT FK_OrderDetail_Service FOREIGN KEY (ServiceID) REFERENCES Service(ServiceID)
