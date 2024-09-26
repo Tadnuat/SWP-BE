@@ -5,7 +5,7 @@ namespace KoiShipping.Repo.Entities;
 
 public partial class AserviceOrderD
 {
-    public int AserviceOrderId { get; set; }
+    public int AserviceOrderId { get; set; } // Tự động tăng
 
     public int OrderDetailId { get; set; }
 

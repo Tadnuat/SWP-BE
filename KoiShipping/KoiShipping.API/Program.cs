@@ -27,6 +27,13 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // ??ng ký IUnitOfWork
 // Register TokenService
 builder.Services.AddSingleton<TokenService>();
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.MaxDepth = 100;
+    });
+
+
 // Add Swagger
 builder.Services.AddSwaggerGen(c =>
 {

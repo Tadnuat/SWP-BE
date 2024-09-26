@@ -4,6 +4,7 @@ using KoiShipping.Repo.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,7 +47,8 @@ namespace KoiShipping.API.Controllers
                 ReceiverName = od.ReceiverName,
                 ReceiverPhone = od.ReceiverPhone,
                 Rating = od.Rating,
-                Feedback = od.Feedback
+                Feedback = od.Feedback,
+                CreatedDate = od.CreatedDate
             }).ToList();
 
             return Ok(response);
@@ -80,7 +82,8 @@ namespace KoiShipping.API.Controllers
                 ReceiverName = orderDetail.ReceiverName,
                 ReceiverPhone = orderDetail.ReceiverPhone,
                 Rating = orderDetail.Rating,
-                Feedback = orderDetail.Feedback
+                Feedback = orderDetail.Feedback,
+                CreatedDate = orderDetail.CreatedDate
             };
 
             return Ok(response);
@@ -88,16 +91,18 @@ namespace KoiShipping.API.Controllers
 
         // POST: api/orderdetail
         [HttpPost]
-        public async Task<ActionResult> CreateOrderDetail([FromBody] RequestCreateOrderDetailModel request)
+        public async Task<IActionResult> Create(RequestCreateOrderDetailModel request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            // Tạo đối tượng OrderDetail
             var orderDetail = new OrderDetail
             {
-                OrderId = request.OrderId,
+                OrderDetailId = request.OrderDetailId,
+                OrderId = 0, // Cần điều chỉnh nếu cần thiết
                 CustomerId = request.CustomerId,
                 ServiceId = request.ServiceId,
                 Weight = request.Weight,
@@ -106,18 +111,55 @@ namespace KoiShipping.API.Controllers
                 KoiStatus = request.KoiStatus,
                 AttachedItem = request.AttachedItem,
                 Status = request.Status,
+                DeleteStatus = false,
                 ReceiverName = request.ReceiverName,
                 ReceiverPhone = request.ReceiverPhone,
-                Rating = request.Rating, // Include Rating
-                Feedback = request.Feedback, // Include Feedback
-                DeleteStatus = false // Set DeleteStatus to false by default
+                CreatedDate = DateTime.Now,
+                Rating = null,
+                Feedback = null
             };
 
-            _unitOfWork.OrderDetailRepository.Insert(orderDetail);
-            await _unitOfWork.SaveAsync();
+            try
+            {
+                // Sử dụng Unit of Work để thêm OrderDetail
+                _unitOfWork.OrderDetailRepository.Insert(orderDetail);
+                await _unitOfWork.SaveAsync(); // Lưu thay đổi để có OrderDetailId
 
-            return CreatedAtAction(nameof(GetOrderDetail), new { id = orderDetail.OrderDetailId }, orderDetail);
+                // Tạo AserviceOrderD cho từng AdvancedService đã chọn
+                if (request.SelectedAdvancedServiceIds != null && request.SelectedAdvancedServiceIds.Any())
+                {
+                    foreach (var advancedServiceId in request.SelectedAdvancedServiceIds)
+                    {
+                        // Kiểm tra xem đã tồn tại chưa để tránh lặp
+                        var exists = await _unitOfWork.AserviceOrderDRepository
+                            .AnyAsync(a => a.OrderDetailId == orderDetail.OrderDetailId && a.AdvancedServiceId == advancedServiceId);
+
+                        if (!exists)
+                        {
+                            var aserviceOrderD = new AserviceOrderD
+                            {
+                                OrderDetailId = orderDetail.OrderDetailId,
+                                AdvancedServiceId = advancedServiceId
+                            };
+
+                            _unitOfWork.AserviceOrderDRepository.Insert(aserviceOrderD);
+                        }
+                    }
+
+                    await _unitOfWork.SaveAsync(); // Lưu thay đổi cho bảng AserviceOrderD
+                }
+
+                // Trả về thông điệp thành công
+                return Ok("Tạo đơn thành công"); // Thay đổi phản hồi ở đây
+            }
+            catch (Exception ex)
+            {
+                // Xử lý ngoại lệ và trả về thông báo lỗi
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
+
+
 
 
         // PUT: api/orderdetail/5
@@ -137,6 +179,7 @@ namespace KoiShipping.API.Controllers
             }
 
             // Update fields only if they are provided
+            if (request.OrderId.HasValue) orderDetail.OrderId = request.OrderId.Value;
             if (request.CustomerId.HasValue) orderDetail.CustomerId = request.CustomerId.Value;
             if (request.ServiceId.HasValue) orderDetail.ServiceId = request.ServiceId.Value;
             if (request.Weight.HasValue) orderDetail.Weight = request.Weight.Value;
@@ -151,7 +194,7 @@ namespace KoiShipping.API.Controllers
             if (!string.IsNullOrWhiteSpace(request.Feedback)) orderDetail.Feedback = request.Feedback; // Update Feedback if provided
 
             // Set DeleteStatus to false regardless of the request body
-            orderDetail.DeleteStatus = false;
+            orderDetail.DeleteStatus = request.DeleteStatus;
 
             _unitOfWork.OrderDetailRepository.Update(orderDetail);
             await _unitOfWork.SaveAsync();

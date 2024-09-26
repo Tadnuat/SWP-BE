@@ -17,5 +17,6 @@
         public string ReceiverPhone { get; set; } = null!;
         public int? Rating { get; set; }
         public string? Feedback { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

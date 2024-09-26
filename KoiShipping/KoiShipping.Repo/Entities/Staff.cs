@@ -23,5 +23,4 @@ public partial class Staff
 
     public virtual ICollection<OrderStaff> OrderStaffs { get; set; } = new List<OrderStaff>();
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

@@ -2,7 +2,7 @@
 {
     public class RequestCreateServiceModel
     {
-        public int? ServiceId { get; set; } // Optional ID for reference
+        public int ServiceId { get; set; } // Optional ID for reference
         public string TransportMethod { get; set; } = null!;
         public string WeightRange { get; set; } = null!;
         public decimal FastDelivery { get; set; }

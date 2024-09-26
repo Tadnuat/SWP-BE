@@ -263,5 +263,14 @@ namespace KoiShipping.Repo.Repository
                 return base.VisitConstant(node);
             }
         }
+        public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            return await dbSet.AnyAsync(filter);
+        }
+        public virtual IQueryable<TEntity> GetQueryable()
+        {
+            return dbSet.AsQueryable();
+        }
+
     }
 }

@@ -83,6 +83,7 @@ namespace KoiShipping.API.Controllers
             var service = new Service
             {
                 // ID will be generated automatically by the database
+                ServiceId = request.ServiceId,
                 TransportMethod = request.TransportMethod,
                 WeightRange = request.WeightRange,
                 FastDelivery = request.FastDelivery,
@@ -122,7 +123,7 @@ namespace KoiShipping.API.Controllers
             if (request.ExpressDelivery.HasValue) service.ExpressDelivery = request.ExpressDelivery.Value;
 
             // Set DeleteStatus to false regardless of the request body
-            service.DeleteStatus = false;
+            service.DeleteStatus = request.DeleteStatus;
 
             _unitOfWork.ServiceRepository.Update(service);
             await _unitOfWork.SaveAsync();

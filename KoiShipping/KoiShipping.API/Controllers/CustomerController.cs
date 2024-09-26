@@ -106,6 +106,7 @@ namespace KoiShipping.API.Controllers
 
             var customer = new Customer
             {
+                CustomerId = request.CustomerId, 
                 Name = request.Name,
                 Email = request.Email,
                 Password = request.Password, // Consider hashing the password here
@@ -170,7 +171,7 @@ namespace KoiShipping.API.Controllers
             }
 
             // Set DeleteStatus to false regardless of the request body
-            customer.DeleteStatus = false;
+            customer.DeleteStatus = request.DeleteStatus;
 
             _unitOfWork.CustomerRepository.Update(customer);
             await _unitOfWork.SaveAsync();

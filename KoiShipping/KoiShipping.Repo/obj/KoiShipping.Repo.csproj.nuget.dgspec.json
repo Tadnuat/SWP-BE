@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SWP391\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj": {}
+    "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj": {}
   },
   "projects": {
-    "D:\\SWP391\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj": {
+    "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SWP391\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj",
+        "projectUniqueName": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj",
         "projectName": "KoiShipping.Repo",
-        "projectPath": "D:\\SWP391\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj",
+        "projectPath": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\SWP391\\KoiShipping\\KoiShipping.Repo\\obj\\",
+        "outputPath": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",

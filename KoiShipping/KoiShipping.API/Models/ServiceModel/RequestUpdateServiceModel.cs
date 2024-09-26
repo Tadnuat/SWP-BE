@@ -7,6 +7,6 @@
         public decimal? FastDelivery { get; set; }
         public decimal? EconomyDelivery { get; set; }
         public decimal? ExpressDelivery { get; set; }
-        public bool DeleteStatus { get; set; } = false;
+        public bool DeleteStatus { get; set; }
     }
 }

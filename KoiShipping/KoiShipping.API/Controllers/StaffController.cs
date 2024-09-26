@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
-    [Authorize(Roles = "Manager")]
-    [EnableCors("MyPolicy")]
+   
     [Route("api/[controller]")]
     [ApiController]
     public class StaffController : ControllerBase
@@ -123,6 +122,52 @@ namespace KoiShipping.API.Controllers
             await _unitOfWork.SaveAsync();
 
             return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);
+        }
+        // PUT: api/staff/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateStaff(int id, [FromBody] RequestUpdateStaffModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Kiểm tra xem staff có tồn tại không
+            var existingStaff = _unitOfWork.StaffRepository.GetByID(id);
+            if (existingStaff == null)
+            {
+                return NotFound();
+            }
+
+            // Kiểm tra email có đúng định dạng không
+            if (!IsValidEmail(request.Email))
+            {
+                return BadRequest(new { message = "Email must be in a valid format." });
+            }
+
+            // Kiểm tra email có tồn tại không (nếu email đã thay đổi)
+            if (existingStaff.Email != request.Email)
+            {
+                var existingStaffByEmail = _unitOfWork.StaffRepository.Get(s => s.Email == request.Email).FirstOrDefault();
+                if (existingStaffByEmail != null)
+                {
+                    return Conflict(new { message = "Email already exists." });
+                }
+            }
+
+            // Cập nhật các thông tin
+            existingStaff.StaffName = request.StaffName;
+            existingStaff.Email = request.Email;
+            existingStaff.Phone = request.Phone;
+            existingStaff.Role = request.Role;
+            existingStaff.Status = request.Status;
+            existingStaff.DeleteStatus = request.DeleteStatus;
+
+            // Lưu thay đổi
+            _unitOfWork.StaffRepository.Update(existingStaff);
+            await _unitOfWork.SaveAsync();
+
+            return NoContent();
         }
 
 

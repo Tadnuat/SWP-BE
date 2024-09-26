@@ -41,9 +41,7 @@ CREATE TABLE [Order] (
     Status NVARCHAR(50) NOT NULL,
     TotalWeight DECIMAL(10, 2),
     TotalKoiFish INT,
-    StaffID INT NOT NULL, -- Khóa ngoại tới bảng Staffs
-    DeleteStatus BIT NOT NULL, -- Chỉ có giá trị 0 hoặc 1
-    CONSTRAINT FK_Order_Staffs FOREIGN KEY (StaffID) REFERENCES Staffs(StaffID)
+    DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
 );
 
 -- Tạo bảng Service
@@ -82,6 +80,7 @@ CREATE TABLE Order_Detail (
     ReceiverPhone NVARCHAR(20) NOT NULL, -- SĐT người nhận
     Rating INT, -- Đánh giá từ 1 đến 5 sao
     Feedback NVARCHAR(500), -- Phản hồi từ khách hàng
+    CreatedDate DATETIME NOT NULL, -- Ngày tạo
     CONSTRAINT FK_OrderDetail_Order FOREIGN KEY (OrderID) REFERENCES [Order](OrderID),
     CONSTRAINT FK_OrderDetail_Customer FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
     CONSTRAINT FK_OrderDetail_Service FOREIGN KEY (ServiceID) REFERENCES Service(ServiceID)
@@ -89,7 +88,7 @@ CREATE TABLE Order_Detail (
 
 -- Tạo bảng AService_OrderD (Liên kết giữa Advanced_Service và Order_Detail)
 CREATE TABLE AService_OrderD (
-    AServiceOrderID INT PRIMARY KEY, -- Không có IDENTITY
+    AServiceOrderID INT PRIMARY KEY IDENTITY(1,1), -- Thay đổi thành IDENTITY
     OrderDetailID INT NOT NULL, -- Khóa ngoại tới bảng Order_Detail
     AdvancedServiceID INT NOT NULL, -- Khóa ngoại tới bảng Advanced_Service
     CONSTRAINT FK_AServiceOrderD_OrderDetail FOREIGN KEY (OrderDetailID) REFERENCES Order_Detail(OrderDetailID),
@@ -98,7 +97,7 @@ CREATE TABLE AService_OrderD (
 
 -- Tạo bảng Order_Staffs (Liên kết giữa Order và Staffs)
 CREATE TABLE Order_Staffs (
-    OrderStaffsID INT PRIMARY KEY, -- Không có IDENTITY
+    OrderStaffsID INT PRIMARY KEY IDENTITY(1,1), -- Thay đổi thành IDENTITY
     OrderID INT NOT NULL, -- Khóa ngoại tới bảng Order
     StaffID INT NOT NULL, -- Khóa ngoại tới bảng Staffs
     CONSTRAINT FK_OrderStaffs_Order FOREIGN KEY (OrderID) REFERENCES [Order](OrderID),

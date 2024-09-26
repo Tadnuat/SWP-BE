@@ -10,6 +10,6 @@
         public string Status { get; set; } = null!;
         public decimal? TotalWeight { get; set; }
         public int? TotalKoiFish { get; set; }
-        public int StaffId { get; set; }
+        public List<int> StaffIds { get; set; } = new List<int>(); // Danh sách StaffId
     }
 }

@@ -35,6 +35,8 @@ namespace KoiShipping.Repo.Entities
 
         public string? Feedback { get; set; } // Phản hồi từ khách hàng (có thể null)
 
+        public DateTime CreatedDate { get; set; } // Ngày tạo (datetime)
+
         public virtual ICollection<AserviceOrderD> AserviceOrderDs { get; set; } = new List<AserviceOrderD>();
 
         public virtual Customer Customer { get; set; } = null!;

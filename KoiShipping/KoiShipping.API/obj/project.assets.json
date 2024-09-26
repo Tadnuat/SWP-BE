@@ -5131,11 +5131,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SWP391\\KoiShipping\\KoiShipping.API\\KoiShipping.API.csproj",
+      "projectUniqueName": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\KoiShipping.API.csproj",
       "projectName": "KoiShipping.API",
-      "projectPath": "D:\\SWP391\\KoiShipping\\KoiShipping.API\\KoiShipping.API.csproj",
+      "projectPath": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\KoiShipping.API.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\SWP391\\KoiShipping\\KoiShipping.API\\obj\\",
+      "outputPath": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5152,8 +5152,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\SWP391\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj": {
-              "projectPath": "D:\\SWP391\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj"
+            "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj": {
+              "projectPath": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\KoiShipping.Repo.csproj"
             }
           }
         }

@@ -53,26 +53,32 @@ public partial class KoiShippingContext : DbContext
 
         modelBuilder.Entity<AserviceOrderD>(entity =>
         {
-            entity.HasKey(e => e.AserviceOrderId).HasName("PK__AService__F07E586474FF7EFF");
+            entity.HasKey(e => e.AserviceOrderId)
+                .HasName("PK__AService__F07E586474FF7EFF");
 
             entity.ToTable("AService_OrderD");
 
             entity.Property(e => e.AserviceOrderId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd() // Thay đổi ở đây
                 .HasColumnName("AServiceOrderID");
-            entity.Property(e => e.AdvancedServiceId).HasColumnName("AdvancedServiceID");
-            entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
+            entity.Property(e => e.AdvancedServiceId)
+                .HasColumnName("AdvancedServiceID");
+            entity.Property(e => e.OrderDetailId)
+                .HasColumnName("OrderDetailID");
 
-            entity.HasOne(d => d.AdvancedService).WithMany(p => p.AserviceOrderDs)
+            entity.HasOne(d => d.AdvancedService)
+                .WithMany(p => p.AserviceOrderDs)
                 .HasForeignKey(d => d.AdvancedServiceId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_AServiceOrderD_AdvancedService");
 
-            entity.HasOne(d => d.OrderDetail).WithMany(p => p.AserviceOrderDs)
+            entity.HasOne(d => d.OrderDetail)
+                .WithMany(p => p.AserviceOrderDs)
                 .HasForeignKey(d => d.OrderDetailId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_AServiceOrderD_OrderDetail");
         });
+
 
         modelBuilder.Entity<Customer>(entity =>
         {
@@ -103,20 +109,16 @@ public partial class KoiShippingContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("OrderID");
             entity.Property(e => e.ArrivalDate).HasColumnType("datetime");
-            entity.Property(e => e.DeleteStatus).HasColumnType("bit"); // Chỉnh sửa kiểu dữ liệu
+            entity.Property(e => e.DeleteStatus).HasColumnType("bit");
             entity.Property(e => e.DepartureDate).HasColumnType("datetime");
             entity.Property(e => e.Destination).HasMaxLength(255);
-            entity.Property(e => e.StaffId).HasColumnName("StaffID");
             entity.Property(e => e.StartLocation).HasMaxLength(255);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.TotalWeight).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.TransportMethod).HasMaxLength(50);
 
-            entity.HasOne(d => d.Staff).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.StaffId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Order_Staffs");
         });
+
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
@@ -169,6 +171,12 @@ public partial class KoiShippingContext : DbContext
             entity.Property(e => e.Feedback)
                 .HasMaxLength(500); // Có thể null, phản hồi từ khách hàng
 
+            // Thêm thuộc tính CreatedDate
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("GETDATE()") // Giá trị mặc định là ngày giờ hiện tại
+                .IsRequired(); // Bắt buộc
+
             // Thiết lập quan hệ giữa OrderDetail và Customer
             entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.CustomerId)
@@ -188,28 +196,35 @@ public partial class KoiShippingContext : DbContext
                 .HasConstraintName("FK_OrderDetail_Service");
         });
 
+
         modelBuilder.Entity<OrderStaff>(entity =>
         {
-            entity.HasKey(e => e.OrderStaffsId).HasName("PK__Order_St__BD854B319A2612A9");
+            entity.HasKey(e => e.OrderStaffsId)
+                .HasName("PK__Order_St__BD854B319A2612A9");
 
             entity.ToTable("Order_Staffs");
 
             entity.Property(e => e.OrderStaffsId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd() // Thay đổi ở đây
                 .HasColumnName("OrderStaffsID");
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.StaffId).HasColumnName("StaffID");
+            entity.Property(e => e.OrderId)
+                .HasColumnName("OrderID");
+            entity.Property(e => e.StaffId)
+                .HasColumnName("StaffID");
 
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderStaffs)
+            entity.HasOne(d => d.Order)
+                .WithMany(p => p.OrderStaffs)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OrderStaffs_Order");
 
-            entity.HasOne(d => d.Staff).WithMany(p => p.OrderStaffs)
+            entity.HasOne(d => d.Staff)
+                .WithMany(p => p.OrderStaffs)
                 .HasForeignKey(d => d.StaffId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OrderStaffs_Staff");
         });
+
 
         modelBuilder.Entity<Service>(entity =>
         {

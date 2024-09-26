@@ -9,7 +9,6 @@
         public string? Status { get; set; }
         public decimal? TotalWeight { get; set; }
         public int? TotalKoiFish { get; set; }
-        public int StaffId { get; set; }
-        public bool DeleteStatus { get; set; } = false; // Set to false by default
+        public bool DeleteStatus { get; set; }
     }
 }

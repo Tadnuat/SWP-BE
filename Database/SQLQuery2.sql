@@ -1,55 +1,50 @@
-﻿-- Chèn dữ liệu mẫu vào bảng Customer
-INSERT INTO Customer (CustomerID, Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus)
-VALUES
-(1, 'Nguyen Van A', 'nguyenvana@example.com', 'password123', '0123456789', '123 Nguyen Trai, HCM', GETDATE(), 'Active', 0),
-(2, 'Tran Thi B', 'tranthib@example.com', 'password456', '0987654321', '456 Le Loi, HN', GETDATE(), 'Active', 0),
-(3, 'Le Van C', 'levanc@example.com', 'password789', '0112233445', '789 Tran Hung Dao, Hue', GETDATE(), 'Inactive', 1);
+USE KoiShipping;
+GO
 
--- Chèn dữ liệu mẫu vào bảng Staffs
+-- Ch�n d? li?u m?u v�o b?ng Customer
+INSERT INTO Customer (CustomerID, Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus)
+VALUES 
+(1, N'Nguyen Van A', 'a@gmail.com', 'password123', '0123456789', N'HCM City', GETDATE(), N'Active', 0),
+(2, N'Tran Thi B', 'b@gmail.com', 'password456', '0987654321', N'Hanoi', GETDATE(), N'Active', 0);
+
+-- Ch�n d? li?u m?u v�o b?ng Staffs
 INSERT INTO Staffs (StaffID, StaffName, Email, Password, Role, Phone, Status, DeleteStatus)
 VALUES
-(1, 'Pham Van D', 'phamvand@example.com', 'password123', 'Manager', '0123456789', 'Active', 0),
-(2, 'Ngo Thi E', 'ngothie@example.com', 'password456', 'Staff', '0987654321', 'Active', 0),
-(3, 'Hoang Van F', 'hoangvanf@example.com', 'password789', 'Staff', '0112233445', 'Inactive', 1);
+(1, N'Le Van C', 'c@gmail.com', 'password789', N'Manager', '0912345678', N'Active', 0),
+(2, N'Pham Thi D', 'd@gmail.com', 'password987', N'Staff', '0908765432', N'Inactive', 0);
 
--- Chèn dữ liệu mẫu vào bảng Order
-INSERT INTO [Order] (OrderID, StartLocation, Destination, TransportMethod, DepartureDate, ArrivalDate, Status, TotalWeight, TotalKoiFish, StaffID, DeleteStatus)
+-- Ch�n d? li?u m?u v�o b?ng Order
+INSERT INTO [Order] (OrderID, StartLocation, Destination, TransportMethod, DepartureDate, ArrivalDate, Status, TotalWeight, TotalKoiFish, DeleteStatus)
 VALUES
-(1, 'HCM', 'HN', 'Air', GETDATE(), DATEADD(DAY, 2, GETDATE()), 'In Transit', 100.5, 20, 1, 0),
-(2, 'HN', 'Hue', 'Land', GETDATE(), DATEADD(DAY, 3, GETDATE()), 'Delivered', 50.0, 10, 2, 0),
-(3, 'Hue', 'HCM', 'Air', GETDATE(), DATEADD(DAY, 1, GETDATE()), 'Pending', 75.0, 15, 1, 1);
+(1, N'HCM City', N'Hanoi', N'Air', GETDATE(), DATEADD(DAY, 1, GETDATE()), N'Pending', 50.5, 100, 0),
+(2, N'Hanoi', N'Hue', N'Road', GETDATE(), DATEADD(DAY, 2, GETDATE()), N'Delivered', 30.3, 60, 0);
 
--- Chèn dữ liệu mẫu vào bảng Service
+-- Ch�n d? li?u m?u v�o b?ng Service
 INSERT INTO Service (ServiceID, TransportMethod, WeightRange, FastDelivery, EconomyDelivery, ExpressDelivery, DeleteStatus)
 VALUES
-(1, 'Air', '0-5 kg', 500000, 300000, 700000, 0),
-(2, 'Land', '5-10 kg', 400000, 200000, 600000, 0),
-(3, 'Air', '10-15 kg', 600000, 350000, 800000, 1);
+(1, N'Air', N'0-5 kg', 100000, 50000, 150000, 0),
+(2, N'Road', N'5-10 kg', 80000, 40000, 120000, 0);
 
--- Chèn dữ liệu mẫu vào bảng Advanced_Service
+-- Ch�n d? li?u m?u v�o b?ng Advanced_Service
 INSERT INTO Advanced_Service (AdvancedServiceID, ServiceName, Price, DeleteStatus)
 VALUES
-(1, 'Insured Transport', 150000, 0),
-(2, 'Priority Handling', 200000, 0),
-(3, 'Real-time Tracking', 100000, 1);
+(1, N'Koi Care', 50000, 0),
+(2, N'Oxygen Tank', 30000, 0);
 
--- Chèn dữ liệu mẫu vào bảng Order_Detail
-INSERT INTO Order_Detail (OrderDetailID, OrderID, CustomerID, ServiceID, Weight, Quantity, Price, KoiStatus, AttachedItem, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback)
+-- Ch�n d? li?u m?u v�o b?ng Order_Detail
+INSERT INTO Order_Detail (OrderDetailID, OrderID, CustomerID, ServiceID, Weight, Quantity, Price, KoiStatus, AttachedItem, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback, CreatedDate)
 VALUES
-(1, 1, 1, 1, 5.0, 2, 500000, 'Healthy', 'N/A', 'Pending', 0, 'Nguyen Van G', '0123456789', 5, 'Great service!'),
-(2, 2, 2, 2, 7.5, 1, 400000, 'Healthy', 'N/A', 'Delivered', 0, 'Tran Thi H', '0987654321', 4, 'Satisfactory service.'),
-(3, 3, 3, 3, 10.0, 3, 600000, 'Healthy', 'N/A', 'In Transit', 1, 'Le Van J', '0112233445', NULL, NULL);
+(1, 1, 1, 1, 10.5, 2, 200000, N'Healthy', N'Oxygen Tank', N'Pending', 0, N'Tran Van E', '0911122233', 5, N'Good service', GETDATE()),
+(2, 2, 2, 2, 15.0, 3, 240000, N'Healthy', N'None', N'Delivered', 0, N'Le Thi F', '0922233444', 4, N'Satisfactory', GETDATE());
 
--- Chèn dữ liệu mẫu vào bảng AService_OrderD
-INSERT INTO AService_OrderD (AServiceOrderID, OrderDetailID, AdvancedServiceID)
+-- Ch�n d? li?u m?u v�o b?ng AService_OrderD
+INSERT INTO AService_OrderD (OrderDetailID, AdvancedServiceID)
 VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 1);
+(1, 1),
+(2, 2);
 
--- Chèn dữ liệu mẫu vào bảng Order_Staffs
-INSERT INTO Order_Staffs (OrderStaffsID, OrderID, StaffID)
+-- Ch�n d? li?u m?u v�o b?ng Order_Staffs
+INSERT INTO Order_Staffs (OrderID, StaffID)
 VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 1);
+(1, 1),
+(2, 2);

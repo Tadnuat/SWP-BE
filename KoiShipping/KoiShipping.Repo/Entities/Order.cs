@@ -23,13 +23,10 @@ public partial class Order
 
     public int? TotalKoiFish { get; set; }
 
-    public int StaffId { get; set; }
-
     public bool DeleteStatus { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual ICollection<OrderStaff> OrderStaffs { get; set; } = new List<OrderStaff>();
 
-    public virtual Staff Staff { get; set; } = null!;
 }
