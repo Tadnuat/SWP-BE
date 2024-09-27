@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KoiShipping.API.Controllers
 {
+    [Authorize(Roles = "Manager,Staff")]
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
@@ -152,7 +154,8 @@ namespace KoiShipping.API.Controllers
                     Destination = request.Destination,
                     TransportMethod = request.TransportMethod,
                     DepartureDate = request.DepartureDate,
-                    Status = request.Status,
+                    ArrivalDate   = request.ArrivalDate,
+                    Status = "Pending",
                     TotalWeight = request.TotalWeight,
                     TotalKoiFish = request.TotalKoiFish,
                     DeleteStatus = false // Đặt DeleteStatus mặc định là false
@@ -217,6 +220,7 @@ namespace KoiShipping.API.Controllers
             if (request.Destination != null) order.Destination = request.Destination;
             if (request.TransportMethod != null) order.TransportMethod = request.TransportMethod;
             if (request.DepartureDate.HasValue) order.DepartureDate = request.DepartureDate.Value;
+            if (request.ArrivalDate.HasValue) order.ArrivalDate = request.ArrivalDate.Value;
             if (request.Status != null) order.Status = request.Status;
             if (request.TotalWeight.HasValue) order.TotalWeight = request.TotalWeight.Value;
             if (request.TotalKoiFish.HasValue) order.TotalKoiFish = request.TotalKoiFish.Value;

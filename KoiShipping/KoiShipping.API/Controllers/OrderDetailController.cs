@@ -28,14 +28,19 @@ namespace KoiShipping.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetails()
         {
-            // Retrieve only order details where DeleteStatus is false
-            var orderDetails = await Task.Run(() => _unitOfWork.OrderDetailRepository.Get().Where(od => !od.DeleteStatus).ToList());
+            var orderDetails = await Task.Run(() => _unitOfWork.OrderDetailRepository.Get()
+                .Where(od => !od.DeleteStatus).ToList());
+
+            // Lấy danh sách Customer
+            var customerIds = orderDetails.Select(od => od.CustomerId).Distinct().ToList();
+            var customers = _unitOfWork.CustomerRepository.Get(c => customerIds.Contains(c.CustomerId)).ToList();
 
             var response = orderDetails.Select(od => new ResponseOrderDetailModel
             {
                 OrderDetailId = od.OrderDetailId,
                 OrderId = od.OrderId,
                 CustomerId = od.CustomerId,
+                CustomerName = customers.FirstOrDefault(c => c.CustomerId == od.CustomerId)?.Name, // Lấy CustomerName
                 ServiceId = od.ServiceId,
                 Weight = od.Weight,
                 Quantity = od.Quantity,
@@ -54,6 +59,42 @@ namespace KoiShipping.API.Controllers
             return Ok(response);
         }
 
+        // GET: api/orderdetail/status/pending
+        [HttpGet("status/pending")]
+        public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatus()
+        {
+            var pendingOrderDetails = await Task.Run(() => _unitOfWork.OrderDetailRepository
+                .Get(od => od.Status.ToLower() == "pending" && !od.DeleteStatus).ToList());
+
+            // Lấy danh sách Customer
+            var customerIds = pendingOrderDetails.Select(od => od.CustomerId).Distinct().ToList();
+            var customers = _unitOfWork.CustomerRepository.Get(c => customerIds.Contains(c.CustomerId)).ToList();
+
+            var response = pendingOrderDetails.Select(od => new ResponseOrderDetailModel
+            {
+                OrderDetailId = od.OrderDetailId,
+                OrderId = od.OrderId,
+                CustomerId = od.CustomerId,
+                CustomerName = customers.FirstOrDefault(c => c.CustomerId == od.CustomerId)?.Name, // Lấy CustomerName
+                ServiceId = od.ServiceId,
+                Weight = od.Weight,
+                Quantity = od.Quantity,
+                Price = od.Price,
+                KoiStatus = od.KoiStatus,
+                AttachedItem = od.AttachedItem,
+                Status = od.Status,
+                DeleteStatus = od.DeleteStatus,
+                ReceiverName = od.ReceiverName,
+                ReceiverPhone = od.ReceiverPhone,
+                Rating = od.Rating,
+                Feedback = od.Feedback,
+                CreatedDate = od.CreatedDate
+            }).ToList();
+
+            return Ok(response);
+        }
+
+
         // GET: api/orderdetail/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseOrderDetailModel>> GetOrderDetail(int id)
@@ -66,11 +107,15 @@ namespace KoiShipping.API.Controllers
                 return NotFound();
             }
 
+            // Lấy thông tin khách hàng
+            var customer = _unitOfWork.CustomerRepository.GetByID(orderDetail.CustomerId);
+
             var response = new ResponseOrderDetailModel
             {
                 OrderDetailId = orderDetail.OrderDetailId,
                 OrderId = orderDetail.OrderId,
                 CustomerId = orderDetail.CustomerId,
+                CustomerName = customer?.Name, // Lấy CustomerName
                 ServiceId = orderDetail.ServiceId,
                 Weight = orderDetail.Weight,
                 Quantity = orderDetail.Quantity,
@@ -88,6 +133,7 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
+
 
         // POST: api/orderdetail
         [HttpPost]
@@ -110,7 +156,7 @@ namespace KoiShipping.API.Controllers
                 Price = request.Price,
                 KoiStatus = request.KoiStatus,
                 AttachedItem = request.AttachedItem,
-                Status = request.Status,
+                Status = "Pending",
                 DeleteStatus = false,
                 ReceiverName = request.ReceiverName,
                 ReceiverPhone = request.ReceiverPhone,

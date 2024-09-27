@@ -15,6 +15,6 @@ namespace KoiShipping.API.Models.StaffModel
         public string? Phone { get; set; }
 
         public string Status { get; set; } = null!;
-        public bool DeleteStatus { get; set; } = false;
+        public bool DeleteStatus { get; set; }
     }
 }

@@ -13,7 +13,7 @@ public partial class Order
 
     public string? TransportMethod { get; set; }
 
-    public DateTime DepartureDate { get; set; }
+    public DateTime? DepartureDate { get; set; }
 
     public DateTime? ArrivalDate { get; set; }
 

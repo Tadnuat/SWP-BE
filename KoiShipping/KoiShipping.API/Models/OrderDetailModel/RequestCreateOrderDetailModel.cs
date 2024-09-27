@@ -11,7 +11,6 @@ namespace KoiShipping.API.Models.OrderDetailModel
         public decimal Price { get; set; }
         public string KoiStatus { get; set; } = null!;
         public string? AttachedItem { get; set; }
-        public string Status { get; set; } = null!;
         public string ReceiverName { get; set; } = null!;
         public string ReceiverPhone { get; set; } = null!;
         public List<int> SelectedAdvancedServiceIds { get; set; } // Danh sách ID của AdvancedService đã chọn

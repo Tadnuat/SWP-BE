@@ -36,7 +36,7 @@ CREATE TABLE [Order] (
     StartLocation NVARCHAR(255) NOT NULL,
     Destination NVARCHAR(255) NOT NULL,
     TransportMethod NVARCHAR(50),
-    DepartureDate DATETIME NOT NULL,
+    DepartureDate DATETIME,
     ArrivalDate DATETIME,
     Status NVARCHAR(50) NOT NULL,
     TotalWeight DECIMAL(10, 2),

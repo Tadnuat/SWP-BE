@@ -7,7 +7,7 @@ namespace KoiShipping.API.Models.OrderModel
         public string StartLocation { get; set; }
         public string Destination { get; set; }
         public string? TransportMethod { get; set; }
-        public DateTime DepartureDate { get; set; }
+        public DateTime? DepartureDate { get; set; }
         public DateTime? ArrivalDate { get; set; }
         public string Status { get; set; }
         public decimal? TotalWeight { get; set; }

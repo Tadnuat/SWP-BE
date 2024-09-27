@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
-   
+    [Authorize(Roles = "Manager")]
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class StaffController : ControllerBase
@@ -46,6 +47,34 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
+        // GET: api/staff/active
+        [HttpGet("status/active")]
+        public async Task<ActionResult<IEnumerable<ResponseStaffModel>>> GetActiveStaffs()
+        {
+            // Lấy danh sách nhân viên có Status là "active" và DeleteStatus là false
+            var activeStaffs = await Task.Run(() => _unitOfWork.StaffRepository
+                .Get(s => s.Status.ToLower() == "active" && !s.DeleteStatus)
+                .ToList());
+
+            var response = new List<ResponseStaffModel>();
+
+            foreach (var staff in activeStaffs)
+            {
+                response.Add(new ResponseStaffModel
+                {
+                    StaffId = staff.StaffId,
+                    StaffName = staff.StaffName,
+                    Email = staff.Email,
+                    Phone = staff.Phone,
+                    Role = staff.Role,
+                    Status = staff.Status,
+                    DeleteStatus = staff.DeleteStatus
+                });
+            }
+
+            return Ok(response);
+        }
+
 
         // GET: api/staff/5
         [HttpGet("{id}")]
