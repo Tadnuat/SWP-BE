@@ -30,7 +30,7 @@ namespace KoiShipping.API.Controllers
             if (staff != null)
             {
                 var token = _tokenService.GenerateToken(staff.Email, staff.Role);
-                return Ok(new { token, id = staff.StaffId, Username = staff.StaffName, Role = staff.Role });
+                return Ok(new { token, id = staff.StaffId, name = staff.StaffName, Role = staff.Role });
             }
 
             return Unauthorized("Invalid email or password.");
@@ -46,7 +46,7 @@ namespace KoiShipping.API.Controllers
             if (customer != null)
             {
                 var token = _tokenService.GenerateToken(customer.Email, "Customer");
-                return Ok(new { token, customerName = customer.Name, customerId = customer.CustomerId });
+                return Ok(new { token, customerId = customer.CustomerId, customerName = customer.Name, Role = "Customer" });
             }
 
             return Unauthorized("Invalid email or password.");

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderStaffController : ControllerBase

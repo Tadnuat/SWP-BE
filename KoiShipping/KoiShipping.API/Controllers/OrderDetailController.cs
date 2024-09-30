@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
-    [Authorize(Roles = "Manager,Staff")]
+    [Authorize(Roles = "Manager,Staff,Customer")]
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
@@ -93,7 +93,46 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
+        // GET: api/orderdetail/customer/{customerId}
+        [HttpGet("customer/{customerId}")]
+        public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailsByCustomerId(int customerId)
+        {
+            // Lấy danh sách order details theo CustomerId
+            var orderDetails = await Task.Run(() => _unitOfWork.OrderDetailRepository
+                .Get(od => od.CustomerId == customerId && !od.DeleteStatus).ToList());
 
+            // Kiểm tra nếu không có OrderDetail
+            if (orderDetails == null || !orderDetails.Any())
+            {
+                return NotFound($"No OrderDetails found for CustomerId: {customerId}");
+            }
+
+            // Lấy thông tin khách hàng
+            var customer = _unitOfWork.CustomerRepository.GetByID(customerId);
+
+            var response = orderDetails.Select(od => new ResponseOrderDetailModel
+            {
+                OrderDetailId = od.OrderDetailId,
+                OrderId = od.OrderId,
+                CustomerId = od.CustomerId,
+                CustomerName = customer?.Name, // Lấy CustomerName
+                ServiceId = od.ServiceId,
+                Weight = od.Weight,
+                Quantity = od.Quantity,
+                Price = od.Price,
+                KoiStatus = od.KoiStatus,
+                AttachedItem = od.AttachedItem,
+                Status = od.Status,
+                DeleteStatus = od.DeleteStatus,
+                ReceiverName = od.ReceiverName,
+                ReceiverPhone = od.ReceiverPhone,
+                Rating = od.Rating,
+                Feedback = od.Feedback,
+                CreatedDate = od.CreatedDate
+            }).ToList();
+
+            return Ok(response);
+        }
 
         // GET: api/orderdetail/5
         [HttpGet("{id}")]

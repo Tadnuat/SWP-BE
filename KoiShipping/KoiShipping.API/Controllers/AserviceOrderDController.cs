@@ -1,6 +1,7 @@
 ﻿using KoiShipping.API.Models.AserviceOrderDModel;
 using KoiShipping.Repo.Entities;
 using KoiShipping.Repo.UnitOfWork;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class AserviceOrderDController : ControllerBase
