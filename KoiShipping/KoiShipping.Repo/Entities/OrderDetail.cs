@@ -13,6 +13,8 @@ namespace KoiShipping.Repo.Entities
 
         public int ServiceId { get; set; }
 
+        public string ServiceName { get; set; }
+
         public decimal Weight { get; set; }
 
         public int Quantity { get; set; }

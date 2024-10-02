@@ -68,9 +68,8 @@ namespace KoiShipping.API.Controllers
 
 
 
-        // GET: api/order/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ResponseOrderModel>> GetOrder(int id)
+        public async Task<ActionResult<ResponseOrderByIdModel>> GetOrder(int id)
         {
             // Lấy thông tin order cùng với OrderStaff và Staff
             var order = await _unitOfWork.OrderRepository.GetQueryable()
@@ -85,20 +84,21 @@ namespace KoiShipping.API.Controllers
                 return NotFound();
             }
 
-            // Lấy danh sách OrderDetail liên quan
-            var orderDetails = _unitOfWork.OrderDetailRepository
-                .Get(od => od.OrderId == id && !od.DeleteStatus)
-                .ToList();
+            // Lấy danh sách OrderDetail liên quan và kết hợp với Customer và Service
+            var orderDetails = await _unitOfWork.OrderDetailRepository.GetQueryable()
+                .Where(od => od.OrderId == id && !od.DeleteStatus)
+                .Include(od => od.Customer) // Giả định rằng có liên kết tới Customer
+                .ToListAsync();
 
             // Lấy thông tin StaffDeliveries từ OrderStaffs
             var staffDeliveries = order.OrderStaffs.Select(os => new StaffInfo
             {
-                StaffId = os.Staff.StaffId,   // Lấy StaffId
-                StaffName = os.Staff.StaffName // Lấy StaffName
+                StaffId = os.Staff.StaffId,
+                StaffName = os.Staff.StaffName
             }).ToList();
 
             // Tạo đối tượng ResponseOrderModel và gán các giá trị
-            var response = new ResponseOrderModel
+            var response = new ResponseOrderByIdModel
             {
                 OrderId = order.OrderId,
                 StartLocation = order.StartLocation,
@@ -110,12 +110,14 @@ namespace KoiShipping.API.Controllers
                 TotalWeight = order.TotalWeight,
                 TotalKoiFish = order.TotalKoiFish,
                 DeleteStatus = order.DeleteStatus,
-                StaffDeliveries = staffDeliveries, // Gán danh sách StaffInfo
+                StaffDeliveries = staffDeliveries,
                 OrderDetails = orderDetails.Select(od => new ResponseOrderDetailModel
                 {
                     OrderDetailId = od.OrderDetailId,
                     CustomerId = od.CustomerId,
+                    CustomerName = od.Customer?.Name, // Lấy CustomerName từ Customer
                     ServiceId = od.ServiceId,
+                    ServiceName = od.ServiceName, // Lấy ServiceName từ Service
                     Weight = od.Weight,
                     Quantity = od.Quantity,
                     Price = od.Price,
@@ -127,13 +129,11 @@ namespace KoiShipping.API.Controllers
                     Rating = od.Rating,
                     Feedback = od.Feedback,
                     CreatedDate = od.CreatedDate
-                }).ToList() // Map các OrderDetail sang ResponseOrderDetailModel
+                }).ToList()
             };
 
             return Ok(response);
         }
-
-
 
         // POST: api/order
         [HttpPost]

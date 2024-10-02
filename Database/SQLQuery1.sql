@@ -7,7 +7,7 @@ GO
 
 -- Tạo bảng Customer
 CREATE TABLE Customer (
-    CustomerID INT PRIMARY KEY, -- Không có IDENTITY
+    CustomerID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
     Name NVARCHAR(100) NOT NULL,
     Email NVARCHAR(100) NOT NULL,
     Password NVARCHAR(100) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE Customer (
 
 -- Tạo bảng Staffs
 CREATE TABLE Staffs (
-    StaffID INT PRIMARY KEY, -- Không có IDENTITY
+    StaffID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
     StaffName NVARCHAR(100) NOT NULL,
     Email NVARCHAR(100) NOT NULL,
     Password NVARCHAR(100) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE Staffs (
 
 -- Tạo bảng Order
 CREATE TABLE [Order] (
-    OrderID INT PRIMARY KEY, -- Không có IDENTITY
+    OrderID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
     StartLocation NVARCHAR(255) NOT NULL,
     Destination NVARCHAR(255) NOT NULL,
     TransportMethod NVARCHAR(50),
@@ -46,7 +46,7 @@ CREATE TABLE [Order] (
 
 -- Tạo bảng Service
 CREATE TABLE Service (
-    ServiceID INT PRIMARY KEY, -- ID không tự tăng
+    ServiceID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
     TransportMethod NVARCHAR(50) NOT NULL, -- Phương thức vận chuyển (Đường Bộ, Đường Hàng Không)
     WeightRange NVARCHAR(50) NOT NULL, -- Trọng Lượng (0-5 kg, 5-10 kg, ...)
     FastDelivery DECIMAL(10, 2) NOT NULL, -- Giao Nhanh (VNĐ)
@@ -57,18 +57,19 @@ CREATE TABLE Service (
 
 -- Tạo bảng Advanced_Service
 CREATE TABLE Advanced_Service (
-    AdvancedServiceID INT PRIMARY KEY, -- Không có IDENTITY
-    ServiceName NVARCHAR(100) NOT NULL,
+    AdvancedServiceID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
+    AServiceName NVARCHAR(100) NOT NULL,
     Price DECIMAL(10, 2) NOT NULL,
     DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
 );
 
 -- Tạo bảng Order_Detail
 CREATE TABLE Order_Detail (
-    OrderDetailID INT PRIMARY KEY, -- Không có IDENTITY
+    OrderDetailID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
     OrderID INT NOT NULL, -- Khóa ngoại tới bảng Order
     CustomerID INT NOT NULL, -- Khóa ngoại tới bảng Customer
     ServiceID INT NOT NULL, -- Khóa ngoại tới bảng Service
+    ServiceName NVARCHAR(100), -- Thêm trường ServiceName
     Weight DECIMAL(10, 2) NOT NULL,
     Quantity INT NOT NULL,
     Price DECIMAL(10, 2) NOT NULL,
@@ -88,7 +89,7 @@ CREATE TABLE Order_Detail (
 
 -- Tạo bảng AService_OrderD (Liên kết giữa Advanced_Service và Order_Detail)
 CREATE TABLE AService_OrderD (
-    AServiceOrderID INT PRIMARY KEY IDENTITY(1,1), -- Thay đổi thành IDENTITY
+    AServiceOrderID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
     OrderDetailID INT NOT NULL, -- Khóa ngoại tới bảng Order_Detail
     AdvancedServiceID INT NOT NULL, -- Khóa ngoại tới bảng Advanced_Service
     CONSTRAINT FK_AServiceOrderD_OrderDetail FOREIGN KEY (OrderDetailID) REFERENCES Order_Detail(OrderDetailID),
@@ -97,7 +98,7 @@ CREATE TABLE AService_OrderD (
 
 -- Tạo bảng Order_Staffs (Liên kết giữa Order và Staffs)
 CREATE TABLE Order_Staffs (
-    OrderStaffsID INT PRIMARY KEY IDENTITY(1,1), -- Thay đổi thành IDENTITY
+    OrderStaffsID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
     OrderID INT NOT NULL, -- Khóa ngoại tới bảng Order
     StaffID INT NOT NULL, -- Khóa ngoại tới bảng Staffs
     CONSTRAINT FK_OrderStaffs_Order FOREIGN KEY (OrderID) REFERENCES [Order](OrderID),

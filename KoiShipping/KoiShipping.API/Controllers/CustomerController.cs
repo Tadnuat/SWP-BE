@@ -146,10 +146,10 @@ namespace KoiShipping.API.Controllers
             }
 
             // Check if the password has at least 8 characters (if updating password)
-            if (!string.IsNullOrWhiteSpace(request.Password) && request.Password.Length < 8)
-            {
-                return BadRequest(new { message = "Password must be at least 8 characters long." });
-            }
+            //if (!string.IsNullOrWhiteSpace(request.Password) && request.Password.Length < 8)
+            //{
+            //    return BadRequest(new { message = "Password must be at least 8 characters long." });
+            //}
 
             // Check if the email is being updated and already exists in another customer
             var existingCustomerByEmail = _unitOfWork.CustomerRepository.Get(c => c.Email == request.Email && c.CustomerId != id).FirstOrDefault();
@@ -165,10 +165,10 @@ namespace KoiShipping.API.Controllers
             customer.Status = request.Status;
 
             // Update the password only if it's provided in the request
-            if (!string.IsNullOrWhiteSpace(request.Password))
-            {
-                customer.Password = request.Password; // Consider hashing the password here
-            }
+            //if (!string.IsNullOrWhiteSpace(request.Password))
+            //{
+            //    customer.Password = request.Password; // Consider hashing the password here
+            //}
 
             // Set DeleteStatus to false regardless of the request body
             customer.DeleteStatus = request.DeleteStatus;

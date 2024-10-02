@@ -1,50 +1,59 @@
-USE KoiShipping;
+ï»¿USE KoiShipping;
 GO
 
--- Chèn d? li?u m?u vào b?ng Customer
-INSERT INTO Customer (CustomerID, Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus)
+-- Sample data for Customer table
+INSERT INTO Customer (Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus)
 VALUES 
-(1, N'Nguyen Van A', 'a@gmail.com', 'password123', '0123456789', N'HCM City', GETDATE(), N'Active', 0),
-(2, N'Tran Thi B', 'b@gmail.com', 'password456', '0987654321', N'Hanoi', GETDATE(), N'Active', 0);
+('Nguyen Van A', 'nva@gmail.com', 'password123', '0901234567', '123 Le Loi, HCM', GETDATE(), 'Active', 0),
+('Tran Thi B', 'ttb@gmail.com', 'password456', '0912345678', '456 Tran Hung Dao, HCM', GETDATE(), 'Inactive', 0),
+('Le Van C', 'lvc@gmail.com', 'password789', '0933456789', '789 Nguyen Hue, HCM', GETDATE(), 'Active', 0);
 
--- Chèn d? li?u m?u vào b?ng Staffs
-INSERT INTO Staffs (StaffID, StaffName, Email, Password, Role, Phone, Status, DeleteStatus)
-VALUES
-(1, N'Le Van C', 'c@gmail.com', 'password789', N'Manager', '0912345678', N'Active', 0),
-(2, N'Pham Thi D', 'd@gmail.com', 'password987', N'Staff', '0908765432', N'Inactive', 0);
+-- Sample data for Staffs table
+INSERT INTO Staffs (StaffName, Email, Password, Role, Phone, Status, DeleteStatus)
+VALUES 
+('Admin 1', 'a@gmail.com', 'admin123', 'Manager', '0909876543', 'Active', 0),
+('Staff 1', 'b@gmail.com', 'staff456', 'Staff', '0918765432', 'Active', 0),
+('Staff 2', 'c@gmail.com', 'staff789', 'Staff', '0927654321', 'Inactive', 0);
 
--- Chèn d? li?u m?u vào b?ng Order
-INSERT INTO [Order] (OrderID, StartLocation, Destination, TransportMethod, DepartureDate, ArrivalDate, Status, TotalWeight, TotalKoiFish, DeleteStatus)
-VALUES
-(1, N'HCM City', N'Hanoi', N'Air', GETDATE(), DATEADD(DAY, 1, GETDATE()), N'Pending', 50.5, 100, 0),
-(2, N'Hanoi', N'Hue', N'Road', GETDATE(), DATEADD(DAY, 2, GETDATE()), N'Delivered', 30.3, 60, 0);
+-- Sample data for Order table
+INSERT INTO [Order] (StartLocation, Destination, TransportMethod, DepartureDate, ArrivalDate, Status, TotalWeight, TotalKoiFish, DeleteStatus)
+VALUES 
+('HCM', 'Hanoi', 'Road', '2024-10-01 10:00', '2024-10-02 18:00', 'In Transit', 20.50, 50, 0),
+('HCM', 'Hue', 'Air', '2024-10-05 08:00', '2024-10-05 12:00', 'Delivered', 15.75, 30, 0),
+('Hanoi', 'Hue', 'Road', '2024-09-29 07:00', '2024-09-30 20:00', 'Pending', 10.00, 20, 0);
 
--- Chèn d? li?u m?u vào b?ng Service
-INSERT INTO Service (ServiceID, TransportMethod, WeightRange, FastDelivery, EconomyDelivery, ExpressDelivery, DeleteStatus)
-VALUES
-(1, N'Air', N'0-5 kg', 100000, 50000, 150000, 0),
-(2, N'Road', N'5-10 kg', 80000, 40000, 120000, 0);
+-- Sample data for Service table
+INSERT INTO Service (TransportMethod, WeightRange, FastDelivery, EconomyDelivery, ExpressDelivery, DeleteStatus)
+VALUES 
+('Road', '0-5 kg', 50000, 30000, 80000, 0),
+('Air', '0-5 kg', 70000, 50000, 100000, 0),
+('Road', '5-10 kg', 100000, 70000, 120000, 0),
+('Air', '5-10 kg', 130000, 100000, 150000, 0);
 
--- Chèn d? li?u m?u vào b?ng Advanced_Service
-INSERT INTO Advanced_Service (AdvancedServiceID, ServiceName, Price, DeleteStatus)
-VALUES
-(1, N'Koi Care', 50000, 0),
-(2, N'Oxygen Tank', 30000, 0);
+-- Sample data for Advanced_Service table
+INSERT INTO Advanced_Service (AServiceName, Price, DeleteStatus)
+VALUES 
+('Transport Insurance', 50000, 0),
+('Special Packaging', 30000, 0),
+('GPS Tracking', 70000, 0);
 
--- Chèn d? li?u m?u vào b?ng Order_Detail
-INSERT INTO Order_Detail (OrderDetailID, OrderID, CustomerID, ServiceID, Weight, Quantity, Price, KoiStatus, AttachedItem, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback, CreatedDate)
-VALUES
-(1, 1, 1, 1, 10.5, 2, 200000, N'Healthy', N'Oxygen Tank', N'Pending', 0, N'Tran Van E', '0911122233', 5, N'Good service', GETDATE()),
-(2, 2, 2, 2, 15.0, 3, 240000, N'Healthy', N'None', N'Delivered', 0, N'Le Thi F', '0922233444', 4, N'Satisfactory', GETDATE());
+-- Sample data for Order_Detail table
+INSERT INTO Order_Detail (OrderID, CustomerID, ServiceID, ServiceName, Weight, Quantity, Price, KoiStatus, AttachedItem, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback, CreatedDate)
+VALUES 
+(1, 1, 1, 'Road (0-5 kg)', 5.00, 10, 500000, 'Healthy', 'Plastic Box', 'In Transit', 0, 'Nguyen Van D', '0909988776', 5, 'Good service', GETDATE()),
+(2, 2, 2, 'Air (0-5 kg)', 3.50, 5, 350000, 'Healthy', 'Foam Box', 'Delivered', 0, 'Tran Thi E', '0912345566', 4, 'Quick delivery', GETDATE()),
+(3, 3, 3, 'Road (5-10 kg)', 7.00, 20, 700000, 'Sick', 'Nylon Bag', 'Pending', 0, 'Le Van F', '0923456677', NULL, NULL, GETDATE());
 
--- Chèn d? li?u m?u vào b?ng AService_OrderD
+-- Sample data for AService_OrderD table
 INSERT INTO AService_OrderD (OrderDetailID, AdvancedServiceID)
-VALUES
-(1, 1),
-(2, 2);
+VALUES 
+(1, 1), -- Transport Insurance for order 1
+(2, 2), -- Special Packaging for order 2
+(3, 3); -- GPS Tracking for order 3
 
--- Chèn d? li?u m?u vào b?ng Order_Staffs
+-- Sample data for Order_Staffs table
 INSERT INTO Order_Staffs (OrderID, StaffID)
-VALUES
-(1, 1),
-(2, 2);
+VALUES 
+(1, 1), -- Admin 1 handles order 1
+(2, 2), -- Staff 1 handles order 2
+(3, 3); -- Staff 2 handles order 3

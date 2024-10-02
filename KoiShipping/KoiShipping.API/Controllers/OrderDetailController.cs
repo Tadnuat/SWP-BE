@@ -42,6 +42,7 @@ namespace KoiShipping.API.Controllers
                 CustomerId = od.CustomerId,
                 CustomerName = customers.FirstOrDefault(c => c.CustomerId == od.CustomerId)?.Name, // Lấy CustomerName
                 ServiceId = od.ServiceId,
+                ServiceName = od.ServiceName,
                 Weight = od.Weight,
                 Quantity = od.Quantity,
                 Price = od.Price,
@@ -77,6 +78,7 @@ namespace KoiShipping.API.Controllers
                 CustomerId = od.CustomerId,
                 CustomerName = customers.FirstOrDefault(c => c.CustomerId == od.CustomerId)?.Name, // Lấy CustomerName
                 ServiceId = od.ServiceId,
+                ServiceName = od.ServiceName,
                 Weight = od.Weight,
                 Quantity = od.Quantity,
                 Price = od.Price,
@@ -117,6 +119,7 @@ namespace KoiShipping.API.Controllers
                 CustomerId = od.CustomerId,
                 CustomerName = customer?.Name, // Lấy CustomerName
                 ServiceId = od.ServiceId,
+                ServiceName = od.ServiceName,
                 Weight = od.Weight,
                 Quantity = od.Quantity,
                 Price = od.Price,
@@ -156,6 +159,7 @@ namespace KoiShipping.API.Controllers
                 CustomerId = orderDetail.CustomerId,
                 CustomerName = customer?.Name, // Lấy CustomerName
                 ServiceId = orderDetail.ServiceId,
+                ServiceName = orderDetail.ServiceName,
                 Weight = orderDetail.Weight,
                 Quantity = orderDetail.Quantity,
                 Price = orderDetail.Price,
@@ -190,6 +194,7 @@ namespace KoiShipping.API.Controllers
                 OrderId = 0, // Cần điều chỉnh nếu cần thiết
                 CustomerId = request.CustomerId,
                 ServiceId = request.ServiceId,
+                ServiceName = request.ServiceName,
                 Weight = request.Weight,
                 Quantity = request.Quantity,
                 Price = request.Price,
@@ -267,6 +272,7 @@ namespace KoiShipping.API.Controllers
             if (request.OrderId.HasValue) orderDetail.OrderId = request.OrderId.Value;
             if (request.CustomerId.HasValue) orderDetail.CustomerId = request.CustomerId.Value;
             if (request.ServiceId.HasValue) orderDetail.ServiceId = request.ServiceId.Value;
+            if (!string.IsNullOrWhiteSpace(request.ServiceName)) orderDetail.ServiceName = request.ServiceName;
             if (request.Weight.HasValue) orderDetail.Weight = request.Weight.Value;
             if (request.Quantity.HasValue) orderDetail.Quantity = request.Quantity.Value;
             if (request.Price.HasValue) orderDetail.Price = request.Price.Value;

@@ -6,6 +6,7 @@ namespace KoiShipping.API.Models.OrderDetailModel
         public int OrderDetailId { get; set; }
         public int CustomerId { get; set; }
         public int ServiceId { get; set; }
+        public string ServiceName { get; set; }
         public decimal Weight { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }

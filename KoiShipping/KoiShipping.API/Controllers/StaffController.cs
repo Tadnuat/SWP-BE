@@ -187,7 +187,7 @@ namespace KoiShipping.API.Controllers
             // Cập nhật các thông tin
             existingStaff.StaffName = request.StaffName;
             existingStaff.Email = request.Email;
-            existingStaff.Password = request.Password;
+            //existingStaff.Password = request.Password;
             existingStaff.Phone = request.Phone;
             existingStaff.Role = request.Role;
             existingStaff.Status = request.Status;
