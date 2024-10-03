@@ -2,7 +2,6 @@
 {
     public class RequestCreateOrderModel
     {
-        public int OrderId { get; set; }
         public string StartLocation { get; set; } = null!;
         public string Destination { get; set; } = null!;
         public string? TransportMethod { get; set; }

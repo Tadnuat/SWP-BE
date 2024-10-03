@@ -106,7 +106,6 @@ namespace KoiShipping.API.Controllers
 
             var customer = new Customer
             {
-                CustomerId = request.CustomerId, 
                 Name = request.Name,
                 Email = request.Email,
                 Password = request.Password, // Consider hashing the password here

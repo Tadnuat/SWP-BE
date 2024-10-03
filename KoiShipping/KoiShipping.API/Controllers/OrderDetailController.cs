@@ -190,7 +190,6 @@ namespace KoiShipping.API.Controllers
             // Tạo đối tượng OrderDetail
             var orderDetail = new OrderDetail
             {
-                OrderDetailId = request.OrderDetailId,
                 OrderId = 0, // Cần điều chỉnh nếu cần thiết
                 CustomerId = request.CustomerId,
                 ServiceId = request.ServiceId,

@@ -5,6 +5,5 @@
         public int AserviceOrderId { get; set; }
         public int OrderDetailId { get; set; }
         public int AdvancedServiceId { get; set; }
-        public bool DeleteStatus { get; set; }
     }
 }

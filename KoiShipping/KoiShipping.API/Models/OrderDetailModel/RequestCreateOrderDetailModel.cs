@@ -3,7 +3,6 @@ namespace KoiShipping.API.Models.OrderDetailModel
 {
     public class RequestCreateOrderDetailModel
     {
-        public int OrderDetailId { get; set; }
         public int CustomerId { get; set; }
         public int ServiceId { get; set; }
         public string ServiceName { get; set; }

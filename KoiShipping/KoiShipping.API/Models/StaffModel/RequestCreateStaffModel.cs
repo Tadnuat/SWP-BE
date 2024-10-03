@@ -5,8 +5,6 @@ namespace KoiShipping.API.Models.StaffModel
     public class RequestCreateStaffModel
     {
 
-        public int StaffId { get; set; } // Include StaffId for easier updates
-
         public string StaffName { get; set; } = null!;
 
         public string Email { get; set; } = null!;

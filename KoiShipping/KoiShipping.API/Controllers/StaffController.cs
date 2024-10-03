@@ -137,7 +137,6 @@ namespace KoiShipping.API.Controllers
 
             var staff = new Staff
             {
-                StaffId = request.StaffId, // Include StaffId
                 StaffName = request.StaffName,
                 Email = request.Email,
                 Password = request.Password, // Consider hashing the password here

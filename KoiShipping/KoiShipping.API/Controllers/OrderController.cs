@@ -149,7 +149,6 @@ namespace KoiShipping.API.Controllers
                 // Tạo đối tượng Order
                 var order = new Order
                 {
-                    OrderId = request.OrderId,
                     StartLocation = request.StartLocation,
                     Destination = request.Destination,
                     TransportMethod = request.TransportMethod,

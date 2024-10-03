@@ -83,7 +83,6 @@ namespace KoiShipping.API.Controllers
             var service = new Service
             {
                 // ID will be generated automatically by the database
-                ServiceId = request.ServiceId,
                 TransportMethod = request.TransportMethod,
                 WeightRange = request.WeightRange,
                 FastDelivery = request.FastDelivery,

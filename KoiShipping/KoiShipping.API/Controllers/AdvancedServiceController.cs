@@ -73,7 +73,6 @@ namespace KoiShipping.API.Controllers
 
             var service = new AdvancedService
             {
-                AdvancedServiceId = request.AdvancedServiceId, // Include ID
                 AServiceName = request.AServiceName,
                 Price = request.Price,
                 DeleteStatus = false // Set DeleteStatus to false by default
