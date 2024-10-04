@@ -68,47 +68,7 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
-        // GET: api/service/filter
-        [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<ResponseFilterServiceModel>>> GetFilteredServices([FromQuery] RequestFilterServiceModel filter)
-        {
-            var services = await Task.Run(() => _unitOfWork.ServiceRepository.Get()
-                .Where(s => !s.DeleteStatus &&
-                            s.TransportMethod.Equals(filter.TransportMethod, StringComparison.OrdinalIgnoreCase) &&
-                            IsWeightInRange(s.WeightRange, filter.Weight) &&
-                            DeliveryTypeMatches(s, filter.DeliveryType))
-                .ToList());
-
-            // Create the response using ResponseFilterServiceModel
-            var response = services.Select(service => new ResponseFilterServiceModel
-            {
-                ServiceId = service.ServiceId,
-                Price = filter.DeliveryType.Equals("fast", StringComparison.OrdinalIgnoreCase) ? service.FastDelivery :
-                        filter.DeliveryType.Equals("economy", StringComparison.OrdinalIgnoreCase) ? service.EconomyDelivery :
-                        filter.DeliveryType.Equals("express", StringComparison.OrdinalIgnoreCase) ? service.ExpressDelivery :
-                        0 // Default to 0 if DeliveryType is unrecognized
-            }).ToList();
-
-            return Ok(response);
-        }
-        // Helper method to check if weight is within the specified range
-        private bool IsWeightInRange(string weightRange, decimal weight)
-        {
-            var ranges = weightRange.Split('-').Select(w => decimal.Parse(w.Trim())).ToArray();
-            return ranges.Length == 2 && weight >= ranges[0] && weight <= ranges[1];
-        }
-
-        // Helper method to match delivery type
-        private bool DeliveryTypeMatches(Service service, string deliveryType)
-        {
-            return deliveryType switch
-            {
-                "fast" => service.FastDelivery > 0,
-                "economy" => service.EconomyDelivery > 0,
-                "express" => service.ExpressDelivery > 0,
-                _ => false,
-            };
-        }
+        
         // POST: api/service
         [HttpPost]
         public async Task<ActionResult> CreateService([FromBody] RequestCreateServiceModel request)

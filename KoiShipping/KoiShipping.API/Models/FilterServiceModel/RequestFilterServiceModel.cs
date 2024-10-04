@@ -1,4 +1,4 @@
-﻿namespace KoiShipping.API.Models.ServiceModel
+﻿namespace KoiShipping.API.Models.FilterServiceModel
 {
     public class RequestFilterServiceModel
     {
