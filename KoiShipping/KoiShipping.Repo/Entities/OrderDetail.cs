@@ -15,6 +15,10 @@ namespace KoiShipping.Repo.Entities
 
         public string ServiceName { get; set; }
 
+        public string StartLocation { get; set; } = null!; // Vị trí bắt đầu
+
+        public string Destination { get; set; } = null!; // Điểm đến
+
         public decimal Weight { get; set; }
 
         public int Quantity { get; set; }

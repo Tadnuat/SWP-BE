@@ -4,6 +4,8 @@ namespace KoiShipping.API.Models.OrderDetailModel
     public class RequestCreateOrderDetailModel
     {
         public int CustomerId { get; set; }
+        public string StartLocation { get; set; } = null!; // Vị trí bắt đầu
+        public string Destination { get; set; } = null!; // Điểm đến
         public int ServiceId { get; set; }
         public string ServiceName { get; set; }
         public decimal Weight { get; set; }

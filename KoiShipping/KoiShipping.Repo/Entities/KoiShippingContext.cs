@@ -149,6 +149,11 @@ public partial class KoiShippingContext : DbContext
             entity.Property(e => e.OrderId).HasColumnName("OrderID").IsRequired();
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID").IsRequired();
             entity.Property(e => e.ServiceId).HasColumnName("ServiceID").IsRequired();
+
+            // Sửa thêm các trường mới StartLocation và Destination
+            entity.Property(e => e.StartLocation).HasMaxLength(255).IsRequired();
+            entity.Property(e => e.Destination).HasMaxLength(255).IsRequired();
+
             entity.Property(e => e.ServiceName).HasMaxLength(100);
             entity.Property(e => e.Weight).HasColumnType("decimal(10, 2)").IsRequired();
             entity.Property(e => e.Quantity).HasColumnType("int").IsRequired();
@@ -181,7 +186,6 @@ public partial class KoiShippingContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OrderDetail_Service");
         });
-
         // Bảng AService_OrderD
         modelBuilder.Entity<AserviceOrderD>(entity =>
         {

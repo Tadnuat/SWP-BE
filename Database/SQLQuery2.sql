@@ -1,59 +1,54 @@
-﻿USE KoiShipping;
-GO
-
--- Sample data for Customer table
+﻿-- Chèn dữ liệu mẫu vào bảng Customer
 INSERT INTO Customer (Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus)
 VALUES 
-('Nguyen Van A', 'nva@gmail.com', 'password123', '0901234567', '123 Le Loi, HCM', GETDATE(), 'Active', 0),
-('Tran Thi B', 'ttb@gmail.com', 'password456', '0912345678', '456 Tran Hung Dao, HCM', GETDATE(), 'Inactive', 0),
-('Le Van C', 'lvc@gmail.com', 'password789', '0933456789', '789 Nguyen Hue, HCM', GETDATE(), 'Active', 0);
+('Nguyen Van A', 'nguyenvana@example.com', 'password123', '0909123456', '123 Nguyen Trai, HCM', GETDATE(), 'Active', 0),
+('Tran Thi B', 'tranthib@example.com', 'password456', '0912345678', '456 Le Loi, Hanoi', GETDATE(), 'Active', 0);
 
--- Sample data for Staffs table
+-- Chèn dữ liệu mẫu vào bảng Staffs
 INSERT INTO Staffs (StaffName, Email, Password, Role, Phone, Status, DeleteStatus)
 VALUES 
-('Admin 1', 'a@gmail.com', 'admin123', 'Manager', '0909876543', 'Active', 0),
-('Staff 1', 'b@gmail.com', 'staff456', 'Staff', '0918765432', 'Active', 0),
-('Staff 2', 'c@gmail.com', 'staff789', 'Staff', '0927654321', 'Inactive', 0);
+('Le Van C', 'levanc@example.com', 'password789', 'Manager', '0987654321', 'Working', 0),
+('Hoang Thi D', 'hoangthid@example.com', 'password012', 'Driver', '0998765432', 'Working', 0);
 
--- Sample data for Order table
-INSERT INTO [Order] (StartLocation, Destination, TransportMethod, DepartureDate, ArrivalDate, Status, TotalWeight, TotalKoiFish, DeleteStatus)
+-- Cho phép chèn ID tùy chỉnh cho bảng Order
+SET IDENTITY_INSERT [Order] ON;
+
+-- Chèn dữ liệu mẫu vào bảng Order (ID bắt đầu từ 0)
+INSERT INTO [Order] (OrderID, StartLocation, Destination, TransportMethod, DepartureDate, ArrivalDate, Status, TotalWeight, TotalKoiFish, DeleteStatus)
 VALUES 
-('HCM', 'Hanoi', 'Road', '2024-10-01 10:00', '2024-10-02 18:00', 'In Transit', 20.50, 50, 0),
-('HCM', 'Hue', 'Air', '2024-10-05 08:00', '2024-10-05 12:00', 'Delivered', 15.75, 30, 0),
-('Hanoi', 'Hue', 'Road', '2024-09-29 07:00', '2024-09-30 20:00', 'Pending', 10.00, 20, 0);
+(0, 'HCM', 'Hanoi', 'Air', '2024-09-01 10:00:00', '2024-09-01 12:00:00', 'Completed', 20.5, 50, 1),
+(1, 'HCM', 'Hanoi', 'Air', '2024-09-01 10:00:00', '2024-09-01 12:00:00', 'Completed', 20.5, 50, 0),
+(2, 'Hue', 'HCM', 'Road', '2024-09-05 08:00:00', '2024-09-05 18:00:00', 'In Transit', 10.2, 25, 0);
 
--- Sample data for Service table
+-- Tắt lại chế độ IDENTITY_INSERT cho bảng Order
+SET IDENTITY_INSERT [Order] OFF;
+
+-- Chèn dữ liệu mẫu vào bảng Service
 INSERT INTO Service (TransportMethod, WeightRange, FastDelivery, EconomyDelivery, ExpressDelivery, DeleteStatus)
 VALUES 
-('Road', '0-5 kg', 50000, 30000, 80000, 0),
-('Air', '0-5 kg', 70000, 50000, 100000, 0),
-('Road', '5-10 kg', 100000, 70000, 120000, 0),
-('Air', '5-10 kg', 130000, 100000, 150000, 0);
+('Air', '0-5', 200000, 150000, 300000, 0),
+('Road', '5-10', 100000, 75000, 150000, 0);
 
--- Sample data for Advanced_Service table
+-- Chèn dữ liệu mẫu vào bảng Advanced_Service
 INSERT INTO Advanced_Service (AServiceName, Price, DeleteStatus)
 VALUES 
-('Transport Insurance', 50000, 0),
-('Special Packaging', 30000, 0),
-('GPS Tracking', 70000, 0);
+('Water Filtering System', 50000, 0),
+('Air Pump', 30000, 0);
 
--- Sample data for Order_Detail table
-INSERT INTO Order_Detail (OrderID, CustomerID, ServiceID, ServiceName, Weight, Quantity, Price, KoiStatus, AttachedItem, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback, CreatedDate)
+-- Chèn dữ liệu mẫu vào bảng Order_Detail
+INSERT INTO Order_Detail (OrderID, CustomerID, ServiceID, ServiceName, StartLocation, Destination, Weight, Quantity, Price, KoiStatus, AttachedItem, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback, CreatedDate)
 VALUES 
-(1, 1, 1, 'Road (0-5 kg)', 5.00, 10, 500000, 'Healthy', 'Plastic Box', 'In Transit', 0, 'Nguyen Van D', '0909988776', 5, 'Good service', GETDATE()),
-(2, 2, 2, 'Air (0-5 kg)', 3.50, 5, 350000, 'Healthy', 'Foam Box', 'Delivered', 0, 'Tran Thi E', '0912345566', 4, 'Quick delivery', GETDATE()),
-(3, 3, 3, 'Road (5-10 kg)', 7.00, 20, 700000, 'Sick', 'Nylon Bag', 'Pending', 0, 'Le Van F', '0923456677', NULL, NULL, GETDATE());
+(0, 1, 1, 'FastDelivery', 'HCM', 'Hanoi', 5.0, 10, 200000, 'Healthy', 'Oxygen Bag', 'Completed', 0, 'Tran Van E', '0923456789', 5, 'Good service', GETDATE()),
+(1, 2, 2, 'EconomyDelivery', 'Hue', 'HCM', 7.5, 15, 150000, 'Healthy', 'Plastic Bag', 'In Transit', 0, 'Le Thi F', '0934567890', NULL, NULL, GETDATE());
 
--- Sample data for AService_OrderD table
+-- Chèn dữ liệu mẫu vào bảng AService_OrderD
 INSERT INTO AService_OrderD (OrderDetailID, AdvancedServiceID)
 VALUES 
-(1, 1), -- Transport Insurance for order 1
-(2, 2), -- Special Packaging for order 2
-(3, 3); -- GPS Tracking for order 3
+(1, 1), -- Dịch vụ bổ sung cho Order_Detail đầu tiên
+(2, 2); -- Dịch vụ bổ sung cho Order_Detail thứ hai
 
--- Sample data for Order_Staffs table
+-- Chèn dữ liệu mẫu vào bảng Order_Staffs
 INSERT INTO Order_Staffs (OrderID, StaffID)
 VALUES 
-(1, 1), -- Admin 1 handles order 1
-(2, 2), -- Staff 1 handles order 2
-(3, 3); -- Staff 2 handles order 3
+(0, 1), -- Nhân viên quản lý Order đầu tiên
+(1, 2); -- Nhân viên quản lý Order thứ hai

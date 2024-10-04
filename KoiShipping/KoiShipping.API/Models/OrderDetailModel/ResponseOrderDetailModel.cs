@@ -6,6 +6,8 @@
         public int OrderId { get; set; }
         public int CustomerId { get; set; }
         public string? CustomerName { get; set; }  // Thêm CustomerName
+        public string StartLocation { get; set; } = null!; // Vị trí bắt đầu
+        public string Destination { get; set; } = null!; // Điểm đến
         public int ServiceId { get; set; }
         public string ServiceName { get; set; }
         public decimal Weight { get; set; }
@@ -20,5 +22,8 @@
         public int? Rating { get; set; }
         public string? Feedback { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        // Danh sách tên của các dịch vụ nâng cao (AdvancedService)
+        public List<string?> AdvancedServiceNames { get; set; } = new List<string>();
     }
 }

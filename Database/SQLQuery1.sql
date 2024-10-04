@@ -70,6 +70,8 @@ CREATE TABLE Order_Detail (
     CustomerID INT NOT NULL, -- Khóa ngoại tới bảng Customer
     ServiceID INT NOT NULL, -- Khóa ngoại tới bảng Service
     ServiceName NVARCHAR(100), -- Thêm trường ServiceName
+    StartLocation NVARCHAR(255) NOT NULL, -- Điểm xuất phát
+    Destination NVARCHAR(255) NOT NULL, -- Điểm đến
     Weight DECIMAL(10, 2) NOT NULL,
     Quantity INT NOT NULL,
     Price DECIMAL(10, 2) NOT NULL,
