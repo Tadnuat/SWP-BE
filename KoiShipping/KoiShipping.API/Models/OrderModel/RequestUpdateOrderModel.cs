@@ -11,5 +11,6 @@
         public decimal? TotalWeight { get; set; }
         public int? TotalKoiFish { get; set; }
         public bool DeleteStatus { get; set; }
+        public List<int> StaffIds { get; set; } = new List<int>(); // Allow updating staff
     }
 }

@@ -215,22 +215,56 @@ namespace KoiShipping.API.Controllers
                 return NotFound();
             }
 
-            if (request.StartLocation != null) order.StartLocation = request.StartLocation;
-            if (request.Destination != null) order.Destination = request.Destination;
-            if (request.TransportMethod != null) order.TransportMethod = request.TransportMethod;
+            // Update fields if provided
+            if (!string.IsNullOrEmpty(request.StartLocation)) order.StartLocation = request.StartLocation;
+            if (!string.IsNullOrEmpty(request.Destination)) order.Destination = request.Destination;
+            if (!string.IsNullOrEmpty(request.TransportMethod)) order.TransportMethod = request.TransportMethod;
             if (request.DepartureDate.HasValue) order.DepartureDate = request.DepartureDate.Value;
             if (request.ArrivalDate.HasValue) order.ArrivalDate = request.ArrivalDate.Value;
-            if (request.Status != null) order.Status = request.Status;
+            if (!string.IsNullOrEmpty(request.Status)) order.Status = request.Status;
             if (request.TotalWeight.HasValue) order.TotalWeight = request.TotalWeight.Value;
             if (request.TotalKoiFish.HasValue) order.TotalKoiFish = request.TotalKoiFish.Value;
-
             order.DeleteStatus = request.DeleteStatus;
+
+            // Update the OrderStaff assignments
+            if (request.StaffIds != null && request.StaffIds.Any())
+            {
+                // Fetch current staff assignments for this order
+                var currentOrderStaffs = _unitOfWork.OrderStaffRepository.Get()
+                                            .Where(os => os.OrderId == id)
+                                            .ToList();
+
+                // Get a list of current staff IDs
+                var currentStaffIds = currentOrderStaffs.Select(os => os.StaffId).ToList();
+
+                // Remove OrderStaff entries for staff who are not in the new list
+                var staffToRemove = currentOrderStaffs.Where(os => !request.StaffIds.Contains(os.StaffId)).ToList();
+                foreach (var orderStaff in staffToRemove)
+                {
+                    _unitOfWork.OrderStaffRepository.Delete(orderStaff);
+                }
+
+                // Add new OrderStaff entries for staff who are in the new list but not in the current list
+                var newStaffIds = request.StaffIds.Except(currentStaffIds).ToList();
+                foreach (var staffId in newStaffIds)
+                {
+                    var newOrderStaff = new OrderStaff
+                    {
+                        OrderId = id,
+                        StaffId = staffId
+                    };
+                    _unitOfWork.OrderStaffRepository.Insert(newOrderStaff);
+                }
+
+                await _unitOfWork.SaveAsync(); // Save changes to OrderStaff
+            }
 
             _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.SaveAsync();
 
             return NoContent();
         }
+
 
         // DELETE: api/order/5
         [HttpDelete("{id}")]

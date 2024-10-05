@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "D:\\SWP391\\SWP-BE\\KoiShipping\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\ordermodel\\requestupdateordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\ordermodel\\requestupdateordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\ordermodel\\requestcreateordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\ordermodel\\requestcreateordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\customermodel\\requestcreatecustomermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\customermodel\\requestcreatecustomermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|d:\\swp391\\swp-be\\koishipping\\koishipping.api\\controllers\\filterservicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\controllers\\filterservicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,20 +35,12 @@
       "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\controllers\\passwordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|d:\\swp391\\swp-be\\koishipping\\koishipping.api\\models\\filterservicemodel\\responsefilterservicemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\filterservicemodel\\responsefilterservicemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\filterservicemodel\\responsefilterservicemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|d:\\swp391\\swp-be\\koishipping\\koishipping.api\\models\\filterservicemodel\\requestfilterservicemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\filterservicemodel\\requestfilterservicemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\filterservicemodel\\requestfilterservicemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|d:\\swp391\\swp-be\\koishipping\\koishipping.api\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4816870A-CEC1-4BEB-A16F-82F9CC2EA2D7}|KoiShipping.Repo\\KoiShipping.Repo.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.repo\\entities\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -171,14 +183,6 @@
       "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\orderstaffmodel\\requestcreateorderstaffmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\ordermodel\\requestupdateordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\ordermodel\\requestupdateordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\ordermodel\\requestcreateordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\ordermodel\\requestcreateordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\loginmodel\\loginmodelcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\loginmodel\\loginmodelcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -193,10 +197,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\customermodel\\requestupdatecustomermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\customermodel\\requestupdatecustomermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\customermodel\\requestcreatecustomermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|solutionrelative:koishipping.api\\models\\customermodel\\requestcreatecustomermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CAF70B63-DE61-4EC8-8389-860438E4DAE1}|KoiShipping.API\\KoiShipping.API.csproj|D:\\SWP391\\SWP-BE\\KoiShipping\\koishipping.api\\models\\passwordmodel\\changepasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -254,7 +254,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 45,
           "Children": [
             {
               "$type": "Bookmark",
@@ -294,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "ResponseFilterServiceModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\FilterServiceModel\\ResponseFilterServiceModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\FilterServiceModel\\ResponseFilterServiceModel.cs",
@@ -302,12 +302,11 @@
               "RelativeToolTip": "KoiShipping.API\\Models\\FilterServiceModel\\ResponseFilterServiceModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T07:15:47.411Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-04T07:15:47.411Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "RequestFilterServiceModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\FilterServiceModel\\RequestFilterServiceModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\FilterServiceModel\\RequestFilterServiceModel.cs",
@@ -315,18 +314,17 @@
               "RelativeToolTip": "KoiShipping.API\\Models\\FilterServiceModel\\RequestFilterServiceModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T07:15:46.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-04T07:15:46.184Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "FilterServiceController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\FilterServiceController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\FilterServiceController.cs",
               "ToolTip": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\FilterServiceController.cs",
               "RelativeToolTip": "KoiShipping.API\\Controllers\\FilterServiceController.cs",
-              "ViewState": "AQIAABwAAAAAAAAAAAAYwCEAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-04T07:13:36.363Z",
               "EditorCaption": ""
@@ -345,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "PasswordController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\PasswordController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\PasswordController.cs",
@@ -353,12 +351,11 @@
               "RelativeToolTip": "KoiShipping.API\\Controllers\\PasswordController.cs",
               "ViewState": "AQIAACoAAAAAAAAAAAAYwBgAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-02T02:22:22.2Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-02T02:22:22.2Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "ResponseOrderByIdModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderModel\\ResponseOrderByIdModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderModel\\ResponseOrderByIdModel.cs",
@@ -394,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 33,
               "Title": "OrderStaffController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\OrderStaffController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\OrderStaffController.cs",
@@ -406,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "ResponseOrderStaffModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderStaffModel\\ResponseOrderStaffModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderStaffModel\\ResponseOrderStaffModel.cs",
@@ -418,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 43,
               "Title": "RequestUpdateOrderStaffModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderStaffModel\\RequestUpdateOrderStaffModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderStaffModel\\RequestUpdateOrderStaffModel.cs",
@@ -430,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 44,
               "Title": "RequestCreateOrderStaffModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderStaffModel\\RequestCreateOrderStaffModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderStaffModel\\RequestCreateOrderStaffModel.cs",
@@ -442,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "AserviceOrderDController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\AserviceOrderDController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\AserviceOrderDController.cs",
@@ -454,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 35,
               "Title": "ResponseAserviceOrderDModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\AserviceOrderDModel\\ResponseAserviceOrderDModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\AserviceOrderDModel\\ResponseAserviceOrderDModel.cs",
@@ -466,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 36,
               "Title": "RequestUpdateAserviceOrderDModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\AserviceOrderDModel\\RequestUpdateAserviceOrderDModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\AserviceOrderDModel\\RequestUpdateAserviceOrderDModel.cs",
@@ -478,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 34,
               "Title": "RequestCreateAserviceOrderDModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\AserviceOrderDModel\\RequestCreateAserviceOrderDModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\AserviceOrderDModel\\RequestCreateAserviceOrderDModel.cs",
@@ -502,7 +499,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "LoginModelCustomer.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\LoginModel\\LoginModelCustomer.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\LoginModel\\LoginModelCustomer.cs",
@@ -514,7 +511,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "LoginModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\LoginModel\\LoginModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\LoginModel\\LoginModel.cs",
@@ -526,7 +523,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\AuthController.cs",
@@ -538,7 +535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "AdvancedServiceController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\AdvancedServiceController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\AdvancedServiceController.cs",
@@ -550,7 +547,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "ResponseAdvancedServiceModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\AdvancedService\\ResponseAdvancedServiceModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\AdvancedService\\ResponseAdvancedServiceModel.cs",
@@ -562,7 +559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "RequestUpdateAdvancedServiceModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\AdvancedService\\RequestUpdateAdvancedServiceModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\AdvancedService\\RequestUpdateAdvancedServiceModel.cs",
@@ -574,7 +571,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "RequestCreateAdvancedServiceModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\AdvancedService\\RequestCreateAdvancedServiceModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\AdvancedService\\RequestCreateAdvancedServiceModel.cs",
@@ -586,7 +583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 37,
               "Title": "StaffController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\StaffController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\StaffController.cs",
@@ -598,7 +595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 40,
               "Title": "ResponseStaffModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\StaffModel\\ResponseStaffModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\StaffModel\\ResponseStaffModel.cs",
@@ -610,7 +607,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 39,
               "Title": "RequestUpdateStaffModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\StaffModel\\RequestUpdateStaffModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\StaffModel\\RequestUpdateStaffModel.cs",
@@ -622,7 +619,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 41,
               "Title": "RequestCreateStaffModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\StaffModel\\RequestCreateStaffModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\StaffModel\\RequestCreateStaffModel.cs",
@@ -634,7 +631,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "ServiceController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\ServiceController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\ServiceController.cs",
@@ -642,12 +639,11 @@
               "RelativeToolTip": "KoiShipping.API\\Controllers\\ServiceController.cs",
               "ViewState": "AQIAAEAAAAAAAAAAAAAAwEUAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T16:20:32.211Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-24T16:20:32.211Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "ResponseServiceModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\ServiceModel\\ResponseServiceModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\ServiceModel\\ResponseServiceModel.cs",
@@ -659,7 +655,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 42,
               "Title": "RequestUpdateServiceModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\ServiceModel\\RequestUpdateServiceModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\ServiceModel\\RequestUpdateServiceModel.cs",
@@ -671,7 +667,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "RequestCreateServiceModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\ServiceModel\\RequestCreateServiceModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\ServiceModel\\RequestCreateServiceModel.cs",
@@ -683,7 +679,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "OrderDetailController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\OrderDetailController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\OrderDetailController.cs",
@@ -696,7 +692,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "ResponseOrderDetailModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderDetailModel\\ResponseOrderDetailModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderDetailModel\\ResponseOrderDetailModel.cs",
@@ -708,7 +704,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "RequestUpdateOrderDetailModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderDetailModel\\RequestUpdateOrderDetailModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderDetailModel\\RequestUpdateOrderDetailModel.cs",
@@ -720,7 +716,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "RequestCreateOrderDetailModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderDetailModel\\RequestCreateOrderDetailModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderDetailModel\\RequestCreateOrderDetailModel.cs",
@@ -732,20 +728,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "OrderController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\OrderController.cs",
               "ToolTip": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\OrderController.cs",
               "RelativeToolTip": "KoiShipping.API\\Controllers\\OrderController.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAACgAAAAAAAAA",
+              "ViewState": "AQIAAL8AAAAAAAAAAAAUwAoBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-24T15:36:40.066Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "ResponseOrderModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderModel\\ResponseOrderModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderModel\\ResponseOrderModel.cs",
@@ -757,31 +753,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 2,
               "Title": "RequestUpdateOrderModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderModel\\RequestUpdateOrderModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderModel\\RequestUpdateOrderModel.cs",
               "ToolTip": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderModel\\RequestUpdateOrderModel.cs",
               "RelativeToolTip": "KoiShipping.API\\Models\\OrderModel\\RequestUpdateOrderModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAyAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T15:31:02.038Z"
+              "WhenOpened": "2024-09-24T15:31:02.038Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 3,
               "Title": "RequestCreateOrderModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderModel\\RequestCreateOrderModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\OrderModel\\RequestCreateOrderModel.cs",
               "ToolTip": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\OrderModel\\RequestCreateOrderModel.cs",
               "RelativeToolTip": "KoiShipping.API\\Models\\OrderModel\\RequestCreateOrderModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAFAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T15:30:46.113Z"
+              "WhenOpened": "2024-09-24T15:30:46.113Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "Service.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\Service.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\Service.cs",
@@ -793,7 +791,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Order.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\Order.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\Order.cs",
@@ -805,7 +803,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "AserviceOrderD.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\AserviceOrderD.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\AserviceOrderD.cs",
@@ -853,7 +851,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "ResponseCustomerModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\CustomerModel\\ResponseCustomerModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\CustomerModel\\ResponseCustomerModel.cs",
@@ -865,7 +863,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "RequestUpdateCustomerModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\CustomerModel\\RequestUpdateCustomerModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\CustomerModel\\RequestUpdateCustomerModel.cs",
@@ -877,7 +875,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 38,
               "Title": "Customer.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\Customer.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\Customer.cs",
@@ -889,7 +887,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 4,
               "Title": "RequestCreateCustomerModel.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Models\\CustomerModel\\RequestCreateCustomerModel.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Models\\CustomerModel\\RequestCreateCustomerModel.cs",
@@ -897,11 +895,12 @@
               "RelativeToolTip": "KoiShipping.API\\Models\\CustomerModel\\RequestCreateCustomerModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T13:02:10.962Z"
+              "WhenOpened": "2024-09-24T13:02:10.962Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "OrderStaff.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\OrderStaff.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\OrderStaff.cs",
@@ -913,7 +912,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "OrderDetail.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\OrderDetail.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\OrderDetail.cs",
@@ -925,7 +924,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "KoiShippingContext.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\KoiShippingContext.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\KoiShippingContext.cs",
@@ -937,7 +936,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 32,
               "Title": "CustomerController.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\Controllers\\CustomerController.cs",
               "RelativeDocumentMoniker": "KoiShipping.API\\Controllers\\CustomerController.cs",
@@ -949,7 +948,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "Staff.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\Staff.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\Staff.cs",
@@ -961,7 +960,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "AdvancedService.cs",
               "DocumentMoniker": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.Repo\\Entities\\AdvancedService.cs",
               "RelativeDocumentMoniker": "KoiShipping.Repo\\Entities\\AdvancedService.cs",
