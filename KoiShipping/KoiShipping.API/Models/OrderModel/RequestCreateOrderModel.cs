@@ -7,8 +7,6 @@
         public string? TransportMethod { get; set; }
         public DateTime? DepartureDate { get; set; }
         public DateTime? ArrivalDate { get; set; }
-        public decimal? TotalWeight { get; set; }
-        public int? TotalKoiFish { get; set; }
         public List<int> StaffIds { get; set; } = new List<int>(); // Danh sách StaffId
     }
 }

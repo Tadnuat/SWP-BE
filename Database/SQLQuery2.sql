@@ -14,11 +14,11 @@ VALUES
 SET IDENTITY_INSERT [Order] ON;
 
 -- Chèn dữ liệu mẫu vào bảng Order (ID bắt đầu từ 0)
-INSERT INTO [Order] (OrderID, StartLocation, Destination, TransportMethod, DepartureDate, ArrivalDate, Status, TotalWeight, TotalKoiFish, DeleteStatus)
+INSERT INTO [Order] (OrderID, StartLocation, Destination, TransportMethod, DepartureDate, ArrivalDate, Status, DeleteStatus)
 VALUES 
-(0, 'HCM', 'Hanoi', 'Air', '2024-09-01 10:00:00', '2024-09-01 12:00:00', 'Completed', 20.5, 50, 1),
-(1, 'HCM', 'Hanoi', 'Air', '2024-09-01 10:00:00', '2024-09-01 12:00:00', 'Completed', 20.5, 50, 0),
-(2, 'Hue', 'HCM', 'Road', '2024-09-05 08:00:00', '2024-09-05 18:00:00', 'In Transit', 10.2, 25, 0);
+(0, 'HCM', 'Hanoi', 'Air', '2024-09-01 10:00:00', '2024-09-01 12:00:00', 'Completed', 1),
+(1, 'HCM', 'Hanoi', 'Air', '2024-09-01 10:00:00', '2024-09-01 12:00:00', 'Completed', 0),
+(2, 'Hue', 'HCM', 'Road', '2024-09-05 08:00:00', '2024-09-05 18:00:00', 'In Transit', 0);
 
 -- Tắt lại chế độ IDENTITY_INSERT cho bảng Order
 SET IDENTITY_INSERT [Order] OFF;

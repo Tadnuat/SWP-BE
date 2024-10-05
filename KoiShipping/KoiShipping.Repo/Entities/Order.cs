@@ -19,10 +19,6 @@ public partial class Order
 
     public string Status { get; set; } = null!;
 
-    public decimal? TotalWeight { get; set; }
-
-    public int? TotalKoiFish { get; set; }
-
     public bool DeleteStatus { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();

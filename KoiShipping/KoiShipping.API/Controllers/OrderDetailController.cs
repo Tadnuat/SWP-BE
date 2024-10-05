@@ -80,7 +80,7 @@ namespace KoiShipping.API.Controllers
 
         // GET: api/orderdetail/status/pending
         [HttpGet("status/pending")]
-        public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatus()
+        public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatusPending()
         {
             var pendingOrderDetails = await _unitOfWork.OrderDetailRepository
                 .GetQueryable() // Use GetQueryable to get IQueryable<OrderDetail>
@@ -122,7 +122,50 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
+        // GET: api/orderdetail/status/pending
+        [HttpGet("status/waiting")]
+        public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatusWaiting()
+        {
+            var pendingOrderDetails = await _unitOfWork.OrderDetailRepository
+                .GetQueryable() // Use GetQueryable to get IQueryable<OrderDetail>
+                .Include(od => od.AserviceOrderDs) // Include the related AserviceOrderDs
+                    .ThenInclude(asod => asod.AdvancedService) // Include the related AdvancedService
+                .Where(od => od.Status.ToLower() == "waiting" && !od.DeleteStatus)
+                .ToListAsync();
 
+            // Lấy danh sách Customer
+            var customerIds = pendingOrderDetails.Select(od => od.CustomerId).Distinct().ToList();
+            var customers = await _unitOfWork.CustomerRepository.GetQueryable()
+                .Where(c => customerIds.Contains(c.CustomerId))
+                .ToListAsync();
+
+            var response = pendingOrderDetails.Select(od => new ResponseOrderDetailModel
+            {
+                OrderDetailId = od.OrderDetailId,
+                OrderId = od.OrderId,
+                CustomerId = od.CustomerId,
+                CustomerName = customers.FirstOrDefault(c => c.CustomerId == od.CustomerId)?.Name,
+                StartLocation = od.StartLocation,
+                Destination = od.Destination,
+                ServiceId = od.ServiceId,
+                ServiceName = od.ServiceName,
+                Weight = od.Weight,
+                Quantity = od.Quantity,
+                Price = od.Price,
+                KoiStatus = od.KoiStatus,
+                AttachedItem = od.AttachedItem,
+                Status = od.Status,
+                DeleteStatus = od.DeleteStatus,
+                ReceiverName = od.ReceiverName,
+                ReceiverPhone = od.ReceiverPhone,
+                Rating = od.Rating,
+                Feedback = od.Feedback,
+                CreatedDate = od.CreatedDate,
+                AdvancedServiceNames = od.AserviceOrderDs.Select(asod => asod.AdvancedService.AServiceName).ToList()
+            }).ToList();
+
+            return Ok(response);
+        }
         // GET: api/orderdetail/customer/{customerId}
         [HttpGet("customer/{customerId}")]
         public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailsByCustomerId(int customerId)

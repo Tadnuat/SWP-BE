@@ -56,8 +56,6 @@ namespace KoiShipping.API.Controllers
                     DepartureDate = order.DepartureDate,
                     ArrivalDate = order.ArrivalDate,
                     Status = order.Status,
-                    TotalWeight = order.TotalWeight,
-                    TotalKoiFish = order.TotalKoiFish,
                     DeleteStatus = order.DeleteStatus,
                     StaffDeliveries = staffDeliveries // Gán danh sách StaffInfo
                 });
@@ -107,8 +105,6 @@ namespace KoiShipping.API.Controllers
                 DepartureDate = order.DepartureDate,
                 ArrivalDate = order.ArrivalDate,
                 Status = order.Status,
-                TotalWeight = order.TotalWeight,
-                TotalKoiFish = order.TotalKoiFish,
                 DeleteStatus = order.DeleteStatus,
                 StaffDeliveries = staffDeliveries,
                 OrderDetails = orderDetails.Select(od => new ResponseOrderDetailModel
@@ -155,8 +151,6 @@ namespace KoiShipping.API.Controllers
                     DepartureDate = request.DepartureDate,
                     ArrivalDate   = request.ArrivalDate,
                     Status = "Pending",
-                    TotalWeight = request.TotalWeight,
-                    TotalKoiFish = request.TotalKoiFish,
                     DeleteStatus = false // Đặt DeleteStatus mặc định là false
                 };
 
@@ -222,8 +216,6 @@ namespace KoiShipping.API.Controllers
             if (request.DepartureDate.HasValue) order.DepartureDate = request.DepartureDate.Value;
             if (request.ArrivalDate.HasValue) order.ArrivalDate = request.ArrivalDate.Value;
             if (!string.IsNullOrEmpty(request.Status)) order.Status = request.Status;
-            if (request.TotalWeight.HasValue) order.TotalWeight = request.TotalWeight.Value;
-            if (request.TotalKoiFish.HasValue) order.TotalKoiFish = request.TotalKoiFish.Value;
             order.DeleteStatus = request.DeleteStatus;
 
             // Update the OrderStaff assignments

@@ -39,8 +39,6 @@ CREATE TABLE [Order] (
     DepartureDate DATETIME,
     ArrivalDate DATETIME,
     Status NVARCHAR(50) NOT NULL,
-    TotalWeight DECIMAL(10, 2),
-    TotalKoiFish INT,
     DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
 );
 

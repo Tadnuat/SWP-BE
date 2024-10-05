@@ -95,8 +95,6 @@ public partial class KoiShippingContext : DbContext
             entity.Property(e => e.DepartureDate).HasColumnType("datetime");
             entity.Property(e => e.ArrivalDate).HasColumnType("datetime");
             entity.Property(e => e.Status).IsRequired().HasMaxLength(50);
-            entity.Property(e => e.TotalWeight).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.TotalKoiFish).HasColumnType("int");
             entity.Property(e => e.DeleteStatus).HasColumnType("bit").IsRequired();
         });
 

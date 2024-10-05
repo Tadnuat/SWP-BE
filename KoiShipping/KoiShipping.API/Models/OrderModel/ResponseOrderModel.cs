@@ -10,8 +10,6 @@ namespace KoiShipping.API.Models.OrderModel
         public DateTime? DepartureDate { get; set; }
         public DateTime? ArrivalDate { get; set; }
         public string Status { get; set; }
-        public decimal? TotalWeight { get; set; }
-        public int? TotalKoiFish { get; set; }
         public bool DeleteStatus { get; set; }
         // Thêm thuộc tính để chứa danh sách tên nhân viên
         public List<StaffInfo> StaffDeliveries { get; set; } = new List<StaffInfo>(); // Thay đổi ở đây
