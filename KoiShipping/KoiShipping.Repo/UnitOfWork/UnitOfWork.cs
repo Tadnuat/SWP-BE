@@ -19,6 +19,10 @@ namespace KoiShipping.Repo.UnitOfWork
         private GenericRepository<Service> _service;
         private GenericRepository<Staff> _staff;
 
+        // Thêm các biến riêng tư cho Tracking và TrackingOrderD
+        private GenericRepository<Tracking> _tracking;
+        private GenericRepository<TrackingOrderD> _trackingOrderD;
+
         public UnitOfWork(KoiShippingContext context)
         {
             _context = context;
@@ -148,6 +152,31 @@ namespace KoiShipping.Repo.UnitOfWork
                     _staff = new GenericRepository<Staff>(_context);
                 }
                 return _staff;
+            }
+        }
+
+        // Thêm repository cho Tracking và TrackingOrderD
+        public GenericRepository<Tracking> TrackingRepository
+        {
+            get
+            {
+                if (_tracking == null)
+                {
+                    _tracking = new GenericRepository<Tracking>(_context);
+                }
+                return _tracking;
+            }
+        }
+
+        public GenericRepository<TrackingOrderD> TrackingOrderDRepository
+        {
+            get
+            {
+                if (_trackingOrderD == null)
+                {
+                    _trackingOrderD = new GenericRepository<TrackingOrderD>(_context);
+                }
+                return _trackingOrderD;
             }
         }
     }

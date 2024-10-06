@@ -43,6 +43,7 @@ namespace KoiShipping.Repo.Entities
 
         public DateTime CreatedDate { get; set; } // Ngày tạo (datetime)
 
+        public ICollection<TrackingOrderD> TrackingOrderDs { get; set; }
         public virtual ICollection<AserviceOrderD> AserviceOrderDs { get; set; } = new List<AserviceOrderD>();
 
         public virtual Customer Customer { get; set; } = null!;

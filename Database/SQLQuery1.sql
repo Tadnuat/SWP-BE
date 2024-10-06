@@ -24,7 +24,7 @@ CREATE TABLE Staffs (
     StaffName NVARCHAR(100) NOT NULL,
     Email NVARCHAR(100) NOT NULL,
     Password NVARCHAR(100) NOT NULL,
-    Role NVARCHAR(50),
+    Role NVARCHAR(100),
     Phone NVARCHAR(15),
     Status NVARCHAR(100) NOT NULL,
     DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
@@ -103,4 +103,20 @@ CREATE TABLE Order_Staffs (
     StaffID INT NOT NULL, -- Khóa ngoại tới bảng Staffs
     CONSTRAINT FK_OrderStaffs_Order FOREIGN KEY (OrderID) REFERENCES [Order](OrderID),
     CONSTRAINT FK_OrderStaffs_Staff FOREIGN KEY (StaffID) REFERENCES Staffs(StaffID)
+);
+
+-- Tạo bảng Tracking
+CREATE TABLE Tracking (
+    TrackingID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
+    TrackingName NVARCHAR(100) NOT NULL
+);
+
+-- Tạo bảng Tracking_OrderD (Liên kết nhiều-nhiều giữa Tracking và Order_Detail)
+CREATE TABLE Tracking_OrderD (
+    TrackingOrderDID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
+    OrderDetailID INT NOT NULL, -- Khóa ngoại tới bảng Order_Detail
+    TrackingID INT NOT NULL, -- Khóa ngoại tới bảng Tracking
+    Date DATETIME NOT NULL, -- Ngày gắn nhãn tracking
+    CONSTRAINT FK_TrackingOrderD_OrderDetail FOREIGN KEY (OrderDetailID) REFERENCES Order_Detail(OrderDetailID),
+    CONSTRAINT FK_TrackingOrderD_Tracking FOREIGN KEY (TrackingID) REFERENCES Tracking(TrackingID)
 );

@@ -72,7 +72,7 @@ public partial class KoiShippingContext : DbContext
             entity.Property(e => e.StaffName).IsRequired().HasMaxLength(100);
             entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
             entity.Property(e => e.Password).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Role).HasMaxLength(50);
+            entity.Property(e => e.Role).HasMaxLength(100);
             entity.Property(e => e.Phone).HasMaxLength(15);
             entity.Property(e => e.Status).IsRequired().HasMaxLength(100);
             entity.Property(e => e.DeleteStatus).HasColumnType("bit").IsRequired();
@@ -147,14 +147,11 @@ public partial class KoiShippingContext : DbContext
             entity.Property(e => e.OrderId).HasColumnName("OrderID").IsRequired();
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID").IsRequired();
             entity.Property(e => e.ServiceId).HasColumnName("ServiceID").IsRequired();
-
-            // Sửa thêm các trường mới StartLocation và Destination
-            entity.Property(e => e.StartLocation).HasMaxLength(255).IsRequired();
-            entity.Property(e => e.Destination).HasMaxLength(255).IsRequired();
-
             entity.Property(e => e.ServiceName).HasMaxLength(100);
+            entity.Property(e => e.StartLocation).IsRequired().HasMaxLength(255);
+            entity.Property(e => e.Destination).IsRequired().HasMaxLength(255);
             entity.Property(e => e.Weight).HasColumnType("decimal(10, 2)").IsRequired();
-            entity.Property(e => e.Quantity).HasColumnType("int").IsRequired();
+            entity.Property(e => e.Quantity).IsRequired();
             entity.Property(e => e.Price).HasColumnType("decimal(10, 2)").IsRequired();
             entity.Property(e => e.KoiStatus).IsRequired().HasMaxLength(50);
             entity.Property(e => e.AttachedItem).HasMaxLength(255);
@@ -164,26 +161,27 @@ public partial class KoiShippingContext : DbContext
             entity.Property(e => e.ReceiverPhone).IsRequired().HasMaxLength(20);
             entity.Property(e => e.Rating).HasColumnType("int");
             entity.Property(e => e.Feedback).HasMaxLength(500);
-            entity.Property(e => e.CreatedDate).HasColumnType("datetime").HasDefaultValueSql("GETDATE()").IsRequired();
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime").IsRequired();
 
             entity.HasOne(d => d.Order)
                 .WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OrderDetail_Order");
 
             entity.HasOne(d => d.Customer)
                 .WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.CustomerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OrderDetail_Customer");
 
             entity.HasOne(d => d.Service)
                 .WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.ServiceId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OrderDetail_Service");
         });
+
         // Bảng AService_OrderD
         modelBuilder.Entity<AserviceOrderD>(entity =>
         {
@@ -201,13 +199,13 @@ public partial class KoiShippingContext : DbContext
             entity.HasOne(d => d.OrderDetail)
                 .WithMany(p => p.AserviceOrderDs)
                 .HasForeignKey(d => d.OrderDetailId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_AServiceOrderD_OrderDetail");
 
             entity.HasOne(d => d.AdvancedService)
                 .WithMany(p => p.AserviceOrderDs)
                 .HasForeignKey(d => d.AdvancedServiceId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_AServiceOrderD_AdvancedService");
         });
 
@@ -228,19 +226,59 @@ public partial class KoiShippingContext : DbContext
             entity.HasOne(d => d.Order)
                 .WithMany(p => p.OrderStaffs)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OrderStaffs_Order");
 
             entity.HasOne(d => d.Staff)
                 .WithMany(p => p.OrderStaffs)
                 .HasForeignKey(d => d.StaffId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OrderStaffs_Staff");
         });
 
-        OnModelCreatingPartial(modelBuilder);
+        // Bảng Tracking
+        modelBuilder.Entity<Tracking>(entity =>
+        {
+            entity.HasKey(e => e.TrackingId).HasName("PK_Tracking");
+
+            entity.ToTable("Tracking");
+
+            entity.Property(e => e.TrackingId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("TrackingID");
+
+            entity.Property(e => e.TrackingName).IsRequired().HasMaxLength(100);
+        });
+
+        // Bảng Tracking_OrderD
+        modelBuilder.Entity<TrackingOrderD>(entity =>
+        {
+            entity.HasKey(e => e.TrackingOrderDId).HasName("PK_Tracking_OrderD");
+
+            entity.ToTable("Tracking_OrderD");
+
+            entity.Property(e => e.TrackingOrderDId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("TrackingOrderDID");
+
+            entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID").IsRequired();
+            entity.Property(e => e.TrackingId).HasColumnName("TrackingID").IsRequired();
+            entity.Property(e => e.Date).HasColumnType("datetime").IsRequired();
+
+            entity.HasOne(d => d.OrderDetail)
+                .WithMany(p => p.TrackingOrderDs)
+                .HasForeignKey(d => d.OrderDetailId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_TrackingOrderD_OrderDetail");
+
+            entity.HasOne(d => d.Tracking)
+                .WithMany(p => p.TrackingOrderDs)
+                .HasForeignKey(d => d.TrackingId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_TrackingOrderD_Tracking");
+        });
+
+    OnModelCreatingPartial(modelBuilder);
     }
-
-
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

@@ -19,5 +19,7 @@ namespace KoiShipping.Repo.UnitOfWork
         public GenericRepository<OrderStaff> OrderStaffRepository { get; }
         public GenericRepository<Service> ServiceRepository { get; }
         public GenericRepository<Staff> StaffRepository { get; }
+        public GenericRepository<Tracking> TrackingRepository { get; }
+        public GenericRepository<TrackingOrderD> TrackingOrderDRepository { get; }
     }
 }

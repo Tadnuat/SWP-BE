@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KoiShipping.API.Controllers
 {
-    [Authorize(Roles = "Manager,Staff")]
+    [Authorize(Roles = "Manager,Sale Staff,Delivering Staff")]
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]

@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 namespace KoiShipping.API.Controllers
 {
     [EnableCors("MyPolicy")]
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class PasswordController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork; // Sử dụng UnitOfWork hoặc repository
