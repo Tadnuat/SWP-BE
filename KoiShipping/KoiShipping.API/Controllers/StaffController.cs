@@ -53,7 +53,7 @@ namespace KoiShipping.API.Controllers
         {
             // Lấy danh sách nhân viên có Status là "active" và DeleteStatus là false
             var activeStaffs = await Task.Run(() => _unitOfWork.StaffRepository
-                .Get(s => s.Status.ToLower() == "active" && !s.DeleteStatus)
+                .Get(s => s.Status.ToLower() == "active" && !s.DeleteStatus && s.Role == "Delivering Staff")
                 .ToList());
 
             var response = new List<ResponseStaffModel>();
