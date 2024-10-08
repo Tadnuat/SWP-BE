@@ -105,6 +105,30 @@ namespace KoiShipping.API.Controllers
 
             return NoContent();
         }
+        // DELETE: api/orderstaff/delete
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteOrderStaffsByOrderIdAndStaffId([FromQuery] int orderId, [FromQuery] int staffId)
+        {
+            // Tìm tất cả các OrderStaff có OrderId và StaffId khớp với yêu cầu
+            var orderStaffs = _unitOfWork.OrderStaffRepository.Get()
+                .Where(os => os.OrderId == orderId && os.StaffId == staffId).ToList();
+
+            if (!orderStaffs.Any())
+            {
+                return NotFound();
+            }
+
+            // Xóa tất cả các bản ghi OrderStaff tìm thấy
+            foreach (var orderStaff in orderStaffs)
+            {
+                _unitOfWork.OrderStaffRepository.Delete(orderStaff.OrderStaffsId);
+            }
+
+            await _unitOfWork.SaveAsync();
+
+            return NoContent();
+        }
+
 
         // DELETE: api/orderstaff/5
         [HttpDelete("{id}")]
