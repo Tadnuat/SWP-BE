@@ -88,6 +88,13 @@ namespace KoiShipping.API.Controllers
                 .Include(od => od.Customer) // Giả định rằng có liên kết tới Customer
                 .ToListAsync();
 
+            // Truy vấn dữ liệu OrderDetail và bao gồm cả bảng trung gian AserviceOrderD và AdvancedService
+            var orderDetail = await _unitOfWork.OrderDetailRepository.GetQueryable()
+                .Where(od => !od.DeleteStatus)
+                .Include(od => od.AserviceOrderDs) // Bao gồm bảng AserviceOrderD
+                    .ThenInclude(asod => asod.AdvancedService) // Bao gồm bảng AdvancedService
+                .ToListAsync();
+
             // Lấy thông tin StaffDeliveries từ OrderStaffs
             var staffDeliveries = order.OrderStaffs.Select(os => new StaffInfo
             {
@@ -110,21 +117,26 @@ namespace KoiShipping.API.Controllers
                 OrderDetails = orderDetails.Select(od => new ResponseOrderDetailModel
                 {
                     OrderDetailId = od.OrderDetailId,
+                    OrderId = od.OrderId,
                     CustomerId = od.CustomerId,
-                    CustomerName = od.Customer?.Name, // Lấy CustomerName từ Customer
+                    CustomerName = od.Customer?.Name,
+                    StartLocation = od.StartLocation,
+                    Destination = od.Destination,
                     ServiceId = od.ServiceId,
-                    ServiceName = od.ServiceName, // Lấy ServiceName từ Service
+                    ServiceName = od.ServiceName,
                     Weight = od.Weight,
                     Quantity = od.Quantity,
                     Price = od.Price,
                     KoiStatus = od.KoiStatus,
                     AttachedItem = od.AttachedItem,
                     Status = od.Status,
+                    DeleteStatus = od.DeleteStatus,
                     ReceiverName = od.ReceiverName,
                     ReceiverPhone = od.ReceiverPhone,
                     Rating = od.Rating,
                     Feedback = od.Feedback,
-                    CreatedDate = od.CreatedDate
+                    CreatedDate = od.CreatedDate,
+                    AdvancedServiceNames = od.AserviceOrderDs.Select(asod => asod.AdvancedService.AServiceName).ToList()
                 }).ToList()
             };
 

@@ -322,6 +322,15 @@ namespace KoiShipping.API.Controllers
 
                     await _unitOfWork.SaveAsync(); // Lưu thay đổi cho bảng AserviceOrderD
                 }
+                var trackingOrderD = new TrackingOrderD
+                {
+                    OrderDetailId = orderDetail.OrderDetailId,
+                    TrackingId = 1, // Giá trị mặc định là 1
+                    Date = DateTime.Now
+                };
+
+                _unitOfWork.TrackingOrderDRepository.Insert(trackingOrderD);
+                await _unitOfWork.SaveAsync(); // Lưu thay đổi cho bảng TrackingOrderD
 
                 // Trả về thông điệp thành công
                 return Ok("Tạo đơn thành công"); // Thay đổi phản hồi ở đây

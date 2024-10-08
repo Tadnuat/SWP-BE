@@ -73,6 +73,17 @@ VALUES
 (6, 3),
 (7, 1);
 
+-- Thêm dữ liệu mẫu vào bảng Order_Staffs
+INSERT INTO Order_Staffs (OrderID, StaffID)
+VALUES 
+(1, 2),
+(1, 3),
+(2, 4),
+(3, 1),
+(4, 5),
+(5, 6),
+(6, 7);
+
 -- Thêm dữ liệu mẫu vào bảng Tracking
 INSERT INTO Tracking (TrackingName)
 VALUES

@@ -62,7 +62,7 @@ namespace KoiShipping.API.Controllers
         }
 
         // GET: api/trackingorderd/byorderdetail/5
-        [HttpGet("byorderdetail/{orderDetailId}")]
+        [HttpGet("orderdetail/{orderDetailId}")]
         public async Task<ActionResult<IEnumerable<ResponseTrackingOrderDModel>>> GetTrackingOrderDsByOrderDetailId(int orderDetailId)
         {
             var trackingOrderDs = await Task.Run(() =>
