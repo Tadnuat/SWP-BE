@@ -61,6 +61,29 @@ namespace KoiShipping.API.Controllers
             return Ok(response);
         }
 
+        // GET: api/trackingorderd/byorderdetail/5
+        [HttpGet("byorderdetail/{orderDetailId}")]
+        public async Task<ActionResult<IEnumerable<ResponseTrackingOrderDModel>>> GetTrackingOrderDsByOrderDetailId(int orderDetailId)
+        {
+            var trackingOrderDs = await Task.Run(() =>
+                _unitOfWork.TrackingOrderDRepository.Get(t => t.OrderDetailId == orderDetailId).ToList());
+
+            if (trackingOrderDs == null || trackingOrderDs.Count == 0)
+            {
+                return NotFound();
+            }
+
+            var response = trackingOrderDs.Select(orderD => new ResponseTrackingOrderDModel
+            {
+                TrackingOrderDId = orderD.TrackingOrderDId,
+                OrderDetailId = orderD.OrderDetailId,
+                TrackingId = orderD.TrackingId,
+                Date = orderD.Date
+            });
+
+            return Ok(response);
+        }
+
         // POST: api/trackingorderd
         [HttpPost]
         public async Task<ActionResult> CreateTrackingOrderD([FromBody] RequestCreateTrackingOrderDModel request)
