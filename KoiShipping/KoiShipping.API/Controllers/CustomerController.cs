@@ -111,8 +111,8 @@ namespace KoiShipping.API.Controllers
                 Password = request.Password, // Consider hashing the password here
                 Phone = request.Phone,
                 Address = request.Address,
-                RegistrationDate = DateTime.UtcNow, // Set to current date
-                Status = request.Status,
+                RegistrationDate = DateTime.Now, // Set to current date
+                Status = "Active",
                 DeleteStatus = false // Set DeleteStatus to false by default
             };
 

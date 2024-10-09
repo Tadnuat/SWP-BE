@@ -203,8 +203,6 @@ namespace KoiShipping.API.Controllers
             }
         }
 
-
-
         // PUT: api/order/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOrder(int id, [FromBody] RequestUpdateOrderModel request)
@@ -233,22 +231,18 @@ namespace KoiShipping.API.Controllers
             // Update the OrderStaff assignments
             if (request.StaffIds != null && request.StaffIds.Any())
             {
-                // Fetch current staff assignments for this order
                 var currentOrderStaffs = _unitOfWork.OrderStaffRepository.Get()
                                             .Where(os => os.OrderId == id)
                                             .ToList();
 
-                // Get a list of current staff IDs
                 var currentStaffIds = currentOrderStaffs.Select(os => os.StaffId).ToList();
 
-                // Remove OrderStaff entries for staff who are not in the new list
                 var staffToRemove = currentOrderStaffs.Where(os => !request.StaffIds.Contains(os.StaffId)).ToList();
                 foreach (var orderStaff in staffToRemove)
                 {
                     _unitOfWork.OrderStaffRepository.Delete(orderStaff);
                 }
 
-                // Add new OrderStaff entries for staff who are in the new list but not in the current list
                 var newStaffIds = request.StaffIds.Except(currentStaffIds).ToList();
                 foreach (var staffId in newStaffIds)
                 {
@@ -263,12 +257,31 @@ namespace KoiShipping.API.Controllers
                 await _unitOfWork.SaveAsync(); // Save changes to OrderStaff
             }
 
+            // If the order status is "finish" or "Finish", update staff status to "active"
+            if (request.Status?.Equals("Finish", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                var orderStaffs = _unitOfWork.OrderStaffRepository.Get()
+                                       .Where(os => os.OrderId == id)
+                                       .ToList();
+
+                foreach (var orderStaff in orderStaffs)
+                {
+                    var staff = _unitOfWork.StaffRepository.GetByID(orderStaff.StaffId);
+                    if (staff != null)
+                    {
+                        staff.Status = "Active"; // Update staff status to "active"
+                        _unitOfWork.StaffRepository.Update(staff);
+                    }
+                }
+
+                await _unitOfWork.SaveAsync(); // Save changes to Staff status
+            }
+
             _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.SaveAsync();
 
             return NoContent();
         }
-
 
         // DELETE: api/order/5
         [HttpDelete("{id}")]

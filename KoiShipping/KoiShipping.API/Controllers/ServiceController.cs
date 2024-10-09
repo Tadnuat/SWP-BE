@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
-    [Authorize(Roles = "Manager")]
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
