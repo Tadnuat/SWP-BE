@@ -3,6 +3,7 @@ using KoiShipping.Repo.Entities;
 using KoiShipping.Repo.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -135,22 +136,27 @@ namespace KoiShipping.API.Controllers
                 return Conflict(new { message = "Email already exists." });
             }
 
+            // Hash the password using PasswordHasher
+            var passwordHasher = new PasswordHasher<Staff>();
             var staff = new Staff
             {
                 StaffName = request.StaffName,
                 Email = request.Email,
-                Password = request.Password, // Consider hashing the password here
                 Phone = request.Phone,
                 Role = request.Role,
                 Status = request.Status,
                 DeleteStatus = false // Set DeleteStatus to false by default
             };
 
+            // Hash the password before saving it to the database
+            staff.Password = passwordHasher.HashPassword(staff, request.Password);
+
             _unitOfWork.StaffRepository.Insert(staff);
             await _unitOfWork.SaveAsync();
 
             return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);
         }
+
         // PUT: api/staff/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateStaff(int id, [FromBody] RequestUpdateStaffModel request)

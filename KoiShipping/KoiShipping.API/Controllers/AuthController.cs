@@ -5,6 +5,7 @@ using KoiShipping.Repo.Entities;
 using KoiShipping.Repo.UnitOfWork;
 using System.Linq;
 using KoiShipping.API.Models.CustomerModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace KoiShipping.API.Controllers
 {
@@ -25,10 +26,22 @@ namespace KoiShipping.API.Controllers
         [HttpPost("loginstaff")]
         public IActionResult LoginStaff([FromBody] LoginModelStaff loginModel)
         {
-            // Kiểm tra trong bảng Staff (admin)
-            var staff = _unitOfWork.StaffRepository.Get(x => x.Email == loginModel.Email && x.Password == loginModel.Password && x.DeleteStatus == false).FirstOrDefault();
+            // Tìm nhân viên dựa trên email
+            var staff = _unitOfWork.StaffRepository.Get(x => x.Email == loginModel.Email && x.DeleteStatus == false).FirstOrDefault();
 
-            if (staff != null)
+            if (staff == null)
+            {
+                return Unauthorized("Invalid email or password.");
+            }
+
+            // Khởi tạo PasswordHasher để kiểm tra mật khẩu
+            var passwordHasher = new PasswordHasher<Staff>();
+
+            // Xác thực mật khẩu đã nhập
+            var passwordVerificationResult = passwordHasher.VerifyHashedPassword(staff, staff.Password, loginModel.Password);
+
+            // Kiểm tra kết quả xác thực
+            if (passwordVerificationResult == PasswordVerificationResult.Success)
             {
                 var token = _tokenService.GenerateToken(staff.Email, staff.Role);
                 return Ok(new { token, id = staff.StaffId, name = staff.StaffName, Role = staff.Role });
@@ -64,11 +77,12 @@ namespace KoiShipping.API.Controllers
                 return Conflict(new { message = "Email already exists." });
             }
 
+            // Hash the password using PasswordHasher
+            var passwordHasher = new PasswordHasher<Customer>();
             var customer = new Customer
             {
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password, // Consider hashing the password here
                 Phone = request.Phone,
                 Address = request.Address,
                 RegistrationDate = DateTime.Now, // Set to current date
@@ -76,11 +90,15 @@ namespace KoiShipping.API.Controllers
                 DeleteStatus = false // Set DeleteStatus to false by default
             };
 
+            // Hash the password before saving it to the database
+            customer.Password = passwordHasher.HashPassword(customer, request.Password);
+
             _unitOfWork.CustomerRepository.Insert(customer);
             await _unitOfWork.SaveAsync();
 
             return Ok("Đăng ký thành công");
         }
+
         private bool IsValidEmail(string email)
         {
             // Validate email format (must end with @gmail.com)
@@ -91,10 +109,22 @@ namespace KoiShipping.API.Controllers
         [HttpPost("logincustomer")]
         public IActionResult LoginCustomer([FromBody] LoginModelCustomer loginModel)
         {
-            // Kiểm tra trong bảng Customer
-            var customer = _unitOfWork.CustomerRepository.Get(x => x.Email == loginModel.Email && x.Password == loginModel.Password && x.DeleteStatus == false).FirstOrDefault();
+            // Tìm khách hàng dựa trên email
+            var customer = _unitOfWork.CustomerRepository.Get(x => x.Email == loginModel.Email && x.DeleteStatus == false).FirstOrDefault();
 
-            if (customer != null)
+            if (customer == null)
+            {
+                return Unauthorized("Invalid email or password.");
+            }
+
+            // Khởi tạo PasswordHasher để kiểm tra mật khẩu
+            var passwordHasher = new PasswordHasher<Customer>();
+
+            // Xác thực mật khẩu đã nhập
+            var passwordVerificationResult = passwordHasher.VerifyHashedPassword(customer, customer.Password, loginModel.Password);
+
+            // Kiểm tra kết quả xác thực
+            if (passwordVerificationResult == PasswordVerificationResult.Success)
             {
                 var token = _tokenService.GenerateToken(customer.Email, "Customer");
                 return Ok(new { token, customerId = customer.CustomerId, customerName = customer.Name, Role = "Customer" });
