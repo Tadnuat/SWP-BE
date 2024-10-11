@@ -70,6 +70,7 @@ namespace KoiShipping.API.Controllers
         
         // POST: api/service
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult> CreateService([FromBody] RequestCreateServiceModel request)
         {
             if (!ModelState.IsValid)
@@ -98,6 +99,7 @@ namespace KoiShipping.API.Controllers
 
         // PUT: api/service/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> UpdateService(int id, [FromBody] RequestUpdateServiceModel request)
         {
             if (!ModelState.IsValid)
@@ -130,6 +132,7 @@ namespace KoiShipping.API.Controllers
 
         // DELETE: api/service/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteService(int id)
         {
             var service = _unitOfWork.ServiceRepository.GetByID(id);
@@ -147,6 +150,7 @@ namespace KoiShipping.API.Controllers
 
         // Soft DELETE: api/service/soft/5
         [HttpDelete("soft/{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> SoftDeleteService(int id)
         {
             var service = _unitOfWork.ServiceRepository.GetByID(id);

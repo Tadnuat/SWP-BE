@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
-    [Authorize(Roles = "Manager")]
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
@@ -64,6 +63,7 @@ namespace KoiShipping.API.Controllers
 
         // POST: api/advancedservice
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult> CreateAdvancedService([FromBody] RequestCreateAdvancedServiceModel request)
         {
             if (!ModelState.IsValid)
@@ -86,6 +86,7 @@ namespace KoiShipping.API.Controllers
 
         // PUT: api/advancedservice/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> UpdateAdvancedService(int id, [FromBody] RequestUpdateAdvancedServiceModel request)
         {
             if (!ModelState.IsValid)
@@ -114,6 +115,7 @@ namespace KoiShipping.API.Controllers
 
         // DELETE: api/advancedservice/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteAdvancedService(int id)
         {
             var service = _unitOfWork.AdvancedServiceRepository.GetByID(id);
@@ -131,6 +133,7 @@ namespace KoiShipping.API.Controllers
 
         // Soft DELETE: api/advancedservice/soft/5
         [HttpDelete("soft/{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> SoftDeleteAdvancedService(int id)
         {
             var service = _unitOfWork.AdvancedServiceRepository.GetByID(id);

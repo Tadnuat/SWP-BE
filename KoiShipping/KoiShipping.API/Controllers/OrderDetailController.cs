@@ -170,12 +170,13 @@ namespace KoiShipping.API.Controllers
         [HttpGet("customer/{customerId}")]
         public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailsByCustomerId(int customerId)
         {
-            // Lấy danh sách order details theo CustomerId
+            // Lấy danh sách order details theo CustomerId và sắp xếp theo OrderDetailId từ lớn tới nhỏ
             var orderDetails = await _unitOfWork.OrderDetailRepository
                 .GetQueryable() // Use GetQueryable to get IQueryable<OrderDetail>
                 .Include(od => od.AserviceOrderDs)
                     .ThenInclude(asod => asod.AdvancedService)
                 .Where(od => od.CustomerId == customerId && !od.DeleteStatus)
+                .OrderByDescending(od => od.OrderDetailId) // Sắp xếp theo OrderDetailId từ lớn đến nhỏ
                 .ToListAsync();
 
             // Kiểm tra nếu không có OrderDetail
@@ -214,6 +215,7 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
+
         // GET: api/orderdetail/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseOrderDetailModel>> GetOrderDetail(int id)

@@ -28,7 +28,7 @@ namespace KoiShipping.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ResponseStaffModel>>> GetStaffs()
         {
-            var staffs = await Task.Run(() => _unitOfWork.StaffRepository.Get().Where(s => !s.DeleteStatus).ToList());
+            var staffs = await Task.Run(() => _unitOfWork.StaffRepository.Get().ToList());
 
             var response = new List<ResponseStaffModel>();
 

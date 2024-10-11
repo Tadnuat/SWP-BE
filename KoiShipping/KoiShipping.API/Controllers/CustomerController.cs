@@ -28,7 +28,7 @@ namespace KoiShipping.API.Controllers
         public async Task<ActionResult<IEnumerable<ResponseCustomerModel>>> GetCustomers()
         {
             // Retrieve only customers where DeleteStatus is false
-            var customers = await Task.Run(() => _unitOfWork.CustomerRepository.Get().Where(c => !c.DeleteStatus).ToList());
+            var customers = await Task.Run(() => _unitOfWork.CustomerRepository.Get().ToList());
 
             var response = new List<ResponseCustomerModel>();
 
