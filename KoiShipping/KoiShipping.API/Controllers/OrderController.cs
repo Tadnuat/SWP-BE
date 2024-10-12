@@ -162,7 +162,7 @@ namespace KoiShipping.API.Controllers
                     TransportMethod = request.TransportMethod,
                     DepartureDate = request.DepartureDate,
                     ArrivalDate   = request.ArrivalDate,
-                    Status = "Pending",
+                    Status = "Ready",
                     DeleteStatus = false // Đặt DeleteStatus mặc định là false
                 };
 

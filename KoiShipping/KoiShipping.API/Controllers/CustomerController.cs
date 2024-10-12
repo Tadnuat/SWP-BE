@@ -1,4 +1,4 @@
-using KoiShipping.API.Models.CustomerModel;
+﻿using KoiShipping.API.Models.CustomerModel;
 using KoiShipping.Repo.Entities;
 using KoiShipping.Repo.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
@@ -76,8 +76,7 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
-
-        [HttpPost]
+    [HttpPost]
         public async Task<ActionResult> CreateCustomer([FromBody] RequestCreateCustomerModel request)
         {
             if (!ModelState.IsValid)

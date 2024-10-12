@@ -291,3 +291,16 @@ D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\obj\Debug\net8.0\scopedcss\bundle\K
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\obj\Debug\net8.0\KoiShipp.530880D4.Up2Date
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\obj\Debug\net8.0\KoiShipping.API.genruntimeconfig.cache
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\obj\Debug\net8.0\ref\KoiShipping.API.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\FirebaseAdmin.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Api.Gax.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Api.Gax.Rest.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Apis.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Apis.Auth.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Apis.Core.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\System.Management.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Management.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Apis.Storage.v1.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Cloud.Storage.V1.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Config\koishipping-a6bd7-firebase-adminsdk-m1z5j-85f434431e.json
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll

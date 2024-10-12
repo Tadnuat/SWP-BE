@@ -6,6 +6,12 @@ using KoiShipping.Repo.UnitOfWork;
 using System.Linq;
 using KoiShipping.API.Models.CustomerModel;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Policy;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace KoiShipping.API.Controllers
 {
@@ -132,5 +138,80 @@ namespace KoiShipping.API.Controllers
 
             return Unauthorized("Invalid email or password.");
         }
+        [HttpGet("google-login")]
+        public IActionResult GoogleLogin()
+        {
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("GoogleResponse")
+            };
+
+            // Chỉ định các quyền cần thiết
+            properties.Items["scope"] = "openid profile email"; // Yêu cầu quyền email
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
+
+        [HttpGet("google-response")]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+            if (!result.Succeeded)
+            {
+                return BadRequest("Authentication failed."); // Nếu không xác thực thành công
+            }
+
+            var userEmail = result.Principal.FindFirst(c => c.Type == ClaimTypes.Email)?.Value;
+            var userName = result.Principal.FindFirst(c => c.Type == ClaimTypes.Name)?.Value;
+
+            if (userEmail == null || userName == null)
+            {
+                return BadRequest("Email or Name is not valid."); // Kiểm tra email và tên
+            }
+
+            // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
+            var existingCustomer = await _unitOfWork.CustomerRepository.GetByEmailAsync(userEmail); // Phương thức tìm kiếm khách hàng theo email
+
+            if (existingCustomer == null)
+            {
+                // Tạo tài khoản mới
+                var newCustomer = new Customer
+                {
+                    Name = userName,
+                    Email = userEmail,
+                    Password = "string123", // Mật khẩu mặc định
+                    RegistrationDate = DateTime.UtcNow, // Ngày đăng ký
+                    Status = "Active", // Hoặc giá trị khác tùy theo yêu cầu
+                    DeleteStatus = false // Đặt DeleteStatus là false
+                };
+
+                _unitOfWork.CustomerRepository.Insert(newCustomer);
+                await _unitOfWork.SaveAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+
+                // Lấy thông tin của khách hàng mới tạo
+                existingCustomer = newCustomer;
+            }
+
+            // Tạo token JWT cho người dùng
+            var role = "Customer"; // Vai trò của khách hàng
+            var tokenService = HttpContext.RequestServices.GetRequiredService<TokenService>();
+            var token = tokenService.GenerateToken(existingCustomer.Email, role);
+
+            // Trả về phản hồi với token và thông tin khách hàng
+            return Ok(new
+            {
+                token,
+                customerId = existingCustomer.CustomerId,
+                customerName = existingCustomer.Name,
+                Role = role
+            });
+        }
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("https://chatgpt.com/"); // Chuyển hướng đến URL bên ngoài
+        }
+
     }
 }

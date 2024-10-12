@@ -5,44 +5,49 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-//allow cros
-builder.Services.AddCors(options => options.AddPolicy(name: "MyPolicy", policy =>
-policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
+// Allow CORS for all origins, headers, and methods
+builder.Services.AddCors(options =>
+    options.AddPolicy("MyPolicy", policy =>
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
-// Configure database context
+// Configure database context using connection string from appsettings.json
 builder.Services.AddDbContext<KoiShippingContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbContext")));
 
 // Register UnitOfWork
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // ??ng ký IUnitOfWork
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Register TokenService
 builder.Services.AddSingleton<TokenService>();
 
+// Add JSON options to increase depth of serialization (if necessary)
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.MaxDepth = 100;
     });
 
-
-// Add Swagger
+// Add Swagger for API documentation
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "KoiShipping", Version = "v.1.0" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "KoiShipping API", Version = "v1.0" });
 
+    // Configure Swagger for JWT Authentication
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
-        Description = "Please enter a valid token",
+        Description = "Enter JWT token in the following format: Bearer {token}",
         Name = "Authorization",
         Type = SecuritySchemeType.Http,
         BearerFormat = "JWT",
@@ -63,12 +68,16 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
 // Add JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 })
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -81,36 +90,54 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
+})
+// Add Google Authentication
+.AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Google:ClientSecret"];
+    googleOptions.CallbackPath = "/signin-google";
+    googleOptions.Scope.Add("email"); // Thêm scope cho email
 });
-// Add Authorization policies
+
+// Add Authorization policies based on roles
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminPolicy", policy =>
-        policy.RequireClaim("Role", "Admin"));
+    options.AddPolicy("DeliveringStaffPolicy", policy =>
+        policy.RequireClaim("Role", "Delivering Staff"));
+    options.AddPolicy("SaleStaffPolicy", policy =>
+        policy.RequireClaim("Role", "Sale Staff"));
     options.AddPolicy("ManagerPolicy", policy =>
         policy.RequireClaim("Role", "Manager"));
     options.AddPolicy("CustomerPolicy", policy =>
         policy.RequireClaim("Role", "Customer"));
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction() || app.Environment.IsStaging())
 {
+    // Enable Swagger for API testing
     app.UseSwagger();
-    app.UseSwaggerUI(
-        c =>
-        {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "ABC");
-            c.InjectStylesheet("/static/css/swaggerui-dark.css");
-        }
-        );
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "KoiShipping API v1.0");
+        c.InjectStylesheet("/static/css/swaggerui-dark.css"); // Optional: Custom styling for Swagger
+    });
 }
 
+// Enable HTTPS redirection
 app.UseHttpsRedirection();
-app.UseCors();
+
+// Enable CORS
+app.UseCors("MyPolicy");
+
+// Enable Authentication and Authorization
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Map the controllers
 app.MapControllers();
 
 app.Run();

@@ -271,6 +271,20 @@ namespace KoiShipping.Repo.Repository
         {
             return dbSet.AsQueryable();
         }
+        public virtual async Task<Customer?> GetByEmailAsync(string email)
+        {
+            // Kiểm tra xem TEntity có phải là Customer không
+            if (typeof(TEntity) == typeof(Customer))
+            {
+                // Sử dụng OfType<Customer>() để chọn các đối tượng Customer
+                return await dbSet
+                    .AsQueryable()
+                    .OfType<Customer>()
+                    .FirstOrDefaultAsync(c => c.Email == email && !c.DeleteStatus);
+            }
 
+            // Nếu TEntity không phải là Customer, trả về null
+            return null;
+        }
     }
 }
