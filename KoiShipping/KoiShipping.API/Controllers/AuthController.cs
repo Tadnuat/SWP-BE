@@ -151,7 +151,6 @@ namespace KoiShipping.API.Controllers
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
 
-
         [HttpGet("google-response")]
         public async Task<IActionResult> GoogleResponse()
         {
@@ -197,15 +196,18 @@ namespace KoiShipping.API.Controllers
             var tokenService = HttpContext.RequestServices.GetRequiredService<TokenService>();
             var token = tokenService.GenerateToken(existingCustomer.Email, role);
 
-            // Trả về phản hồi với token và thông tin khách hàng
-            return Ok(new
+            // Lưu token vào cookie nếu cần
+            HttpContext.Response.Cookies.Append("AuthToken", token, new CookieOptions
             {
-                token,
-                customerId = existingCustomer.CustomerId,
-                customerName = existingCustomer.Name,
-                Role = role
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict
             });
+
+            // Chuyển hướng người dùng tới trang chủ (homepage)
+            return Redirect("/home"); // Thay '/home' bằng URL của trang chủ bạn muốn
         }
+
         [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
