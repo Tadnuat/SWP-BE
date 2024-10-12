@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KoiShipping.Repo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fd1465132b917049186daadfa9699f5a7d1efc6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc23339cb396f054f74f96fe467674d455683780")]
 [assembly: System.Reflection.AssemblyProductAttribute("KoiShipping.Repo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KoiShipping.Repo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

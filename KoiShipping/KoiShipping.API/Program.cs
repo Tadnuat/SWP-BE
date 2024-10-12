@@ -1,4 +1,4 @@
-using KoiShipping.Repo.Entities;
+﻿using KoiShipping.Repo.Entities;
 using KoiShipping.Repo.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -97,7 +97,7 @@ builder.Services.AddAuthentication(options =>
     googleOptions.ClientId = builder.Configuration["Google:ClientId"];
     googleOptions.ClientSecret = builder.Configuration["Google:ClientSecret"];
     googleOptions.CallbackPath = "/signin-google";
-    googleOptions.Scope.Add("email"); // Th�m scope cho email
+    googleOptions.Scope.Add("email"); // Thêm scope cho email
 });
 
 // Add Authorization policies based on roles

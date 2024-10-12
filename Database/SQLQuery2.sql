@@ -1,24 +1,24 @@
 ﻿-- Thêm dữ liệu mẫu vào bảng Customer
 INSERT INTO Customer (Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus)
 VALUES
-('Customer 1', 'customer1@example.com', 'password1', '0912345671', 'Address 1', GETDATE(), 'Active', 0),
-('Customer 2', 'customer2@example.com', 'password2', '0912345672', 'Address 2', GETDATE(), 'Active', 0),
-('Customer 3', 'customer3@example.com', 'password3', '0912345673', 'Address 3', GETDATE(), 'Inactive', 0),
-('Customer 4', 'customer4@example.com', 'password4', '0912345674', 'Address 4', GETDATE(), 'Active', 0),
-('Customer 5', 'customer5@example.com', 'password5', '0912345675', 'Address 5', GETDATE(), 'Active', 0),
-('Customer 6', 'customer6@example.com', 'password6', '0912345676', 'Address 6', GETDATE(), 'Inactive', 0),
-('Customer 7', 'customer7@example.com', 'password7', '0912345677', 'Address 7', GETDATE(), 'Active', 0);
+('Customer 1', 'customer1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345671', 'Address 1', GETDATE(), 'Active', 0),
+('Customer 2', 'customer2@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345672', 'Address 2', GETDATE(), 'Active', 0),
+('Customer 3', 'customer3@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345673', 'Address 3', GETDATE(), 'Inactive', 0),
+('Customer 4', 'customer4@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345674', 'Address 4', GETDATE(), 'Active', 0),
+('Customer 5', 'customer5@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345675', 'Address 5', GETDATE(), 'Active', 0),
+('Customer 6', 'customer6@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345676', 'Address 6', GETDATE(), 'Inactive', 0),
+('Customer 7', 'customer7@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345677', 'Address 7', GETDATE(), 'Active', 0);
 
 -- Thêm dữ liệu mẫu vào bảng Staffs
 INSERT INTO Staffs (StaffName, Email, Password, Role, Phone, Status, DeleteStatus)
 VALUES
-('Staff 1', 'staff1@example.com', 'password1', 'Manager', '0912345671', 'Active', 0),
-('Staff 2', 'staff2@example.com', 'password2', 'Sale Staff', '0912345672', 'Active', 0),
-('Staff 3', 'staff3@example.com', 'password3', 'Delivering Staff', '0912345673', 'Active', 0),
-('Staff 4', 'staff4@example.com', 'password4', 'Manager', '0912345674', 'Active', 0),
-('Staff 5', 'staff5@example.com', 'password5', 'Delivering Staff', '0912345675', 'Active', 0),
-('Staff 6', 'staff6@example.com', 'password6', 'Sale Staff', '0912345676', 'Inactive', 0),
-('Staff 7', 'staff7@example.com', 'password7', 'Manager', '0912345677', 'Active', 0);
+('Staff 1', 'staff1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', 'Manager', '0912345671', 'Active', 0),
+('Staff 2', 'staff2@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', 'Sale Staff', '0912345672', 'Active', 0),
+('Staff 3', 'staff3@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', 'Delivering Staff', '0912345673', 'Active', 0),
+('Staff 4', 'staff4@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', 'Manager', '0912345674', 'Active', 0),
+('Staff 5', 'staff5@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', 'Delivering Staff', '0912345675', 'Active', 0),
+('Staff 6', 'staff6@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', 'Sale Staff', '0912345676', 'Inactive', 0),
+('Staff 7', 'staff7@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', 'Manager', '0912345677', 'Active', 0);
 
 -- Thêm dữ liệu mẫu vào bảng Order
 SET IDENTITY_INSERT [Order] ON;
@@ -90,6 +90,7 @@ VALUES
 ('Pending'),
 ('Waiting'),
 ('Delivering'),
+('Delivered'),
 ('Finish'),
 ('Canceled');
 
