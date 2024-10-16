@@ -9,6 +9,7 @@ using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using KoiShipping.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,16 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Register TokenService
 builder.Services.AddSingleton<TokenService>();
+
+
+builder.Services.AddTransient<IEmailService>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var email = configuration["EmailSettings:Email"];
+    var password = configuration["EmailSettings:Password"];
+    return new EmailService(email, password);
+});
+
 
 // Add JSON options to increase depth of serialization (if necessary)
 builder.Services.AddControllers()

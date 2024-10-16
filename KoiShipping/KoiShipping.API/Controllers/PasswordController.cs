@@ -1,4 +1,5 @@
-﻿using KoiShipping.API.Models.PasswordModel;
+﻿using Google.Apis.Gmail.v1;
+using KoiShipping.API.Models.PasswordModel;
 using KoiShipping.Repo.Entities;
 using KoiShipping.Repo.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
@@ -17,10 +18,12 @@ namespace KoiShipping.API.Controllers
     public class PasswordController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork; // Sử dụng UnitOfWork hoặc repository
+        private readonly IEmailService _emailService; // Service for sending emails
 
-        public PasswordController(IUnitOfWork unitOfWork)
+        public PasswordController(IUnitOfWork unitOfWork, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
         }
 
         [HttpPost("staff/change-password/{StaffId}")]
@@ -75,6 +78,64 @@ namespace KoiShipping.API.Controllers
 
             return Ok("Password changed successfully.");
         }
+        // Method to request a password reset
+        [HttpPost("customer/forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
+        {
+            var customer = await _unitOfWork.CustomerRepository.GetByEmailAsync(model.Email); // Assuming you have a method to get customer by email
+            if (customer == null)
+            {
+                return NotFound("Customer not found.");
+            }
 
+            // Generate OTP and store it (you may want to save it in a database with an expiry time)
+            var otp = GenerateOtp(); // You should implement this method
+            customer.Otp = otp; // Assuming your Customer entity has an Otp property
+            await _unitOfWork.SaveAsync();
+
+            // Send OTP via email
+            var emailSent = await _emailService.SendEmailAsync(model.Email, "Password Reset OTP", $"Your OTP is: {otp}");
+            if (!emailSent)
+            {
+                return StatusCode(500, "Failed to send email.");
+            }
+
+            // Return CustomerId along with success message
+            return Ok(new { Message = "OTP sent to your email.", CustomerId = customer.CustomerId });
+        }
+
+        // Method to reset password using OTP
+        [HttpPost("customer/reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model, int customerId)
+        {
+            var customer = _unitOfWork.CustomerRepository.GetByID(customerId);
+            if (customer == null)
+            {
+                return NotFound("Customer not found.");
+            }
+
+            // Verify OTP
+            if (customer.Otp != model.OTP)
+            {
+                return BadRequest("Invalid OTP.");
+            }
+
+            // Update password
+            var passwordHasher = new PasswordHasher<Customer>();
+            customer.Password = passwordHasher.HashPassword(customer, model.NewPassword);
+            customer.Otp = null; // Clear OTP after use
+            _unitOfWork.CustomerRepository.Update(customer);
+            await _unitOfWork.SaveAsync();
+
+            return Ok("Password reset successfully.");
+        }
+
+        private string GenerateOtp()
+        {
+            // Implement OTP generation logic (e.g., a random 6-digit number)
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString(); // Simple OTP generation
+        }
     }
+
 }

@@ -15,7 +15,8 @@ CREATE TABLE Customer (
     Address NVARCHAR(255),
     RegistrationDate DATETIME NOT NULL,
     Status NVARCHAR(100) NOT NULL,
-    DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
+    DeleteStatus BIT NOT NULL, -- Chỉ có giá trị 0 hoặc 1
+	Otp NVARCHAR(6)
 );
 
 -- Tạo bảng Staffs
@@ -58,6 +59,7 @@ CREATE TABLE Advanced_Service (
     AdvancedServiceID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
     AServiceName NVARCHAR(100) NOT NULL,
     Price DECIMAL(10, 2) NOT NULL,
+    Description NVARCHAR(255), -- Thêm cột mô tả dịch vụ
     DeleteStatus BIT NOT NULL -- Chỉ có giá trị 0 hoặc 1
 );
 

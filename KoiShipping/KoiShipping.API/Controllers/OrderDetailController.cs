@@ -28,9 +28,10 @@ namespace KoiShipping.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetails()
         {
-            // Truy vấn dữ liệu OrderDetail và bao gồm cả bảng trung gian AserviceOrderD và AdvancedService
+            // Truy vấn dữ liệu OrderDetail, sắp xếp theo OrderDetailId giảm dần và bao gồm bảng trung gian AserviceOrderD và AdvancedService
             var orderDetails = await _unitOfWork.OrderDetailRepository.GetQueryable()
                 .Where(od => !od.DeleteStatus)
+                .OrderByDescending(od => od.OrderDetailId) // Sắp xếp theo OrderDetailId từ cao tới thấp
                 .Include(od => od.AserviceOrderDs) // Bao gồm bảng AserviceOrderD
                     .ThenInclude(asod => asod.AdvancedService) // Bao gồm bảng AdvancedService
                 .ToListAsync();
@@ -77,6 +78,7 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
+
 
         // GET: api/orderdetail/status/pending
         [HttpGet("status/pending")]

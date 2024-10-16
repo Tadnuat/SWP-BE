@@ -1,13 +1,14 @@
 ﻿-- Thêm dữ liệu mẫu vào bảng Customer
-INSERT INTO Customer (Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus)
+INSERT INTO Customer (Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus, Otp)
 VALUES
-('Customer 1', 'customer1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345671', 'Address 1', GETDATE(), 'Active', 0),
-('Customer 2', 'customer2@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345672', 'Address 2', GETDATE(), 'Active', 0),
-('Customer 3', 'customer3@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345673', 'Address 3', GETDATE(), 'Inactive', 0),
-('Customer 4', 'customer4@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345674', 'Address 4', GETDATE(), 'Active', 0),
-('Customer 5', 'customer5@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345675', 'Address 5', GETDATE(), 'Active', 0),
-('Customer 6', 'customer6@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345676', 'Address 6', GETDATE(), 'Inactive', 0),
-('Customer 7', 'customer7@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345677', 'Address 7', GETDATE(), 'Active', 0);
+('Customer 1', 'customer1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345671', 'Address 1', GETDATE(), 'Active', 0, NULL),
+('Customer 2', 'customer2@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345672', 'Address 2', GETDATE(), 'Active', 0, NULL),
+('Customer 3', 'customer3@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345673', 'Address 3', GETDATE(), 'Inactive', 0, NULL),
+('Customer 4', 'customer4@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345674', 'Address 4', GETDATE(), 'Active', 0, NULL),
+('Customer 5', 'customer5@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345675', 'Address 5', GETDATE(), 'Active', 0, NULL),
+('Customer 6', 'customer6@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345676', 'Address 6', GETDATE(), 'Inactive', 0, NULL),
+('Customer 7', 'customer7@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345677', 'Address 7', GETDATE(), 'Active', 0, NULL);
+
 
 -- Thêm dữ liệu mẫu vào bảng Staffs
 INSERT INTO Staffs (StaffName, Email, Password, Role, Phone, Status, DeleteStatus)
@@ -45,11 +46,11 @@ VALUES
 ('air', '20-30', 180000, 140000, 200000, 0);
 
 -- Thêm dữ liệu mẫu vào bảng Advanced_Service
-INSERT INTO Advanced_Service (AServiceName, Price, DeleteStatus)
+INSERT INTO Advanced_Service (AServiceName, Price, DeleteStatus, Description)
 VALUES
-('Insurance', 50000, 0),
-('Packing', 30000, 0),
-('Express Handling', 80000, 0);
+(N'Insurance', 50000, 0, N'Cung cấp bảo hiểm cho hàng hóa trong quá trình vận chuyển'),
+(N'Packing', 30000, 0, N'Dịch vụ đóng gói an toàn cho hàng hóa'),
+(N'Express Handling', 80000, 0, N'Xử lý và vận chuyển hàng hóa hỏa tốc');
 
 -- Thêm dữ liệu mẫu vào bảng Order_Detail
 INSERT INTO Order_Detail (OrderID, CustomerID, ServiceID, ServiceName, StartLocation, Destination, Weight, Quantity, Price, KoiStatus, AttachedItem, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback, CreatedDate)

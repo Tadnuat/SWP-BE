@@ -32,6 +32,7 @@ namespace KoiShipping.API.Controllers
             {
                 AdvancedServiceId = service.AdvancedServiceId,
                 AServiceName = service.AServiceName,
+                Description = service.Description,
                 Price = service.Price,
                 DeleteStatus = service.DeleteStatus
             });
@@ -54,6 +55,7 @@ namespace KoiShipping.API.Controllers
             {
                 AdvancedServiceId = service.AdvancedServiceId,
                 AServiceName = service.AServiceName,
+                Description = service.Description,
                 Price = service.Price,
                 DeleteStatus = service.DeleteStatus
             };
@@ -74,6 +76,7 @@ namespace KoiShipping.API.Controllers
             var service = new AdvancedService
             {
                 AServiceName = request.AServiceName,
+                Description = request.Description,
                 Price = request.Price,
                 DeleteStatus = false // Set DeleteStatus to false by default
             };
@@ -102,6 +105,7 @@ namespace KoiShipping.API.Controllers
             }
 
             service.AServiceName = request.AServiceName;
+            service.Description = request.Description;
             service.Price = request.Price;
 
             // Set DeleteStatus as per the request

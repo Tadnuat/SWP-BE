@@ -56,7 +56,9 @@ public partial class KoiShippingContext : DbContext
             entity.Property(e => e.RegistrationDate).HasColumnType("datetime").IsRequired();
             entity.Property(e => e.Status).IsRequired().HasMaxLength(100);
             entity.Property(e => e.DeleteStatus).HasColumnType("bit").IsRequired();
+            entity.Property(e => e.Otp).HasMaxLength(6).IsRequired(false).HasDefaultValue(null); // hoặc .IsRequired() nếu bạn muốn bắt buộc
         });
+
 
         // Bảng Staffs
         modelBuilder.Entity<Staff>(entity =>
@@ -128,9 +130,20 @@ public partial class KoiShippingContext : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("AdvancedServiceID");
 
-            entity.Property(e => e.AServiceName).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Price).HasColumnType("decimal(10, 2)").IsRequired();
-            entity.Property(e => e.DeleteStatus).HasColumnType("bit").IsRequired();
+            entity.Property(e => e.AServiceName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Price)
+                .HasColumnType("decimal(10, 2)")
+                .IsRequired();
+
+            entity.Property(e => e.Description)
+                .HasMaxLength(255); // Cột Description có độ dài tối đa 255 ký tự
+
+            entity.Property(e => e.DeleteStatus)
+                .HasColumnType("bit")
+                .IsRequired();
         });
 
         // Bảng Order_Detail

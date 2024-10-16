@@ -304,3 +304,7 @@ D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Apis.Storag
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Cloud.Storage.V1.dll
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Config\koishipping-a6bd7-firebase-adminsdk-m1z5j-85f434431e.json
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Apis.Gmail.v1.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\MimeKit.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\System.Formats.Asn1.dll
