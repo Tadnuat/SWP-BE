@@ -67,6 +67,7 @@ namespace KoiShipping.API.Controllers
                 CustomerId = customer.CustomerId,
                 Name = customer.Name,
                 Email = customer.Email,
+                Password = customer.Password,
                 Phone = customer.Phone,
                 Address = customer.Address,
                 RegistrationDate = customer.RegistrationDate,
