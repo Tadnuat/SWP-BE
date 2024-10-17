@@ -4,6 +4,7 @@ using KoiShipping.Repo.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,12 @@ namespace KoiShipping.API.Controllers
     public class OrderDetailController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHubContext<OrderHub> _hubContext;
 
-        public OrderDetailController(IUnitOfWork unitOfWork)
+        public OrderDetailController(IUnitOfWork unitOfWork, IHubContext<OrderHub> hubContext)
         {
             _unitOfWork = unitOfWork;
+            _hubContext = hubContext;
         }
 
         // GET: api/orderdetail
@@ -303,6 +306,10 @@ namespace KoiShipping.API.Controllers
                 _unitOfWork.OrderDetailRepository.Insert(orderDetail);
                 await _unitOfWork.SaveAsync(); // Lưu thay đổi để có OrderDetailId
 
+                // Gửi thông báo đến tất cả các client đang kết nối
+                var message = $"Đơn hàng mới từ khách hàng với mã đơn hàng: {orderDetail.OrderDetailId}";
+                await _hubContext.Clients.All.SendAsync("ReceiveOrderNotification", message);
+
                 // Tạo AserviceOrderD cho từng AdvancedService đã chọn
                 if (request.SelectedAdvancedServiceIds != null && request.SelectedAdvancedServiceIds.Any())
                 {
@@ -345,7 +352,8 @@ namespace KoiShipping.API.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        // PUT: api/orderdetail/5
+
+            // PUT: api/orderdetail/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOrderDetail(int id, [FromBody] RequestUpdateOrderDetailModel request)
         {

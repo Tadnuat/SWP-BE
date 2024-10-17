@@ -10,6 +10,7 @@ using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using KoiShipping.API;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,6 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Register TokenService
 builder.Services.AddSingleton<TokenService>();
 
-
 builder.Services.AddTransient<IEmailService>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
@@ -40,7 +40,6 @@ builder.Services.AddTransient<IEmailService>(provider =>
     var password = configuration["EmailSettings:Password"];
     return new EmailService(email, password);
 });
-
 
 // Add JSON options to increase depth of serialization (if necessary)
 builder.Services.AddControllers()
@@ -124,6 +123,12 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("Role", "Customer"));
 });
 
+// ----------------- SignalR Configuration Start -----------------
+// Add SignalR services
+builder.Services.AddSignalR(); // Đăng ký SignalR với DI container
+
+// ----------------- SignalR Configuration End -------------------
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
@@ -147,6 +152,11 @@ app.UseCors("MyPolicy");
 // Enable Authentication and Authorization
 app.UseAuthentication();
 app.UseAuthorization();
+
+// ----------------- SignalR Middleware Start -----------------
+// Map SignalR hub
+app.MapHub<OrderHub>("/orderHub"); // "/orderHub" là endpoint của SignalR hub cho thông báo đơn hàng mới
+// ----------------- SignalR Middleware End -------------------
 
 // Map the controllers
 app.MapControllers();

@@ -308,3 +308,16 @@ D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\BouncyCastle.Crypt
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Google.Apis.Gmail.v1.dll
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\MimeKit.dll
 D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\System.Formats.Asn1.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.Http.Connections.Client.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.Http.Connections.Common.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Client.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Common.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
