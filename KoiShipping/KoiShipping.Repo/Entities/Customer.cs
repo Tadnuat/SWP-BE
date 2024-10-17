@@ -22,7 +22,7 @@ public partial class Customer
     public string Status { get; set; } = null!;
 
     public bool DeleteStatus { get; set; } = false;
-    public string? Otp { get; set; } // Thêm thuộc tính Otp ở đây
-
+    public string? Otp { get; set; } 
+    public DateTime? OtpExpiration { get; set; }
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

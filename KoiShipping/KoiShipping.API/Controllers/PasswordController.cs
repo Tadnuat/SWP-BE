@@ -88,9 +88,10 @@ namespace KoiShipping.API.Controllers
                 return NotFound("Customer not found.");
             }
 
-            // Generate OTP and store it (you may want to save it in a database with an expiry time)
+            // Generate OTP and store it
             var otp = GenerateOtp(); // You should implement this method
-            customer.Otp = otp; // Assuming your Customer entity has an Otp property
+            customer.Otp = otp;
+            customer.OtpExpiration = DateTime.UtcNow.AddMinutes(1); // OTP expires in 1 minute
             await _unitOfWork.SaveAsync();
 
             // Send OTP via email
@@ -120,15 +121,26 @@ namespace KoiShipping.API.Controllers
                 return BadRequest("Invalid OTP.");
             }
 
+            // Check if OTP has expired
+            if (customer.OtpExpiration == null || customer.OtpExpiration < DateTime.UtcNow)
+            {
+                return BadRequest("OTP has expired.");
+            }
+
             // Update password
             var passwordHasher = new PasswordHasher<Customer>();
             customer.Password = passwordHasher.HashPassword(customer, model.NewPassword);
-            customer.Otp = null; // Clear OTP after use
+
+            // Clear OTP and expiration after successful password reset
+            customer.Otp = null;
+            customer.OtpExpiration = null;
+
             _unitOfWork.CustomerRepository.Update(customer);
             await _unitOfWork.SaveAsync();
 
             return Ok("Password reset successfully.");
         }
+
 
         private string GenerateOtp()
         {
@@ -136,6 +148,7 @@ namespace KoiShipping.API.Controllers
             Random random = new Random();
             return random.Next(100000, 999999).ToString(); // Simple OTP generation
         }
+
     }
 
 }

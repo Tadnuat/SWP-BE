@@ -48,18 +48,48 @@ public partial class KoiShippingContext : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("CustomerID");
 
-            entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Password).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Phone).HasMaxLength(15);
-            entity.Property(e => e.Address).HasMaxLength(255);
-            entity.Property(e => e.RegistrationDate).HasColumnType("datetime").IsRequired();
-            entity.Property(e => e.Status).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.DeleteStatus).HasColumnType("bit").IsRequired();
-            entity.Property(e => e.Otp).HasMaxLength(6).IsRequired(false).HasDefaultValue(null); // hoặc .IsRequired() nếu bạn muốn bắt buộc
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Password)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Phone)
+                .HasMaxLength(15);
+
+            entity.Property(e => e.Address)
+                .HasMaxLength(255);
+
+            entity.Property(e => e.RegistrationDate)
+                .HasColumnType("datetime")
+                .IsRequired();
+
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.DeleteStatus)
+                .HasColumnType("bit")
+                .IsRequired();
+
+            // Cấu hình cho trường Otp
+            entity.Property(e => e.Otp)
+                .HasMaxLength(6)
+                .IsRequired(false) // Không bắt buộc
+                .HasDefaultValue(null);
+
+            // Cấu hình cho trường OtpExpiration (thời hạn OTP)
+            entity.Property(e => e.OtpExpiration)
+                .HasColumnType("datetime")
+                .IsRequired(false) // Không bắt buộc
+                .HasDefaultValue(null); // Giá trị mặc định là null
         });
-
-
         // Bảng Staffs
         modelBuilder.Entity<Staff>(entity =>
         {

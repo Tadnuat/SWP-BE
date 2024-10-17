@@ -16,7 +16,8 @@ CREATE TABLE Customer (
     RegistrationDate DATETIME NOT NULL,
     Status NVARCHAR(100) NOT NULL,
     DeleteStatus BIT NOT NULL, -- Chỉ có giá trị 0 hoặc 1
-	Otp NVARCHAR(6)
+	Otp NVARCHAR(6),
+	OtpExpiration DATETIME
 );
 
 -- Tạo bảng Staffs
