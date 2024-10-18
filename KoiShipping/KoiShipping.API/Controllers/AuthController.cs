@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Policy;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Google.Apis.Gmail.v1;
 
 namespace KoiShipping.API.Controllers
 {
@@ -22,11 +23,13 @@ namespace KoiShipping.API.Controllers
     {
         private readonly TokenService _tokenService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
 
-        public AuthController(IUnitOfWork unitOfWork, TokenService tokenService)
+        public AuthController(IUnitOfWork unitOfWork, TokenService tokenService, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
+            _emailService = emailService;
         }
 
         [HttpPost("loginstaff")]
@@ -92,23 +95,71 @@ namespace KoiShipping.API.Controllers
                 Phone = request.Phone,
                 Address = request.Address,
                 RegistrationDate = DateTime.Now, // Set to current date
-                Status = "Active",
-                DeleteStatus = false // Set DeleteStatus to false by default
+                Status = "Active", // Giữ trạng thái "Pending" cho đến khi OTP được xác nhận
+                DeleteStatus = true // Đặt DeleteStatus là true cho đến khi OTP được xác nhận
             };
 
             // Hash the password before saving it to the database
             customer.Password = passwordHasher.HashPassword(customer, request.Password);
 
+            // Generate OTP
+            var otp = GenerateOtp();
+            customer.Otp = otp; // Lưu OTP vào cơ sở dữ liệu (giới hạn 6 ký tự)
+            customer.OtpExpiration = DateTime.Now.AddMinutes(10); // OTP sẽ hết hạn sau 10 phút
+
             _unitOfWork.CustomerRepository.Insert(customer);
             await _unitOfWork.SaveAsync();
 
-            return Ok("Đăng ký thành công");
-        }
+            // Gửi OTP qua email
+            var emailSent = await _emailService.SendEmailAsync(request.Email, "Your OTP Code", $"Your OTP code is {otp}");
+            if (!emailSent)
+            {
+                return StatusCode(500, "Failed to send OTP email.");
+            }
 
+            return Ok(new { message = "Đăng ký thành công. Vui lòng kiểm tra email để nhận OTP." });
+        }
+        [HttpPost("verifyotp")]
+        public async Task<ActionResult> VerifyOtp(string email, string otp)
+        {
+            var customer = _unitOfWork.CustomerRepository.Get(c => c.Email == email).FirstOrDefault();
+            if (customer == null)
+            {
+                return NotFound(new { message = "Customer not found." });
+            }
+
+            // Kiểm tra thời gian hết hạn OTP
+            if (customer.OtpExpiration < DateTime.Now)
+            {
+                return BadRequest(new { message = "OTP has expired." });
+            }
+
+            // Kiểm tra OTP có khớp hay không
+            if (customer.Otp != otp)
+            {
+                return BadRequest(new { message = "Invalid OTP." });
+            }
+
+            // Xác nhận OTP thành công, cập nhật DeleteStatus
+            customer.DeleteStatus = false; // Đặt DeleteStatus thành false sau khi xác nhận thành công
+            customer.Otp = null; // Xóa OTP sau khi xác nhận thành công
+            customer.OtpExpiration = null;
+
+            _unitOfWork.CustomerRepository.Update(customer);
+            await _unitOfWork.SaveAsync();
+
+            return Ok(new { message = "OTP verified successfully. Your account is now active." });
+        }
         private bool IsValidEmail(string email)
         {
             // Validate email format (must end with @gmail.com)
             return !string.IsNullOrWhiteSpace(email) && email.EndsWith("@gmail.com");
+        }
+        private string GenerateOtp()
+        {
+            // Implement OTP generation logic (e.g., a random 6-digit number)
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString(); // Simple OTP generation
         }
 
         // POST: api/auth/logincustomer
