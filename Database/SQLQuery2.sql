@@ -1,15 +1,16 @@
 ﻿-- Thêm dữ liệu mẫu vào bảng Customer
-INSERT INTO Customer (Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus, Otp, OtpExpiration)
+SET IDENTITY_INSERT [Customer] ON;
+INSERT INTO Customer (CustomerID, Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus, Otp, OtpExpiration)
 VALUES
-('Customer 1', 'customer1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345671', 'Address 1', GETDATE(), 'Active', 0, NULL, NULL),
-('Customer 2', 'customer2@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345672', 'Address 2', GETDATE(), 'Active', 0, NULL, NULL),
-('Customer 3', 'customer3@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345673', 'Address 3', GETDATE(), 'Inactive', 0, NULL, NULL),
-('Customer 4', 'customer4@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345674', 'Address 4', GETDATE(), 'Active', 0, NULL, NULL),
-('Customer 5', 'customer5@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345675', 'Address 5', GETDATE(), 'Active', 0, NULL, NULL),
-('Customer 6', 'customer6@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345676', 'Address 6', GETDATE(), 'Inactive', 0, NULL, NULL),
-('Customer 7', 'customer7@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345677', 'Address 7', GETDATE(), 'Active', 0, NULL, NULL);
-
-
+(0, 'Customer 0', 'customer1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345671', 'Address 1', GETDATE(), 'Active', 1, NULL, NULL),
+(1, 'Customer 1', 'customer1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345671', 'Address 1', GETDATE(), 'Active', 0, NULL, NULL),
+(2, 'Customer 2', 'customer2@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345672', 'Address 2', GETDATE(), 'Active', 0, NULL, NULL),
+(3, 'Customer 3', 'customer3@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345673', 'Address 3', GETDATE(), 'Inactive', 0, NULL, NULL),
+(4, 'Customer 4', 'customer4@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345674', 'Address 4', GETDATE(), 'Active', 0, NULL, NULL),
+(5, 'Customer 5', 'customer5@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345675', 'Address 5', GETDATE(), 'Active', 0, NULL, NULL),
+(6, 'Customer 6', 'customer6@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345676', 'Address 6', GETDATE(), 'Inactive', 0, NULL, NULL),
+(7, 'Customer 7', 'customer7@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345677', 'Address 7', GETDATE(), 'Active', 0, NULL, NULL);
+SET IDENTITY_INSERT [Customer] OFF;
 
 -- Thêm dữ liệu mẫu vào bảng Staffs
 INSERT INTO Staffs (StaffName, Email, Password, Role, Phone, Status, DeleteStatus)

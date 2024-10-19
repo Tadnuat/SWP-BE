@@ -20,6 +20,17 @@ CREATE TABLE Customer (
 	OtpExpiration DATETIME
 );
 
+-- Tạo bảng Notification (nhiều-một với bảng Customer)
+CREATE TABLE Notification (
+    NotificationID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng
+    Message NVARCHAR(500) NOT NULL, -- Nội dung thông báo
+    CreatedDate DATETIME NOT NULL, -- Ngày tạo thông báo
+    IsRead BIT NOT NULL DEFAULT 0, -- Trạng thái đọc (0: chưa đọc, 1: đã đọc)
+    Role NVARCHAR(100) NOT NULL, -- Vai trò nhận thông báo (Manager, Sale Staff, etc.)
+    CustomerID INT NOT NULL, -- Khóa ngoại tới bảng Customer
+    CONSTRAINT FK_Notification_Customer FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+);
+
 -- Tạo bảng Staffs
 CREATE TABLE Staffs (
     StaffID INT PRIMARY KEY IDENTITY(1,1), -- ID tự động tăng

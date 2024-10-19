@@ -12,6 +12,7 @@ namespace KoiShipping.Repo.UnitOfWork
 
         private GenericRepository<AdvancedService> _advancedService;
         private GenericRepository<AserviceOrderD> _aserviceOrderD;
+        private GenericRepository<Notification> _notification;
         private GenericRepository<Customer> _customer;
         private GenericRepository<Order> _order;
         private GenericRepository<OrderDetail> _orderDetail;
@@ -92,6 +93,18 @@ namespace KoiShipping.Repo.UnitOfWork
                     _customer = new GenericRepository<Customer>(_context);
                 }
                 return _customer;
+            }
+        }
+
+        public GenericRepository<Notification> NotificationRepository
+        {
+            get
+            {
+                if (_notification == null)
+                {
+                    _notification = new GenericRepository<Notification>(_context);
+                }
+                return _notification;
             }
         }
 

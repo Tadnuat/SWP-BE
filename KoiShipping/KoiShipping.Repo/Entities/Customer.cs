@@ -25,4 +25,5 @@ public partial class Customer
     public string? Otp { get; set; } 
     public DateTime? OtpExpiration { get; set; }
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<Notification> Notifications { get; set; }
 }

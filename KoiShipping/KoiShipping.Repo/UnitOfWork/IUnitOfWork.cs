@@ -14,6 +14,7 @@ namespace KoiShipping.Repo.UnitOfWork
         public GenericRepository<AdvancedService> AdvancedServiceRepository { get; }
         public GenericRepository<AserviceOrderD> AserviceOrderDRepository { get; }
         public GenericRepository<Customer> CustomerRepository { get; }
+        public GenericRepository<Notification> NotificationRepository { get; }
         public GenericRepository<Order> OrderRepository { get; }
         public GenericRepository<OrderDetail> OrderDetailRepository { get; }
         public GenericRepository<OrderStaff> OrderStaffRepository { get; }

@@ -310,6 +310,20 @@ namespace KoiShipping.API.Controllers
                 var message = $"Đơn hàng mới từ khách hàng với mã đơn hàng: {orderDetail.OrderDetailId}";
                 await _hubContext.Clients.All.SendAsync("ReceiveOrderNotification", message);
 
+                // Tạo Notification mới
+                var notification = new Notification
+                {
+                    Message = message,
+                    CreatedDate = DateTime.Now,
+                    IsRead = false, 
+                    Role = "Staffs", 
+                    CustomerId = 0 
+                };
+
+                // Thêm Notification vào cơ sở dữ liệu
+                _unitOfWork.NotificationRepository.Insert(notification);
+                await _unitOfWork.SaveAsync(); // Lưu thay đổi cho bảng Notification
+
                 // Tạo AserviceOrderD cho từng AdvancedService đã chọn
                 if (request.SelectedAdvancedServiceIds != null && request.SelectedAdvancedServiceIds.Any())
                 {
@@ -333,6 +347,7 @@ namespace KoiShipping.API.Controllers
 
                     await _unitOfWork.SaveAsync(); // Lưu thay đổi cho bảng AserviceOrderD
                 }
+
                 var trackingOrderD = new TrackingOrderD
                 {
                     OrderDetailId = orderDetail.OrderDetailId,
@@ -353,7 +368,8 @@ namespace KoiShipping.API.Controllers
             }
         }
 
-            // PUT: api/orderdetail/5
+
+        // PUT: api/orderdetail/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOrderDetail(int id, [FromBody] RequestUpdateOrderDetailModel request)
         {
@@ -369,6 +385,9 @@ namespace KoiShipping.API.Controllers
                 return NotFound();
             }
 
+            // Lưu trạng thái cũ để kiểm tra thay đổi
+            var oldStatus = orderDetail.Status;
+
             // Update fields only if they are provided
             if (request.OrderId.HasValue) orderDetail.OrderId = request.OrderId.Value;
             if (request.CustomerId.HasValue) orderDetail.CustomerId = request.CustomerId.Value;
@@ -381,7 +400,10 @@ namespace KoiShipping.API.Controllers
             if (request.Price.HasValue) orderDetail.Price = request.Price.Value;
             if (!string.IsNullOrWhiteSpace(request.KoiStatus)) orderDetail.KoiStatus = request.KoiStatus;
             if (!string.IsNullOrWhiteSpace(request.AttachedItem)) orderDetail.AttachedItem = request.AttachedItem;
-            if (!string.IsNullOrWhiteSpace(request.Status)) orderDetail.Status = request.Status;
+            if (!string.IsNullOrWhiteSpace(request.Status))
+            {
+                orderDetail.Status = request.Status; // Cập nhật trạng thái
+            }
             if (!string.IsNullOrWhiteSpace(request.ReceiverName)) orderDetail.ReceiverName = request.ReceiverName;
             if (!string.IsNullOrWhiteSpace(request.ReceiverPhone)) orderDetail.ReceiverPhone = request.ReceiverPhone;
             if (request.Rating.HasValue) orderDetail.Rating = request.Rating.Value; // Update Rating if provided
@@ -390,11 +412,35 @@ namespace KoiShipping.API.Controllers
             // Set DeleteStatus to false regardless of the request body
             orderDetail.DeleteStatus = request.DeleteStatus;
 
+            // Gửi thông báo và lưu vào Notification nếu trạng thái thay đổi
+            if (orderDetail.Status != oldStatus)
+            {
+                var message = $"Trạng thái đơn hàng đã thay đổi từ '{oldStatus}' sang '{orderDetail.Status}'.";
+
+                // Gửi thông báo đến tất cả các client đang kết nối
+                await _hubContext.Clients.All.SendAsync("ReceiveOrderNotification", message);
+
+                // Tạo Notification mới
+                var notification = new Notification
+                {
+                    Message = message,
+                    CreatedDate = DateTime.Now,
+                    IsRead = false, // Chưa đọc
+                    Role = "Customer", // Hoặc vai trò phù hợp
+                    CustomerId = orderDetail.CustomerId // Gán CustomerId
+                };
+
+                // Thêm Notification vào cơ sở dữ liệu
+                _unitOfWork.NotificationRepository.Insert(notification);
+            }
+
+            // Cập nhật OrderDetail trong cơ sở dữ liệu
             _unitOfWork.OrderDetailRepository.Update(orderDetail);
             await _unitOfWork.SaveAsync();
 
             return NoContent();
         }
+
 
 
         // DELETE: api/orderdetail/5

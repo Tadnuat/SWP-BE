@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FirebaseAdmin.Messaging;
 using Microsoft.EntityFrameworkCore;
 
 namespace KoiShipping.Repo.Entities;
@@ -90,6 +91,45 @@ public partial class KoiShippingContext : DbContext
                 .IsRequired(false) // Không bắt buộc
                 .HasDefaultValue(null); // Giá trị mặc định là null
         });
+        // Bảng Notification
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(e => e.NotificationId).HasName("PK_Notification");
+
+            entity.ToTable("Notification");
+
+            entity.Property(e => e.NotificationId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("NotificationID");
+
+            entity.Property(e => e.Message)
+                .IsRequired()
+                .HasMaxLength(500);
+
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("datetime")
+                .IsRequired();
+
+            entity.Property(e => e.IsRead)
+                .HasColumnType("bit")
+                .HasDefaultValue(false)
+                .IsRequired();
+
+            entity.Property(e => e.Role)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.CustomerId)
+                .HasColumnName("CustomerID")
+                .IsRequired();
+
+            entity.HasOne(d => d.Customer)
+                .WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Notification_Customer");
+        });
+
         // Bảng Staffs
         modelBuilder.Entity<Staff>(entity =>
         {
