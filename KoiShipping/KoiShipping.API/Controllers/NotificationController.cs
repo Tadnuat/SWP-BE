@@ -27,7 +27,7 @@ namespace KoiShipping.API.Controllers
         {
             var notifications = await Task.Run(() =>
                 _unitOfWork.NotificationRepository.Get()
-                .Where(n => n.CustomerId == customerId)
+                .Where(n => n.CustomerId == customerId).OrderByDescending(n => n.NotificationId)
                 .ToList());
 
             if (notifications == null || !notifications.Any())
@@ -64,7 +64,6 @@ namespace KoiShipping.API.Controllers
                 return NotFound();
             }
 
-            notification.Message = request.Message;
             notification.IsRead = request.IsRead; // Cập nhật trạng thái đọc
 
             _unitOfWork.NotificationRepository.Update(notification);

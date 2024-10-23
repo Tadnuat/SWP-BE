@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
-    [Authorize(Roles = "Manager,Customer")]
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
@@ -25,6 +24,7 @@ namespace KoiShipping.API.Controllers
 
         // GET: api/customer
         [HttpGet]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult<IEnumerable<ResponseCustomerModel>>> GetCustomers()
         {
             // Retrieve only customers where DeleteStatus is false
@@ -52,6 +52,7 @@ namespace KoiShipping.API.Controllers
 
         // GET: api/customer/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Manager,Customer")]
         public async Task<ActionResult<ResponseCustomerModel>> GetCustomer(int id)
         {
             var customer = _unitOfWork.CustomerRepository.GetByID(id);
@@ -78,6 +79,7 @@ namespace KoiShipping.API.Controllers
             return Ok(response);
         }
     [HttpPost]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult> CreateCustomer([FromBody] RequestCreateCustomerModel request)
         {
             if (!ModelState.IsValid)
@@ -124,6 +126,7 @@ namespace KoiShipping.API.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Manager,Customer")]
         public async Task<IActionResult> UpdateCustomer(int id, [FromBody] RequestUpdateCustomerModel request)
         {
             if (!ModelState.IsValid)
@@ -180,6 +183,7 @@ namespace KoiShipping.API.Controllers
 
         // DELETE: api/customer/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             var customer = _unitOfWork.CustomerRepository.GetByID(id);
@@ -197,6 +201,7 @@ namespace KoiShipping.API.Controllers
 
         // Soft DELETE: api/customer/soft/5
         [HttpDelete("soft/{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> SoftDeleteCustomer(int id)
         {
             var customer = _unitOfWork.CustomerRepository.GetByID(id);

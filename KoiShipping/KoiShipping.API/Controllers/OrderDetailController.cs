@@ -315,9 +315,9 @@ namespace KoiShipping.API.Controllers
                 {
                     Message = message,
                     CreatedDate = DateTime.Now,
-                    IsRead = false, 
-                    Role = "Staffs", 
-                    CustomerId = 0 
+                    IsRead = false,
+                    Role = "Staffs",
+                    CustomerId = 0
                 };
 
                 // Thêm Notification vào cơ sở dữ liệu
@@ -415,10 +415,10 @@ namespace KoiShipping.API.Controllers
             // Gửi thông báo và lưu vào Notification nếu trạng thái thay đổi
             if (orderDetail.Status != oldStatus)
             {
-                var message = $"Trạng thái đơn hàng đã thay đổi từ '{oldStatus}' sang '{orderDetail.Status}'.";
+                var message = $"{orderDetail.CustomerId}-{orderDetail.OrderDetailId}-{orderDetail.Status}";
 
                 // Gửi thông báo đến tất cả các client đang kết nối
-                await _hubContext.Clients.All.SendAsync("ReceiveOrderNotification", message);
+                await _hubContext.Clients.All.SendAsync("NotiCustomer", message);
 
                 // Tạo Notification mới
                 var notification = new Notification
