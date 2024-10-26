@@ -42,7 +42,7 @@ namespace KoiShipping.API.Controllers
                     Phone = customer.Phone,
                     Address = customer.Address,
                     RegistrationDate = customer.RegistrationDate,
-                    Status = customer.Status,
+                    Avatar = customer.Avatar,
                     DeleteStatus = customer.DeleteStatus
                 });
             }
@@ -72,7 +72,7 @@ namespace KoiShipping.API.Controllers
                 Phone = customer.Phone,
                 Address = customer.Address,
                 RegistrationDate = customer.RegistrationDate,
-                Status = customer.Status,
+                Avatar = customer.Avatar,
                 DeleteStatus = customer.DeleteStatus
             };
 
@@ -114,7 +114,7 @@ namespace KoiShipping.API.Controllers
                 Phone = request.Phone,
                 Address = request.Address,
                 RegistrationDate = DateTime.Now, // Set to current date
-                Status = "Active",
+                Avatar = null,
                 DeleteStatus = false // Set DeleteStatus to false by default
             };
 
@@ -164,7 +164,7 @@ namespace KoiShipping.API.Controllers
             customer.Email = request.Email;
             customer.Phone = request.Phone;
             customer.Address = request.Address;
-            customer.Status = request.Status;
+            customer.Avatar = request.Avatar;
 
             // Update the password only if it's provided in the request
             //if (!string.IsNullOrWhiteSpace(request.Password))

@@ -1,6 +1,6 @@
 ﻿-- Thêm dữ liệu mẫu vào bảng Customer
 SET IDENTITY_INSERT [Customer] ON;
-INSERT INTO Customer (CustomerID, Name, Email, Password, Phone, Address, RegistrationDate, Status, DeleteStatus, Otp, OtpExpiration)
+INSERT INTO Customer (CustomerID, Name, Email, Password, Phone, Address, RegistrationDate, Avatar, DeleteStatus, Otp, OtpExpiration)
 VALUES
 (0, 'Customer 0', 'customer1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345671', 'Address 1', GETDATE(), 'Active', 1, NULL, NULL),
 (1, 'Customer 1', 'customer1@example.com', 'AQAAAAIAAYagAAAAEDC8JGy5jffGBwG63zWxUFoXUI2hTFDnUfYXjnCEcdcjuanfhmbXUUvsjG8Dm2Qcew==', '0912345671', 'Address 1', GETDATE(), 'Active', 0, NULL, NULL),
@@ -55,15 +55,15 @@ VALUES
 (N'Express Handling', 80000, 0, N'Xử lý và vận chuyển hàng hóa hỏa tốc');
 
 -- Thêm dữ liệu mẫu vào bảng Order_Detail
-INSERT INTO Order_Detail (OrderID, CustomerID, ServiceID, ServiceName, StartLocation, Destination, Weight, Quantity, Price, KoiStatus, AttachedItem, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback, CreatedDate)
+INSERT INTO Order_Detail (OrderID, CustomerID, ServiceID, ServiceName, StartLocation, Destination, Weight, Quantity, Price, KoiStatus, AttachedItem, Image, Status, DeleteStatus, ReceiverName, ReceiverPhone, Rating, Feedback, CreatedDate)
 VALUES
-(0, 1, 1, 'FastDelivery', 'HCM', 'Hanoi', 10.5, 2, 150000, 'Healthy', NULL, 'Pending', 0, 'Receiver 1', '0912345678', 5, 'Great service', GETDATE()),
-(1, 2, 2, 'EconomyDelivery', 'Hanoi', 'HCM', 8.0, 1, 120000, 'Healthy', NULL, 'Waiting', 0, 'Receiver 2', '0912345679', 4, 'Satisfied', GETDATE()),
-(2, 3, 3, 'ExpressDelivery', 'HCM', 'Hue', 15.0, 3, 180000, 'Injured', 'Box', 'Delivering', 0, 'Receiver 3', '0912345680', 3, 'Slow delivery', GETDATE()),
-(3, 4, 4, 'FastDelivery', 'Hue', 'Hanoi', 12.0, 1, 160000, 'Healthy', 'Plastic Bag', 'Pending', 0, 'Receiver 4', '0912345681', 4, 'Good but expensive', GETDATE()),
-(4, 5, 5, 'EconomyDelivery', 'Hanoi', 'HCM', 7.5, 2, 140000, 'Injured', NULL, 'Canceled', 0, 'Receiver 5', '0912345682', NULL, NULL, GETDATE()),
-(5, 6, 6, 'ExpressDelivery', 'HCM', 'Hanoi', 18.0, 3, 200000, 'Healthy', NULL, 'Finish', 0, 'Receiver 6', '0912345683', 5, 'Excellent', GETDATE()),
-(6, 7, 7, 'FastDelivery', 'Hue', 'Hanoi', 20.0, 1, 180000, 'Injured', NULL, 'Delivering', 0, 'Receiver 7', '0912345684', 2, 'Poor packaging', GETDATE());
+(0, 1, 1, 'FastDelivery', 'HCM', 'Hanoi', 10.5, 2, 150000, 'Healthy', NULL, 'image', 'Pending', 0, 'Receiver 1', '0912345678', 5, 'Great service', GETDATE()),
+(1, 2, 2, 'EconomyDelivery', 'Hanoi', 'HCM', 8.0, 1, 120000, 'Healthy', NULL, 'image', 'Waiting', 0, 'Receiver 2', '0912345679', 4, 'Satisfied', GETDATE()),
+(2, 3, 3, 'ExpressDelivery', 'HCM', 'Hue', 15.0, 3, 180000, 'Injured', 'Box', 'image', 'Delivering', 0, 'Receiver 3', '0912345680', 3, 'Slow delivery', GETDATE()),
+(3, 4, 4, 'FastDelivery', 'Hue', 'Hanoi', 12.0, 1, 160000, 'Healthy', 'Plastic Bag', 'image', 'Delivered', 0, 'Receiver 4', '0912345681', 4, 'Good but expensive', GETDATE()),
+(4, 5, 5, 'EconomyDelivery', 'Hanoi', 'HCM', 7.5, 2, 140000, 'Injured', NULL, 'image', 'Canceled', 0, 'Receiver 5', '0912345682', NULL, NULL, GETDATE()),
+(5, 6, 6, 'ExpressDelivery', 'HCM', 'Hanoi', 18.0, 3, 200000, 'Healthy', NULL, 'image', 'Finish', 0, 'Receiver 6', '0912345683', 5, 'Excellent', GETDATE()),
+(6, 7, 7, 'FastDelivery', 'Hue', 'Hanoi', 20.0, 1, 180000, 'Injured', NULL, 'image', 'Delivering', 0, 'Receiver 7', '0912345684', 2, 'Poor packaging', GETDATE());
 
 -- Thêm dữ liệu mẫu vào bảng AService_OrderD
 INSERT INTO AService_OrderD (OrderDetailID, AdvancedServiceID)

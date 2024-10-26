@@ -129,6 +129,7 @@ namespace KoiShipping.API.Controllers
                     Price = od.Price,
                     KoiStatus = od.KoiStatus,
                     AttachedItem = od.AttachedItem,
+                    Image = od.Image,
                     Status = od.Status,
                     DeleteStatus = od.DeleteStatus,
                     ReceiverName = od.ReceiverName,

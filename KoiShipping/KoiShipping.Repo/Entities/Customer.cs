@@ -19,7 +19,7 @@ public partial class Customer
 
     public DateTime RegistrationDate { get; set; }
 
-    public string Status { get; set; } = null!;
+    public string? Avatar { get; set; } = null!;
 
     public bool DeleteStatus { get; set; } = false;
     public string? Otp { get; set; } 

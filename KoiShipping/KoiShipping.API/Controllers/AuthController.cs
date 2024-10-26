@@ -95,7 +95,7 @@ namespace KoiShipping.API.Controllers
                 Phone = request.Phone,
                 Address = request.Address,
                 RegistrationDate = DateTime.Now, // Set to current date
-                Status = "Active", // Giữ trạng thái "Pending" cho đến khi OTP được xác nhận
+                Avatar = null, // Giữ trạng thái "Pending" cho đến khi OTP được xác nhận
                 DeleteStatus = true // Đặt DeleteStatus là true cho đến khi OTP được xác nhận
             };
 
@@ -231,7 +231,7 @@ namespace KoiShipping.API.Controllers
                     Email = userEmail,
                     Password = "string123", // Mật khẩu mặc định
                     RegistrationDate = DateTime.UtcNow, // Ngày đăng ký
-                    Status = "Active", // Hoặc giá trị khác tùy theo yêu cầu
+                    Avatar = null,
                     DeleteStatus = false // Đặt DeleteStatus là false
                 };
 

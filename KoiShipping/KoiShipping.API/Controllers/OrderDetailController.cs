@@ -66,6 +66,7 @@ namespace KoiShipping.API.Controllers
                     Price = od.Price,
                     KoiStatus = od.KoiStatus,
                     AttachedItem = od.AttachedItem,
+                    Image = od.Image,
                     Status = od.Status,
                     DeleteStatus = od.DeleteStatus,
                     ReceiverName = od.ReceiverName,
@@ -115,6 +116,7 @@ namespace KoiShipping.API.Controllers
                 Price = od.Price,
                 KoiStatus = od.KoiStatus,
                 AttachedItem = od.AttachedItem,
+                Image = od.Image,
                 Status = od.Status,
                 DeleteStatus = od.DeleteStatus,
                 ReceiverName = od.ReceiverName,
@@ -159,6 +161,7 @@ namespace KoiShipping.API.Controllers
                 Price = od.Price,
                 KoiStatus = od.KoiStatus,
                 AttachedItem = od.AttachedItem,
+                Image = od.Image,
                 Status = od.Status,
                 DeleteStatus = od.DeleteStatus,
                 ReceiverName = od.ReceiverName,
@@ -208,6 +211,7 @@ namespace KoiShipping.API.Controllers
                 Price = od.Price,
                 KoiStatus = od.KoiStatus,
                 AttachedItem = od.AttachedItem,
+                Image = od.Image,
                 Status = od.Status,
                 DeleteStatus = od.DeleteStatus,
                 ReceiverName = od.ReceiverName,
@@ -255,6 +259,7 @@ namespace KoiShipping.API.Controllers
                 Price = orderDetail.Price,
                 KoiStatus = orderDetail.KoiStatus,
                 AttachedItem = orderDetail.AttachedItem,
+                Image = orderDetail.Image,
                 Status = orderDetail.Status,
                 DeleteStatus = orderDetail.DeleteStatus,
                 ReceiverName = orderDetail.ReceiverName,
@@ -291,6 +296,7 @@ namespace KoiShipping.API.Controllers
                 Price = request.Price,
                 KoiStatus = request.KoiStatus,
                 AttachedItem = request.AttachedItem,
+                Image = request.Image,
                 Status = "Pending",
                 DeleteStatus = false,
                 ReceiverName = request.ReceiverName,
@@ -400,6 +406,7 @@ namespace KoiShipping.API.Controllers
             if (request.Price.HasValue) orderDetail.Price = request.Price.Value;
             if (!string.IsNullOrWhiteSpace(request.KoiStatus)) orderDetail.KoiStatus = request.KoiStatus;
             if (!string.IsNullOrWhiteSpace(request.AttachedItem)) orderDetail.AttachedItem = request.AttachedItem;
+            if (!string.IsNullOrWhiteSpace(request.Image)) orderDetail.Image = request.Image;
             if (!string.IsNullOrWhiteSpace(request.Status))
             {
                 orderDetail.Status = request.Status; // Cập nhật trạng thái

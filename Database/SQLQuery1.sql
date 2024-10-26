@@ -14,7 +14,7 @@ CREATE TABLE Customer (
     Phone NVARCHAR(15),
     Address NVARCHAR(255),
     RegistrationDate DATETIME NOT NULL,
-    Status NVARCHAR(100) NOT NULL,
+    Avatar NVARCHAR(1000),
     DeleteStatus BIT NOT NULL, -- Chỉ có giá trị 0 hoặc 1
 	Otp NVARCHAR(6),
 	OtpExpiration DATETIME
@@ -89,6 +89,7 @@ CREATE TABLE Order_Detail (
     Price DECIMAL(10, 2) NOT NULL,
     KoiStatus NVARCHAR(50) NOT NULL,
     AttachedItem NVARCHAR(255),
+	Image NVARCHAR(2000),
     Status NVARCHAR(50) NOT NULL,
     DeleteStatus BIT NOT NULL, -- Chỉ có giá trị 0 hoặc 1
     ReceiverName NVARCHAR(255) NOT NULL, -- Tên người nhận

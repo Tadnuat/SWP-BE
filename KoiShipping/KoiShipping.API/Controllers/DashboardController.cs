@@ -32,12 +32,12 @@ namespace KoiShipping.API.Controllers
             return Ok(new TotalOrdersResponse { TotalOrders = totalOrders });
         }
 
-        // 2. Số đơn hàng đang vận chuyển với status là "In Transit"
+        // 2. Số đơn hàng đang vận chuyển với status là "delivering"
         [HttpGet("in-transit-orders")]
         public async Task<ActionResult<InTransitOrdersResponse>> GetInTransitOrders()
         {
             var inTransitOrders = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.Status.ToLower() == "in transit").Count());
+                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.Status.ToLower() == "delivering").Count());
 
             return Ok(new InTransitOrdersResponse { InTransitOrders = inTransitOrders });
         }
@@ -57,7 +57,7 @@ namespace KoiShipping.API.Controllers
         public async Task<ActionResult<TotalRevenueResponse>> GetTotalRevenue()
         {
             var totalRevenue = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.Status.ToLower() == "delivered")
+                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.Status.ToLower() == "finish")
                     .Sum(od => od.Price));
 
             return Ok(new TotalRevenueResponse { TotalRevenue = totalRevenue });
@@ -68,7 +68,7 @@ namespace KoiShipping.API.Controllers
         public async Task<ActionResult<SatisfactionRateResponse>> GetSatisfactionRate()
         {
             var totalOrdersWithRating = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.Rating.HasValue && od.DeleteStatus == false).Count());
+                _unitOfWork.OrderDetailRepository.Get(od => od.Rating.HasValue && od.DeleteStatus == false && od.Status == "finish").Count());
 
             var satisfiedOrders = await Task.Run(() =>
                 _unitOfWork.OrderDetailRepository.Get(od => od.Rating >= 4 && od.DeleteStatus == false).Count());
@@ -79,8 +79,6 @@ namespace KoiShipping.API.Controllers
 
             return Ok(new SatisfactionRateResponse { SatisfactionRate = satisfactionRate });
         }
-
-        // 6. Tính doanh thu theo từng tháng trong năm hiện tại
         // 6. Tính doanh thu theo từng tháng trong năm cho phép nhập năm
         [HttpGet("monthly-revenue/{year}")]
         public async Task<ActionResult<List<MonthlyRevenueItem>>> GetMonthlyRevenue(int year)
@@ -88,7 +86,7 @@ namespace KoiShipping.API.Controllers
             decimal[] monthlyRevenue = new decimal[12];
 
             var orderDetails = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.CreatedDate.Year == year));
+                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.CreatedDate.Year == year && od.Status == "finish"));
 
             for (int month = 1; month <= 12; month++)
             {

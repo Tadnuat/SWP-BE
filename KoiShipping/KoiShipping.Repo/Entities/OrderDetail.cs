@@ -28,7 +28,7 @@ namespace KoiShipping.Repo.Entities
         public string KoiStatus { get; set; } = null!;
 
         public string? AttachedItem { get; set; }
-
+        public string? Image { get; set; }
         public string Status { get; set; } = null!;
 
         public bool DeleteStatus { get; set; }

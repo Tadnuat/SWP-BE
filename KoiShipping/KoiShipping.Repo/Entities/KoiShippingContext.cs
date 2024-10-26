@@ -71,8 +71,7 @@ public partial class KoiShippingContext : DbContext
                 .HasColumnType("datetime")
                 .IsRequired();
 
-            entity.Property(e => e.Status)
-                .IsRequired()
+            entity.Property(e => e.Avatar)
                 .HasMaxLength(100);
 
             entity.Property(e => e.DeleteStatus)
@@ -238,6 +237,7 @@ public partial class KoiShippingContext : DbContext
             entity.Property(e => e.Price).HasColumnType("decimal(10, 2)").IsRequired();
             entity.Property(e => e.KoiStatus).IsRequired().HasMaxLength(50);
             entity.Property(e => e.AttachedItem).HasMaxLength(255);
+            entity.Property(e => e.Image).HasMaxLength(2000);
             entity.Property(e => e.Status).IsRequired().HasMaxLength(50);
             entity.Property(e => e.DeleteStatus).HasColumnType("bit").IsRequired();
             entity.Property(e => e.ReceiverName).IsRequired().HasMaxLength(255);
