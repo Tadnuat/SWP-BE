@@ -1,0 +1,15 @@
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\bin\Release\net8.0\KoiShipping.Repo.deps.json
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\bin\Release\net8.0\KoiShipping.Repo.runtimeconfig.json
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\bin\Release\net8.0\KoiShipping.Repo.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\bin\Release\net8.0\KoiShipping.Repo.pdb
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.csproj.AssemblyReference.cache
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.GeneratedMSBuildEditorConfig.editorconfig
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.AssemblyInfoInputs.cache
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.AssemblyInfo.cs
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.csproj.CoreCompileInputs.cache
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.sourcelink.json
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\refint\KoiShipping.Repo.dll
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.pdb
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\KoiShipping.Repo.genruntimeconfig.cache
+D:\SWP391\SWP-BE\KoiShipping\KoiShipping.Repo\obj\Release\net8.0\ref\KoiShipping.Repo.dll
