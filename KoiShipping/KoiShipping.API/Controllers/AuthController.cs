@@ -256,14 +256,14 @@ namespace KoiShipping.API.Controllers
             });
 
             // Chuyển hướng người dùng tới trang chủ (homepage)
-            return Redirect($"http://localhost:3000/home?token={token}&userId={existingCustomer.CustomerId}&role={role}");
+            return Redirect($"https://koi-shipping.netlify.app/home?token={token}&userId={existingCustomer.CustomerId}&role={role}");
         }
 
         [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Redirect("http://localhost:3000/home"); // Chuyển hướng đến URL bên ngoài
+            return Redirect("https://koi-shipping.netlify.app/home"); // Chuyển hướng đến URL bên ngoài
         }
 
     }

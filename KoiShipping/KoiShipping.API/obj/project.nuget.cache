@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CThnKrYcnOOyB66WFWPmEX3LZ3CUwBpzMVFIKtqJDlWlpAnKp3NX8nPQNVVnxsCIj/n/59jkmyg5sXTwh6f7Qw==",
+  "dgSpecHash": "KcDXYxjcBTR0ftaU4Phl1lNbGKrhvz5JLdQJ4ydtImsZsVq7cJBElRqMq5bP0TQ/Gm263Wcyv0xrBp1vwYcX5g==",
   "success": true,
   "projectFilePath": "D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping.API\\KoiShipping.API.csproj",
   "expectedPackageFiles": [
@@ -101,6 +101,7 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.6\\microsoft.visualstudio.azure.containers.tools.targets.1.19.6.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\mimekit\\4.8.0\\mimekit.4.8.0.nupkg.sha512",

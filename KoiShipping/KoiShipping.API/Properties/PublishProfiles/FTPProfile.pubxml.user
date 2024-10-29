@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAoj+Uk0O12Uq23Mox6imvywAAAAACAAAAAAAQZgAAAAEAACAAAAAJ6BjAmZcn6hHZAJCCw7GF/PdzMuXFuloHJQqMULImRwAAAAAOgAAAAAIAACAAAADDf+lKFHYQzecEEXixGiMTCb4h/ln+ztX/7ZedolS/JSAAAABRQpfqLzNJG7Sx76rhXkFSVc7QsoPpccjUH55RDXrJzUAAAAA5mIbPsgnEDtScDgzDQSx1rGiXPnSepdS+eCda2gQ6wA0v+8Fm8wC+T2FjSCVwZO+QR9qRMM1jkhjemLiruZaY</EncryptedPassword>
+    <_PublishTargetUrl>ftp://155.254.244.38/www.Koishipping.somee.com/ftp://Koishipping.somee.com/www.Koishipping.somee.com</_PublishTargetUrl>
+    <History>False|2024-10-28T08:01:25.2448145Z;False|2024-10-28T14:27:19.4769203+07:00;False|2024-10-28T14:25:32.9735178+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="MyDbContext">
+      <Value>Data Source=SQL9001.site4now.net%3bInitial Catalog=db_aaeae4_sa%3bUser Id=db_aaeae4_sa_admin%3bPassword=ilikes1234</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>
