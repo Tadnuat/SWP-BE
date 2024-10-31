@@ -32,7 +32,7 @@ namespace KoiShipping.API.Controllers
         {
             // Retrieve only orders where DeleteStatus is false
             var orders = await _unitOfWork.OrderRepository.GetQueryable()
-                .Where(o => !o.DeleteStatus)
+                .Where(o => !o.DeleteStatus).OrderByDescending(o => o.OrderId)
                 .Include(o => o.OrderStaffs) // Bao gồm bảng OrderStaff
                     .ThenInclude(os => os.Staff) // Bao gồm bảng Staff
                 .ToListAsync(); // Sử dụng ToListAsync thay vì ToList
@@ -153,6 +153,11 @@ namespace KoiShipping.API.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Kiểm tra ngày đến không nhỏ hơn ngày xuất phát
+            if (request.ArrivalDate < request.DepartureDate)
+            {
+                return BadRequest("Ngày đến phải lớn hơn ngày xuất phát.");
+            }
             try
             {
                 // Tạo đối tượng Order

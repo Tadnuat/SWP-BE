@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options =>
     options.AddPolicy("MyPolicy", policy =>
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials() // Allow credentials for SignalR
-            .WithOrigins("https://koi-shipping.netlify.app", "https://admin-koi-shipping.netlify.app"))); // Thêm origin của frontend React))
+            .WithOrigins("https://koi-shipping.netlify.app", "https://admin-koi-shipping.netlify.app","http://localhost:3000", "http://localhost:3001"))); // Thêm origin của frontend React))
 
 // Configure database context using connection string from appsettings.json
 builder.Services.AddDbContext<KoiShippingContext>(options =>
