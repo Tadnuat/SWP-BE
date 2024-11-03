@@ -22,62 +22,58 @@ namespace KoiShipping.API.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // 1. Tổng số đơn hàng với điều kiện status không phải "Canceled"
-        [HttpGet("total-orders")]
-        public async Task<ActionResult<TotalOrdersResponse>> GetTotalOrders()
+        [HttpGet("dashboard")]
+        public async Task<ActionResult<DashboardResponse>> GetDashboardData(DateTime? fromDate, DateTime? toDate)
         {
-            var totalOrders = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.Status.ToLower() != "canceled").Count());
+            var totalOrders =  _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false
+                                                                               && od.Status.ToLower() != "canceled"
+                                                                               && (!fromDate.HasValue || od.CreatedDate >= fromDate)
+                                                                               && (!toDate.HasValue || od.CreatedDate <= toDate))
+                                                                      .Count();
 
-            return Ok(new TotalOrdersResponse { TotalOrders = totalOrders });
-        }
+            var inTransitOrders =  _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false
+                                                                                   && od.Status.ToLower() == "delivering"
+                                                                                   && (!fromDate.HasValue || od.CreatedDate >= fromDate)
+                                                                                   && (!toDate.HasValue || od.CreatedDate <= toDate))
+                                                                        .Count();
 
-        // 2. Số đơn hàng đang vận chuyển với status là "delivering"
-        [HttpGet("in-transit-orders")]
-        public async Task<ActionResult<InTransitOrdersResponse>> GetInTransitOrders()
-        {
-            var inTransitOrders = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.Status.ToLower() == "delivering").Count());
+            var pendingOrders =  _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false
+                                                                                 && od.Status.ToLower() == "pending"
+                                                                                 && (!fromDate.HasValue || od.CreatedDate >= fromDate)
+                                                                                 && (!toDate.HasValue || od.CreatedDate <= toDate))
+                                                                      .Count();
 
-            return Ok(new InTransitOrdersResponse { InTransitOrders = inTransitOrders });
-        }
+            var totalRevenue =  _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false
+                                                                                && od.Status.ToLower() == "finish"
+                                                                                && (!fromDate.HasValue || od.CreatedDate >= fromDate)
+                                                                                && (!toDate.HasValue || od.CreatedDate <= toDate))
+                                                                     .Sum(od => od.Price);
 
-        // 3. Số đơn hàng đang chờ xử lý với status là "Pending"
-        [HttpGet("pending-orders")]
-        public async Task<ActionResult<PendingOrdersResponse>> GetPendingOrders()
-        {
-            var pendingOrders = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.Status.ToLower() == "pending").Count());
+            var totalOrdersWithRating =  _unitOfWork.OrderDetailRepository.Get(od => od.Rating.HasValue
+                                                                                        && od.DeleteStatus == false
+                                                                                        && od.Status == "finish"
+                                                                                        && (!fromDate.HasValue || od.CreatedDate >= fromDate)
+                                                                                        && (!toDate.HasValue || od.CreatedDate <= toDate))
+                                                                              .Count();
 
-            return Ok(new PendingOrdersResponse { PendingOrders = pendingOrders });
-        }
-
-        // 4. Tổng doanh thu từ những đơn hàng có status là "Delivered"
-        [HttpGet("total-revenue")]
-        public async Task<ActionResult<TotalRevenueResponse>> GetTotalRevenue()
-        {
-            var totalRevenue = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false && od.Status.ToLower() == "finish")
-                    .Sum(od => od.Price));
-
-            return Ok(new TotalRevenueResponse { TotalRevenue = totalRevenue });
-        }
-
-        // 5. Tính tỉ lệ hài lòng với rating từ 4 trở lên
-        [HttpGet("satisfaction-rate")]
-        public async Task<ActionResult<SatisfactionRateResponse>> GetSatisfactionRate()
-        {
-            var totalOrdersWithRating = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.Rating.HasValue && od.DeleteStatus == false && od.Status == "finish").Count());
-
-            var satisfiedOrders = await Task.Run(() =>
-                _unitOfWork.OrderDetailRepository.Get(od => od.Rating >= 4 && od.DeleteStatus == false).Count());
+            var satisfiedOrders =  _unitOfWork.OrderDetailRepository.Get(od => od.Rating >= 4
+                                                                                   && od.DeleteStatus == false
+                                                                                   && (!fromDate.HasValue || od.CreatedDate >= fromDate)
+                                                                                   && (!toDate.HasValue || od.CreatedDate <= toDate))
+                                                                         .Count();
 
             var satisfactionRate = totalOrdersWithRating > 0
                 ? (decimal)satisfiedOrders / totalOrdersWithRating * 100
                 : 0;
 
-            return Ok(new SatisfactionRateResponse { SatisfactionRate = satisfactionRate });
+            return Ok(new DashboardResponse
+            {
+                TotalOrders = totalOrders,
+                InTransitOrders = inTransitOrders,
+                PendingOrders = pendingOrders,
+                TotalRevenue = totalRevenue,
+                SatisfactionRate = satisfactionRate
+            });
         }
         // 6. Tính doanh thu theo từng tháng trong năm cho phép nhập năm
         [HttpGet("monthly-revenue/{year}")]

@@ -91,7 +91,7 @@ namespace KoiShipping.API.Controllers
             // Generate OTP and store it
             var otp = GenerateOtp(); // You should implement this method
             customer.Otp = otp;
-            customer.OtpExpiration = DateTime.UtcNow.AddMinutes(1); // OTP expires in 1 minute
+            customer.OtpExpiration = DateTime.UtcNow.AddMinutes(3); // OTP expires in 3 minute
             await _unitOfWork.SaveAsync();
 
             // Send OTP via email

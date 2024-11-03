@@ -6,13 +6,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project>
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAoj+Uk0O12Uq23Mox6imvywAAAAACAAAAAAAQZgAAAAEAACAAAABr2dEe21dVNAQ+A8IgGLjJzL2ry51UOJIGeLNzzSaJiwAAAAAOgAAAAAIAACAAAACaZuMh+xp8NrSqZkajalePWx2DCgUqhOQdxDMl2QjHZiAAAABvwAd5iq4ZJ7RO+pHFV5zsYYZh3tXWuBpT55k52kAPRkAAAADhIMd3aiPNN6IBBIfREiCfbUPZUgVWPNwtNnPq+d3o5P/pe+ivg1DyM6uORpSsoIUvbCbBnr5lqys0Cs6oeepO</EncryptedPassword>
-    <History>True|2024-10-30T01:34:34.8714915Z;False|2024-10-30T08:34:01.7129715+07:00;False|2024-10-30T08:33:57.1132161+07:00;True|2024-10-30T08:14:13.5089000+07:00;True|2024-10-29T22:56:18.7504941+07:00;True|2024-10-29T22:50:55.3805160+07:00;</History>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAoj+Uk0O12Uq23Mox6imvywAAAAACAAAAAAAQZgAAAAEAACAAAACWE5+XroapEUwC3jXJiBfln3nE7p0AOLvQGSotabMnqgAAAAAOgAAAAAIAACAAAACG4A308g+mP9uD15fKsyj/g/NE+n9fVwySwGumakMurCAAAACbgFcHXKR+CbQyIWdR5X5Fgqyn5Vq3bjXXXGc4GuXMoUAAAADjzznVOdindgC5i4YChPpCecLJvh0npBTBemm6cpkXuw0CWBRsIXJu0GeKGRTT277Jzzdp/eT/HuHUimBVp29F</EncryptedPassword>
+    <History>False|2024-11-03T17:05:31.8268549Z;False|2024-11-04T00:01:00.3793921+07:00;False|2024-11-03T23:57:21.0666857+07:00;True|2024-11-02T22:53:00.1191995+07:00;True|2024-11-02T22:47:40.8069056+07:00;True|2024-11-02T22:37:14.9692051+07:00;True|2024-11-02T22:27:47.1643324+07:00;False|2024-11-02T21:32:33.8884909+07:00;True|2024-11-02T09:15:01.8652156+07:00;True|2024-10-30T08:34:34.8714915+07:00;False|2024-10-30T08:34:01.7129715+07:00;False|2024-10-30T08:33:57.1132161+07:00;True|2024-10-30T08:14:13.5089000+07:00;True|2024-10-29T22:56:18.7504941+07:00;True|2024-10-29T22:50:55.3805160+07:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="MyDbContext">
-      <Value>Data Source=SQL9001.site4now.net%3bInitial Catalog=db_aaeae4_sa%3bUser Id=db_aaeae4_sa_admin%3bPassword=ilikes1234</Value>
+      <Value>Data Source=SQL9001.site4now.net%3bInitial Catalog=db_aaeae4_sa%3bUser Id=db_aaeae4_sa_admin%3bPassword=Ilikes1234</Value>
     </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="KoiShipping.Repo.Entities.KoiShippingContext">
+      <Value>Data Source=SQL9001.site4now.net%3bInitial Catalog=db_aaeae4_sa%3bUser Id=db_aaeae4_sa_admin%3bPassword=Ilikes1234</Value>
+    </EFMigrations>
   </ItemGroup>
 </Project>

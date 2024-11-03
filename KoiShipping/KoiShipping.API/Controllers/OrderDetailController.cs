@@ -301,7 +301,7 @@ namespace KoiShipping.API.Controllers
                 DeleteStatus = false,
                 ReceiverName = request.ReceiverName,
                 ReceiverPhone = request.ReceiverPhone,
-                CreatedDate = DateTime.Now,
+                CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
                 Rating = null,
                 Feedback = null
             };
@@ -320,7 +320,7 @@ namespace KoiShipping.API.Controllers
                 var notification = new Notification
                 {
                     Message = message,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
                     IsRead = false,
                     Role = "Staffs",
                     CustomerId = 0
@@ -358,7 +358,7 @@ namespace KoiShipping.API.Controllers
                 {
                     OrderDetailId = orderDetail.OrderDetailId,
                     TrackingId = 1, // Giá trị mặc định là 1
-                    Date = DateTime.Now
+                    Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
                 };
 
                 _unitOfWork.TrackingOrderDRepository.Insert(trackingOrderD);
@@ -372,6 +372,64 @@ namespace KoiShipping.API.Controllers
                 // Xử lý ngoại lệ và trả về thông báo lỗi
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+        [HttpPost("update")]
+        public async Task UpdateOrderDetailStatusAsync()
+        {
+            // Lấy danh sách các OrderDetail với trạng thái "delivered"
+            var orderDetails = await _unitOfWork.OrderDetailRepository.GetQueryable()
+                .Where(od => od.Status == "Delivered" && od.DeleteStatus == false)
+                .ToListAsync();
+
+            var currentDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"));
+
+            foreach (var orderDetail in orderDetails)
+            {
+                // Lấy ngày từ TrackingOrderD dựa trên OrderDetailId và TrackingId
+                var tracking = _unitOfWork.TrackingOrderDRepository.Get()
+                    .FirstOrDefault(t => t.OrderDetailId == orderDetail.OrderDetailId && t.TrackingId == 4);
+
+                if (tracking != null)
+                {
+                    // So sánh ngày với ngày hiện tại
+                    var daysDiff = (currentDate - tracking.Date).TotalDays;
+
+                    if (daysDiff >= 3)
+                    {
+                        // Cập nhật trạng thái thành "finish"
+                        orderDetail.Status = "Finish";
+                        _unitOfWork.OrderDetailRepository.Update(orderDetail);
+
+                        // Tạo tracking mới với status là finish
+                        var trackingOrderD = new TrackingOrderD
+                        {
+                            OrderDetailId = orderDetail.OrderDetailId,
+                            TrackingId = 5, // Giá trị mặc định
+                            Date = currentDate,
+                        };
+
+                        _unitOfWork.TrackingOrderDRepository.Insert(trackingOrderD);
+
+                        // Gửi thông báo và lưu vào Notification nếu trạng thái thay đổi
+                        var message = $"{orderDetail.CustomerId}-{orderDetail.OrderDetailId}-{orderDetail.Status}";
+                        await _hubContext.Clients.All.SendAsync("NotiCustomer", message);
+
+                        var notification = new Notification
+                        {
+                            Message = message,
+                            CreatedDate = currentDate,
+                            IsRead = false,
+                            Role = "Customer",
+                            CustomerId = orderDetail.CustomerId
+                        };
+
+                        _unitOfWork.NotificationRepository.Insert(notification);
+                    }
+                }
+            }
+
+            // Lưu tất cả các thay đổi vào cơ sở dữ liệu
+            await _unitOfWork.SaveAsync();
         }
 
 
@@ -431,7 +489,8 @@ namespace KoiShipping.API.Controllers
                 var notification = new Notification
                 {
                     Message = message,
-                    CreatedDate = DateTime.Now,
+
+                    CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
                     IsRead = false, // Chưa đọc
                     Role = "Customer", // Hoặc vai trò phù hợp
                     CustomerId = orderDetail.CustomerId // Gán CustomerId

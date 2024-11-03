@@ -94,7 +94,7 @@ namespace KoiShipping.API.Controllers
                 Email = request.Email,
                 Phone = request.Phone,
                 Address = request.Address,
-                RegistrationDate = DateTime.Now, // Set to current date
+                RegistrationDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")), // Set to current date
                 Avatar = null, // Giữ trạng thái "Pending" cho đến khi OTP được xác nhận
                 DeleteStatus = true // Đặt DeleteStatus là true cho đến khi OTP được xác nhận
             };
@@ -230,7 +230,7 @@ namespace KoiShipping.API.Controllers
                     Name = userName,
                     Email = userEmail,
                     Password = "string123", // Mật khẩu mặc định
-                    RegistrationDate = DateTime.UtcNow, // Ngày đăng ký
+                    RegistrationDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")), // Ngày đăng ký
                     Avatar = null,
                     DeleteStatus = false // Đặt DeleteStatus là false
                 };

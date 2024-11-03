@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
   <IisApp path="D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\obj\Release\net8.0\PubTmp\Out\" />
+  <dbfullsql path="D:\SWP391\SWP-BE\KoiShipping\KoiShipping.API\obj\Release\net8.0\PubTmp\EFSQLScripts\KoiShipping.Repo.Entities.KoiShippingContext.sql" />
 </sitemanifest>

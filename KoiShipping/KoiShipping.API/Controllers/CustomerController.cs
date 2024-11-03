@@ -113,7 +113,7 @@ namespace KoiShipping.API.Controllers
                 Password = request.Password, // Consider hashing the password here
                 Phone = request.Phone,
                 Address = request.Address,
-                RegistrationDate = DateTime.Now, // Set to current date
+                RegistrationDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
                 Avatar = null,
                 DeleteStatus = false // Set DeleteStatus to false by default
             };

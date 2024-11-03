@@ -97,7 +97,7 @@ namespace KoiShipping.API.Controllers
             {
                 OrderDetailId = request.OrderDetailId,
                 TrackingId = request.TrackingId,
-                Date = DateTime.Now
+                Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
             };
 
             _unitOfWork.TrackingOrderDRepository.Insert(orderD);
@@ -124,29 +124,31 @@ namespace KoiShipping.API.Controllers
 
             orderD.OrderDetailId = request.OrderDetailId;
             orderD.TrackingId = request.TrackingId;
-            orderD.Date = DateTime.Now;
+            orderD.Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"));
 
             _unitOfWork.TrackingOrderDRepository.Update(orderD);
             await _unitOfWork.SaveAsync();
 
             return NoContent();
         }
-
-        // DELETE: api/trackingorderd/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTrackingOrderD(int id)
+        // DELETE: api/trackingorderd/orderdetail/{orderDetailId}/tracking/{trackingId}
+        [HttpDelete("{orderDetailId}/{trackingId}")]
+        public async Task<IActionResult> DeleteTrackingOrderD(int orderDetailId, int trackingId)
         {
-            var orderD = _unitOfWork.TrackingOrderDRepository.GetByID(id);
+            // Tìm đối tượng TrackingOrderD theo cả OrderDetailId và TrackingId
+            var orderD = _unitOfWork.TrackingOrderDRepository.Get()
+                        .SingleOrDefault(x => x.OrderDetailId == orderDetailId && x.TrackingId == trackingId);
 
             if (orderD == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.TrackingOrderDRepository.Delete(id);
+            _unitOfWork.TrackingOrderDRepository.Delete(orderD);
             await _unitOfWork.SaveAsync();
 
             return NoContent();
         }
+
     }
 }

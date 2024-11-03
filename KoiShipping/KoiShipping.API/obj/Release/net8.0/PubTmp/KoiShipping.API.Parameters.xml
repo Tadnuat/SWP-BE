@@ -3,4 +3,7 @@
   <parameter name="IIS Web Application Name" description="" value="tadnuat-001-site1" tags="IisApp">
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping\.API\\obj\\Release\\net8\.0\\PubTmp\\Out\\$" />
   </parameter>
+  <parameter name="KoiShipping.Repo.Entities.KoiShippingContext" description="" value="Data Source=SQL9001.site4now.net;Initial Catalog=db_aaeae4_sa;User Id=db_aaeae4_sa_admin;Password=Ilikes1234" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^D:\\SWP391\\SWP-BE\\KoiShipping\\KoiShipping\.API\\obj\\Release\\net8\.0\\PubTmp\\EFSQLScripts\\KoiShipping\.Repo\.Entities\.KoiShippingContext\.sql$" />
+  </parameter>
 </parameters>
