@@ -25,6 +25,17 @@ namespace KoiShipping.API.Controllers
         [HttpGet("dashboard")]
         public async Task<ActionResult<DashboardResponse>> GetDashboardData(DateTime? fromDate, DateTime? toDate)
         {
+            // Đặt fromDate thành đầu ngày
+            if (fromDate.HasValue)
+            {
+                fromDate = fromDate.Value.Date; // Đầu ngày: 00:00:00
+            }
+
+            // Đặt toDate thành cuối ngày
+            if (toDate.HasValue)
+            {
+                toDate = toDate.Value.Date.AddDays(1).AddSeconds(-1); // Cuối ngày: 23:59:59
+            }
             var totalOrders =  _unitOfWork.OrderDetailRepository.Get(od => od.DeleteStatus == false
                                                                                && od.Status.ToLower() != "canceled"
                                                                                && (!fromDate.HasValue || od.CreatedDate >= fromDate)

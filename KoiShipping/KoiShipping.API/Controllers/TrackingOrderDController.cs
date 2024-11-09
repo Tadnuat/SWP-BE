@@ -135,18 +135,23 @@ namespace KoiShipping.API.Controllers
         [HttpDelete("{orderDetailId}/{trackingId}")]
         public async Task<IActionResult> DeleteTrackingOrderD(int orderDetailId, int trackingId)
         {
-            // Tìm đối tượng TrackingOrderD theo cả OrderDetailId và TrackingId
-            var orderD = _unitOfWork.TrackingOrderDRepository.Get()
-                        .SingleOrDefault(x => x.OrderDetailId == orderDetailId && x.TrackingId == trackingId);
+            // Thêm logging để kiểm tra tham số truyền vào
+            Console.WriteLine($"Deleting TrackingOrderD with OrderDetailId: {orderDetailId}, TrackingId: {trackingId}");
+
+            // Tìm đối tượng TrackingOrderD theo OrderDetailId và TrackingId
+            var orderD =  _unitOfWork.TrackingOrderDRepository.Get()
+                            .FirstOrDefault(x => x.OrderDetailId == orderDetailId && x.TrackingId == trackingId);
 
             if (orderD == null)
             {
+                Console.WriteLine("TrackingOrderD not found.");
                 return NotFound();
             }
 
             _unitOfWork.TrackingOrderDRepository.Delete(orderD);
             await _unitOfWork.SaveAsync();
 
+            Console.WriteLine("TrackingOrderD deleted successfully.");
             return NoContent();
         }
 
