@@ -143,6 +143,43 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
+        [HttpGet("staff/{staffId}")]
+        public async Task<ActionResult<IEnumerable<ResponseOrderModel>>> GetOrdersByStaffId(int staffId)
+        {
+            // Retrieve orders where the staff with the given staffId is associated and DeleteStatus is false
+            var orders = await _unitOfWork.OrderRepository.GetQueryable()
+                .Where(o => !o.DeleteStatus && o.OrderStaffs.Any(os => os.StaffId == staffId))
+                .OrderByDescending(o => o.OrderId)
+                .Include(o => o.OrderStaffs) // Include OrderStaff
+                    .ThenInclude(os => os.Staff) // Include Staff
+                .ToListAsync();
+
+            var response = new List<ResponseOrderModel>();
+
+            foreach (var order in orders)
+            {
+                var staffDeliveries = order.OrderStaffs.Select(os => new StaffInfo
+                {
+                    StaffId = os.Staff.StaffId,
+                    StaffName = os.Staff.StaffName
+                }).ToList();
+
+                response.Add(new ResponseOrderModel
+                {
+                    OrderId = order.OrderId,
+                    StartLocation = order.StartLocation,
+                    Destination = order.Destination,
+                    TransportMethod = order.TransportMethod,
+                    DepartureDate = order.DepartureDate,
+                    ArrivalDate = order.ArrivalDate,
+                    Status = order.Status,
+                    DeleteStatus = order.DeleteStatus,
+                    StaffDeliveries = staffDeliveries
+                });
+            }
+
+            return Ok(response);
+        }
 
         // POST: api/order
         [HttpPost]
