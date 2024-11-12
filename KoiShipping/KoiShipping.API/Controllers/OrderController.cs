@@ -130,6 +130,8 @@ namespace KoiShipping.API.Controllers
                     KoiStatus = od.KoiStatus,
                     AttachedItem = od.AttachedItem,
                     Image = od.Image,
+                    ConfirmationImage = od.ConfirmationImage,
+                    DeliveryPerson = od.DeliveryPerson,
                     Status = od.Status,
                     DeleteStatus = od.DeleteStatus,
                     ReceiverName = od.ReceiverName,
@@ -179,6 +181,32 @@ namespace KoiShipping.API.Controllers
             }
 
             return Ok(response);
+        }
+
+        [HttpGet("order/{orderId}/staff")]
+        public async Task<ActionResult<IEnumerable<StaffInfo>>> GetStaffByOrderId(int orderId)
+        {
+            // Retrieve the order and include associated OrderStaffs and Staff details
+            var order = await _unitOfWork.OrderRepository.GetQueryable()
+                .Where(o => o.OrderId == orderId && !o.DeleteStatus)
+                .Include(o => o.OrderStaffs) // Include OrderStaffs
+                    .ThenInclude(os => os.Staff) // Include Staff
+                .FirstOrDefaultAsync();
+
+            // If the order does not exist, return NotFound
+            if (order == null)
+            {
+                return NotFound("Order not found or has been deleted.");
+            }
+
+            // Select the staff information from the associated OrderStaff records
+            var staffDeliveries = order.OrderStaffs.Select(os => new StaffInfo
+            {
+                StaffId = os.Staff.StaffId,
+                StaffName = os.Staff.StaffName
+            }).ToList();
+
+            return Ok(staffDeliveries);
         }
 
         // POST: api/order
@@ -245,6 +273,55 @@ namespace KoiShipping.API.Controllers
                 return StatusCode(500, $"Lỗi hệ thống: {ex.Message}");
             }
         }
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<ResponseOrderModel>>> GetOrders(
+        string? startLocation = null,
+        string? destination = null)
+        {
+            // Start with a base query for orders with DeleteStatus as false
+            var baseQuery = _unitOfWork.OrderRepository.GetQueryable()
+                .Where(o => !o.DeleteStatus && (o.Status == "Ready" || o.Status == "Delivering"));
+
+            // Apply filtering if startLocation is provided
+            if (!string.IsNullOrWhiteSpace(startLocation))
+            {
+                baseQuery = baseQuery.Where(o => o.StartLocation.Contains(startLocation));
+            }
+
+            // Apply filtering if destination is provided
+            if (!string.IsNullOrWhiteSpace(destination))
+            {
+                baseQuery = baseQuery.Where(o => o.Destination.Contains(destination));
+            }
+
+            // Include related OrderStaffs and Staff entities
+            var orders = await baseQuery
+                .OrderByDescending(o => o.OrderId)
+                .Include(o => o.OrderStaffs) // Include related OrderStaffs
+                    .ThenInclude(os => os.Staff) // Include related Staff
+                .ToListAsync();
+
+            // Map the results to the response model
+            var response = orders.Select(order => new ResponseOrderModel
+            {
+                OrderId = order.OrderId,
+                StartLocation = order.StartLocation,
+                Destination = order.Destination,
+                TransportMethod = order.TransportMethod,
+                DepartureDate = order.DepartureDate,
+                ArrivalDate = order.ArrivalDate,
+                Status = order.Status,
+                DeleteStatus = order.DeleteStatus,
+                StaffDeliveries = order.OrderStaffs.Select(os => new StaffInfo
+                {
+                    StaffId = os.Staff.StaffId,
+                    StaffName = os.Staff.StaffName
+                }).ToList()
+            }).ToList();
+
+            return Ok(response);
+        }
+
 
         // PUT: api/order/5
         [HttpPut("{id}")]

@@ -67,6 +67,8 @@ namespace KoiShipping.API.Controllers
                     KoiStatus = od.KoiStatus,
                     AttachedItem = od.AttachedItem,
                     Image = od.Image,
+                    ConfirmationImage = od.ConfirmationImage,
+                    DeliveryPerson = od.DeliveryPerson,
                     Status = od.Status,
                     DeleteStatus = od.DeleteStatus,
                     ReceiverName = od.ReceiverName,
@@ -83,24 +85,41 @@ namespace KoiShipping.API.Controllers
             return Ok(response);
         }
 
-
         // GET: api/orderdetail/status/pending
         [HttpGet("status/pending")]
-        public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatusPending()
+        public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatusPending(
+            string? startLocation = null,
+            string? destination = null)
         {
-            var pendingOrderDetails = await _unitOfWork.OrderDetailRepository
-                .GetQueryable() // Use GetQueryable to get IQueryable<OrderDetail>
-                .Include(od => od.AserviceOrderDs) // Include the related AserviceOrderDs
-                    .ThenInclude(asod => asod.AdvancedService) // Include the related AdvancedService
-                .Where(od => od.Status.ToLower() == "pending" && !od.DeleteStatus)
-                .ToListAsync();
+            // Start with the base query for pending order details with DeleteStatus as false
+            var query = _unitOfWork.OrderDetailRepository
+                .GetQueryable()
+                .Include(od => od.AserviceOrderDs) // Include related AserviceOrderDs
+                    .ThenInclude(asod => asod.AdvancedService) // Include related AdvancedService
+                .Where(od => od.Status.ToLower() == "pending" && !od.DeleteStatus);
 
-            // Lấy danh sách Customer
+            // Apply filtering if startLocation is provided
+            if (!string.IsNullOrWhiteSpace(startLocation))
+            {
+                query = query.Where(od => od.StartLocation.Contains(startLocation));
+            }
+
+            // Apply filtering if destination is provided
+            if (!string.IsNullOrWhiteSpace(destination))
+            {
+                query = query.Where(od => od.Destination.Contains(destination));
+            }
+
+            // Execute the filtered query
+            var pendingOrderDetails = await query.ToListAsync();
+
+            // Retrieve distinct customer IDs
             var customerIds = pendingOrderDetails.Select(od => od.CustomerId).Distinct().ToList();
             var customers = await _unitOfWork.CustomerRepository.GetQueryable()
                 .Where(c => customerIds.Contains(c.CustomerId))
                 .ToListAsync();
 
+            // Map to the response model
             var response = pendingOrderDetails.Select(od => new ResponseOrderDetailModel
             {
                 OrderDetailId = od.OrderDetailId,
@@ -117,6 +136,8 @@ namespace KoiShipping.API.Controllers
                 KoiStatus = od.KoiStatus,
                 AttachedItem = od.AttachedItem,
                 Image = od.Image,
+                ConfirmationImage = od.ConfirmationImage,
+                DeliveryPerson = od.DeliveryPerson,
                 Status = od.Status,
                 DeleteStatus = od.DeleteStatus,
                 ReceiverName = od.ReceiverName,
@@ -129,6 +150,7 @@ namespace KoiShipping.API.Controllers
 
             return Ok(response);
         }
+
         // GET: api/orderdetail/status/pending
         [HttpGet("status/waiting")]
         public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatusWaiting()
@@ -162,6 +184,8 @@ namespace KoiShipping.API.Controllers
                 KoiStatus = od.KoiStatus,
                 AttachedItem = od.AttachedItem,
                 Image = od.Image,
+                //ConfirmationImage   = od.ConfirmationImage,
+                //DeliveryPerson = od.DeliveryPerson,
                 Status = od.Status,
                 DeleteStatus = od.DeleteStatus,
                 ReceiverName = od.ReceiverName,
@@ -212,6 +236,8 @@ namespace KoiShipping.API.Controllers
                 KoiStatus = od.KoiStatus,
                 AttachedItem = od.AttachedItem,
                 Image = od.Image,
+                ConfirmationImage = od.ConfirmationImage,
+                DeliveryPerson = od.DeliveryPerson,
                 Status = od.Status,
                 DeleteStatus = od.DeleteStatus,
                 ReceiverName = od.ReceiverName,
@@ -260,6 +286,8 @@ namespace KoiShipping.API.Controllers
                 KoiStatus = orderDetail.KoiStatus,
                 AttachedItem = orderDetail.AttachedItem,
                 Image = orderDetail.Image,
+                ConfirmationImage = orderDetail.ConfirmationImage,
+                DeliveryPerson = orderDetail.DeliveryPerson,
                 Status = orderDetail.Status,
                 DeleteStatus = orderDetail.DeleteStatus,
                 ReceiverName = orderDetail.ReceiverName,
@@ -465,6 +493,8 @@ namespace KoiShipping.API.Controllers
             if (!string.IsNullOrWhiteSpace(request.KoiStatus)) orderDetail.KoiStatus = request.KoiStatus;
             if (!string.IsNullOrWhiteSpace(request.AttachedItem)) orderDetail.AttachedItem = request.AttachedItem;
             if (!string.IsNullOrWhiteSpace(request.Image)) orderDetail.Image = request.Image;
+            if (!string.IsNullOrWhiteSpace(request.ConfirmationImage)) orderDetail.ConfirmationImage = request.ConfirmationImage;
+            if (!string.IsNullOrWhiteSpace(request.DeliveryPerson)) orderDetail.DeliveryPerson = request.DeliveryPerson;
             if (!string.IsNullOrWhiteSpace(request.Status))
             {
                 orderDetail.Status = request.Status; // Cập nhật trạng thái
@@ -507,6 +537,87 @@ namespace KoiShipping.API.Controllers
             return NoContent();
         }
 
+        // PUT: api/orderdetail/5/cancel
+        [HttpPut("{id}/cancel")]
+        public async Task<IActionResult> CancelOrderDetail(int id)
+        {
+            var orderDetail = _unitOfWork.OrderDetailRepository.GetByID(id);
+
+            if (orderDetail == null)
+            {
+                return NotFound();
+            }
+
+            var oldStatus = orderDetail.Status;
+
+            // Set status to "cancel"
+            orderDetail.Status = "Canceled";
+
+            // Trigger notification if status has changed
+            if (orderDetail.Status != oldStatus)
+            {
+                var message = $"{orderDetail.CustomerId}-{orderDetail.OrderDetailId}-{orderDetail.Status}";
+
+                await _hubContext.Clients.All.SendAsync("ReceiveOrderNotification", message);
+
+                var notification = new Notification
+                {
+                    Message = message,
+                    CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
+                    IsRead = false,
+                    Role = "Staffs",
+                    CustomerId = 0
+                };
+
+                _unitOfWork.NotificationRepository.Insert(notification);
+            }
+
+            _unitOfWork.OrderDetailRepository.Update(orderDetail);
+            await _unitOfWork.SaveAsync();
+
+            return NoContent();
+        }
+
+        // PUT: api/orderdetail/5/finish
+        [HttpPut("{id}/finish")]
+        public async Task<IActionResult> FinishOrderDetail(int id)
+        {
+            var orderDetail = _unitOfWork.OrderDetailRepository.GetByID(id);
+
+            if (orderDetail == null)
+            {
+                return NotFound();
+            }
+
+            var oldStatus = orderDetail.Status;
+
+            // Set status to "finish"
+            orderDetail.Status = "Finish";
+
+            // Trigger notification if status has changed
+            if (orderDetail.Status != oldStatus)
+            {
+                var message = $"{orderDetail.CustomerId}-{orderDetail.OrderDetailId}-{orderDetail.Status}";
+
+                await _hubContext.Clients.All.SendAsync("ReceiveOrderNotification", message);
+
+                var notification = new Notification
+                {
+                    Message = message,
+                    CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
+                    IsRead = false,
+                    Role = "Staffs",
+                    CustomerId = 0
+                };
+
+                _unitOfWork.NotificationRepository.Insert(notification);
+            }
+
+            _unitOfWork.OrderDetailRepository.Update(orderDetail);
+            await _unitOfWork.SaveAsync();
+
+            return NoContent();
+        }
 
 
         // DELETE: api/orderdetail/5

@@ -13,6 +13,8 @@
         public decimal? Price { get; set; }
         public string? KoiStatus { get; set; }
         public string? AttachedItem { get; set; }
+        public string? DeliveryPerson { get; set; }
+        public string? ConfirmationImage { get; set; }
         public string? Image { get; set; }
         public string? Status { get; set; }
         public string? ReceiverName { get; set; }
