@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace KoiShipping.API.Controllers
 {
-    [Authorize(Roles = "Manager")]
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
@@ -26,6 +25,7 @@ namespace KoiShipping.API.Controllers
 
         // GET: api/staff
         [HttpGet]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult<IEnumerable<ResponseStaffModel>>> GetStaffs()
         {
             var staffs = await Task.Run(() => _unitOfWork.StaffRepository.Get().ToList());
@@ -50,6 +50,7 @@ namespace KoiShipping.API.Controllers
         }
         // GET: api/staff/active
         [HttpGet("status/active")]
+        [Authorize(Roles = "Manager,Sale Staff")]
         public async Task<ActionResult<IEnumerable<ResponseStaffModel>>> GetActiveStaffs()
         {
             // Lấy danh sách nhân viên có Status là "active" và DeleteStatus là false
@@ -79,6 +80,7 @@ namespace KoiShipping.API.Controllers
 
         // GET: api/staff/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult<ResponseStaffModel>> GetStaff(int id)
         {
             var staff = _unitOfWork.StaffRepository.GetByID(id);
@@ -104,6 +106,7 @@ namespace KoiShipping.API.Controllers
 
         // POST: api/staff
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult> CreateStaff([FromBody] RequestCreateStaffModel request)
         {
             if (!ModelState.IsValid)
@@ -136,6 +139,13 @@ namespace KoiShipping.API.Controllers
                 return Conflict(new { message = "Email already exists." });
             }
 
+            // Check if the staff name already exists
+            var existingStaffByName = _unitOfWork.StaffRepository.Get(s => s.StaffName == request.StaffName).FirstOrDefault();
+            if (existingStaffByName != null)
+            {
+                return Conflict(new { message = "Staff name already exists." });
+            }
+
             // Hash the password using PasswordHasher
             var passwordHasher = new PasswordHasher<Staff>();
             var staff = new Staff
@@ -151,14 +161,15 @@ namespace KoiShipping.API.Controllers
             // Hash the password before saving it to the database
             staff.Password = passwordHasher.HashPassword(staff, request.Password);
 
+            // Insert the new staff member
             _unitOfWork.StaffRepository.Insert(staff);
             await _unitOfWork.SaveAsync();
 
             return CreatedAtAction(nameof(GetStaff), new { id = staff.StaffId }, staff);
         }
-
         // PUT: api/staff/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> UpdateStaff(int id, [FromBody] RequestUpdateStaffModel request)
         {
             if (!ModelState.IsValid)
@@ -208,6 +219,7 @@ namespace KoiShipping.API.Controllers
 
         // DELETE: api/staff/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteStaff(int id)
         {
             var staff = _unitOfWork.StaffRepository.GetByID(id);
@@ -225,6 +237,7 @@ namespace KoiShipping.API.Controllers
 
         // Soft DELETE: api/staff/soft/5
         [HttpDelete("soft/{id}")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> SoftDeleteStaff(int id)
         {
             var staff = _unitOfWork.StaffRepository.GetByID(id);

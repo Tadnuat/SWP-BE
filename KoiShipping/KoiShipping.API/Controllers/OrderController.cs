@@ -276,11 +276,13 @@ namespace KoiShipping.API.Controllers
         [HttpGet("filter")]
         public async Task<ActionResult<IEnumerable<ResponseOrderModel>>> GetOrders(
         string? startLocation = null,
-        string? destination = null)
+        string? destination = null,
+        string? transportMethod = null
+            )
         {
             // Start with a base query for orders with DeleteStatus as false
             var baseQuery = _unitOfWork.OrderRepository.GetQueryable()
-                .Where(o => !o.DeleteStatus && (o.Status == "Ready" || o.Status == "Delivering"));
+                .Where(o => !o.DeleteStatus && o.Status == "Ready" );
 
             // Apply filtering if startLocation is provided
             if (!string.IsNullOrWhiteSpace(startLocation))
@@ -292,6 +294,10 @@ namespace KoiShipping.API.Controllers
             if (!string.IsNullOrWhiteSpace(destination))
             {
                 baseQuery = baseQuery.Where(o => o.Destination.Contains(destination));
+            }
+            if (!string.IsNullOrWhiteSpace(destination))
+            {
+                baseQuery = baseQuery.Where(o => o.TransportMethod.Contains(transportMethod));
             }
 
             // Include related OrderStaffs and Staff entities

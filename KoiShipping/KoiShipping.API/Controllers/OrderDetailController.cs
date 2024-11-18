@@ -85,42 +85,59 @@ namespace KoiShipping.API.Controllers
             return Ok(response);
         }
 
-        // GET: api/orderdetail/status/pending
-        [HttpGet("status/pending")]
+        // GET: api/orderdetail/status/waiting
+        [HttpGet("status/waiting")]
         public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatusPending(
-            string? startLocation = null,
-            string? destination = null)
+     string? startLocation = null,
+     string? destination = null,
+     string? transportMethod = null
+ )
         {
+            // Log the initial filter parameters
+            Console.WriteLine($"Filter Params - startLocation: {startLocation}, destination: {destination}, transportMethod: {transportMethod}");
+
             // Start with the base query for pending order details with DeleteStatus as false
             var query = _unitOfWork.OrderDetailRepository
                 .GetQueryable()
-                .Include(od => od.AserviceOrderDs) // Include related AserviceOrderDs
-                    .ThenInclude(asod => asod.AdvancedService) // Include related AdvancedService
-                .Where(od => od.Status.ToLower() == "pending" && !od.DeleteStatus);
+                .Include(od => od.AserviceOrderDs)
+                    .ThenInclude(asod => asod.AdvancedService)
+                .Include(od => od.Service) // Include related Service entity
+                .Where(od => od.Status.ToLower() == "waiting" && !od.DeleteStatus);
 
             // Apply filtering if startLocation is provided
             if (!string.IsNullOrWhiteSpace(startLocation))
             {
                 query = query.Where(od => od.StartLocation.Contains(startLocation));
+                Console.WriteLine("Applied startLocation filter.");
             }
 
             // Apply filtering if destination is provided
             if (!string.IsNullOrWhiteSpace(destination))
             {
                 query = query.Where(od => od.Destination.Contains(destination));
+                Console.WriteLine("Applied destination filter.");
             }
 
-            // Execute the filtered query
-            var pendingOrderDetails = await query.ToListAsync();
+
+            // Apply filtering by transport method through Service entity based on ServiceId
+            if (!string.IsNullOrWhiteSpace(transportMethod))
+            {
+                query = query.Where(od => od.Service != null && od.Service.TransportMethod.ToLower() == transportMethod.ToLower());
+                Console.WriteLine("Applied transportMethod filter.");
+            }
+
+            // Execute the filtered query and log the count
+            var waitingOrderDetails = await query.ToListAsync();
+            Console.WriteLine($"Filtered OrderDetails count: {waitingOrderDetails.Count}");
 
             // Retrieve distinct customer IDs
-            var customerIds = pendingOrderDetails.Select(od => od.CustomerId).Distinct().ToList();
+            var customerIds = waitingOrderDetails.Select(od => od.CustomerId).Distinct().ToList();
             var customers = await _unitOfWork.CustomerRepository.GetQueryable()
                 .Where(c => customerIds.Contains(c.CustomerId))
                 .ToListAsync();
 
             // Map to the response model
-            var response = pendingOrderDetails.Select(od => new ResponseOrderDetailModel
+            var response = waitingOrderDetails.Select(od => new ResponseOrderDetailModel
             {
                 OrderDetailId = od.OrderDetailId,
                 OrderId = od.OrderId,
@@ -148,18 +165,21 @@ namespace KoiShipping.API.Controllers
                 AdvancedServiceNames = od.AserviceOrderDs.Select(asod => asod.AdvancedService.AServiceName).ToList()
             }).ToList();
 
+            // Log final response count
+            Console.WriteLine($"Response OrderDetails count: {response.Count}");
+
             return Ok(response);
         }
 
         // GET: api/orderdetail/status/pending
-        [HttpGet("status/waiting")]
+        [HttpGet("status/pending")]
         public async Task<ActionResult<IEnumerable<ResponseOrderDetailModel>>> GetOrderDetailByStatusWaiting()
         {
             var pendingOrderDetails = await _unitOfWork.OrderDetailRepository
                 .GetQueryable() // Use GetQueryable to get IQueryable<OrderDetail>
                 .Include(od => od.AserviceOrderDs) // Include the related AserviceOrderDs
                     .ThenInclude(asod => asod.AdvancedService) // Include the related AdvancedService
-                .Where(od => od.Status.ToLower() == "waiting" && !od.DeleteStatus)
+                .Where(od => od.Status.ToLower() == "pending" && !od.DeleteStatus)
                 .ToListAsync();
 
             // Lấy danh sách Customer
@@ -184,8 +204,8 @@ namespace KoiShipping.API.Controllers
                 KoiStatus = od.KoiStatus,
                 AttachedItem = od.AttachedItem,
                 Image = od.Image,
-                //ConfirmationImage   = od.ConfirmationImage,
-                //DeliveryPerson = od.DeliveryPerson,
+                ConfirmationImage = od.ConfirmationImage,
+                DeliveryPerson = od.DeliveryPerson,
                 Status = od.Status,
                 DeleteStatus = od.DeleteStatus,
                 ReceiverName = od.ReceiverName,
@@ -251,6 +271,58 @@ namespace KoiShipping.API.Controllers
             return Ok(response);
         }
 
+        // GET: api/orderdetail/deliveryperson/{deliveryPersonName}
+        [HttpGet("deliveryperson/{deliveryPersonName}")]
+        public async Task<ActionResult<IEnumerable<ResponseDeliverystaffOrderDetailModel>>> GetOrderDetailsByDeliveryPerson(string deliveryPersonName)
+        {
+            var orderDetails = await _unitOfWork.OrderDetailRepository
+                .GetQueryable()
+                .Include(od => od.AserviceOrderDs)
+                    .ThenInclude(asod => asod.AdvancedService)
+                .Include(od => od.Order) // Include Order để lấy thông tin Status
+                .Include(od => od.Customer) // Include Customer để lấy CustomerName
+                .Where(od => !string.IsNullOrEmpty(od.DeliveryPerson) &&
+                             od.DeliveryPerson.ToLower() == deliveryPersonName.ToLower() &&
+                             !od.DeleteStatus)
+                .OrderByDescending(od => od.OrderDetailId)
+                .ToListAsync();
+
+            if (orderDetails == null || !orderDetails.Any())
+            {
+                return NotFound($"No OrderDetails found for DeliveryPerson: {deliveryPersonName}");
+            }
+
+            var response = orderDetails.Select(od => new ResponseDeliverystaffOrderDetailModel
+            {
+                OrderDetailId = od.OrderDetailId,
+                OrderId = od.OrderId,
+                CustomerId = od.CustomerId,
+                CustomerName = od.Customer?.Name, // Lấy thông tin tên từ Customer
+                StartLocation = od.StartLocation,
+                Destination = od.Destination,
+                ServiceId = od.ServiceId,
+                ServiceName = od.ServiceName,
+                Weight = od.Weight,
+                Quantity = od.Quantity,
+                Price = od.Price,
+                KoiStatus = od.KoiStatus,
+                AttachedItem = od.AttachedItem,
+                Image = od.Image,
+                ConfirmationImage = od.ConfirmationImage,
+                DeliveryPerson = od.DeliveryPerson,
+                Status = od.Status,
+                DeleteStatus = od.DeleteStatus,
+                ReceiverName = od.ReceiverName,
+                ReceiverPhone = od.ReceiverPhone,
+                Rating = od.Rating,
+                Feedback = od.Feedback,
+                CreatedDate = od.CreatedDate,
+                AdvancedServiceNames = od.AserviceOrderDs?.Select(asod => asod.AdvancedService?.AServiceName).ToList() ?? new List<string>(),
+                IsDone = od.Order?.Status.ToLower() == "finish" // Xác định trạng thái hoàn thành
+            }).ToList();
+
+            return Ok(response);
+        }
         // GET: api/orderdetail/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseOrderDetailModel>> GetOrderDetail(int id)
@@ -401,6 +473,123 @@ namespace KoiShipping.API.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        // POST: api/orderdetail/copy/{id}
+        [HttpPost("copy/{id}")]
+        public async Task<IActionResult> CopyOrderDetail(int id)
+        {
+            try
+            {
+                // Fetch the existing OrderDetail by ID
+                var existingOrderDetail = _unitOfWork.OrderDetailRepository.GetByID(id);
+                if (existingOrderDetail == null)
+                {
+                    return NotFound("OrderDetail not found");
+                }
+
+                // Fetch the associated Customer information
+                var customer = _unitOfWork.CustomerRepository.GetByID(existingOrderDetail.CustomerId);
+                if (customer == null)
+                {
+                    return NotFound("Associated Customer not found");
+                }
+
+                // Update the status of the original OrderDetail to "refund"
+                existingOrderDetail.Status = "Refund";
+                _unitOfWork.OrderDetailRepository.Update(existingOrderDetail);
+
+                // Create a new OrderDetail based on the existing one
+                var newOrderDetail = new OrderDetail
+                {
+                    CustomerId = existingOrderDetail.CustomerId,
+                    StartLocation = existingOrderDetail.Destination,
+                    Destination = existingOrderDetail.StartLocation,
+                    ServiceId = existingOrderDetail.ServiceId,
+                    ServiceName = existingOrderDetail.ServiceName,
+                    Weight = existingOrderDetail.Weight,
+                    Quantity = existingOrderDetail.Quantity,
+                    Price = existingOrderDetail.Price / 2,  // Halve the price for the new OrderDetail
+                    KoiStatus = "Đơn Hoàn Trả",
+                    AttachedItem = existingOrderDetail.AttachedItem,
+                    Image = existingOrderDetail.Image,
+                    Status = "Pending",
+                    DeleteStatus = false,
+                    ReceiverName = customer.Name,
+                    ReceiverPhone = customer.Phone,
+                    CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
+                    Rating = null,
+                    Feedback = null
+                };
+
+                // Insert the new OrderDetail
+                _unitOfWork.OrderDetailRepository.Insert(newOrderDetail);
+                await _unitOfWork.SaveAsync(); // Save to generate OrderDetailId
+
+                // Create a new Notification for Staffs
+                var staffMessage = $"Đơn hàng hoàn trả của khách hàng: {newOrderDetail.ReceiverName} với mã đơn hàng: {newOrderDetail.OrderDetailId}";
+                var staffNotification = new Notification
+                {
+                    Message = staffMessage,
+                    CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
+                    IsRead = false,
+                    Role = "Staffs",
+                    CustomerId = 0
+                };
+                _unitOfWork.NotificationRepository.Insert(staffNotification);
+
+                // Create a new Notification for the customer
+                var customerMessage = $"Đơn hàng {newOrderDetail.OrderDetailId} đã được chuyển sang trạng thái hoàn trả. - {newOrderDetail.OrderDetailId}";
+                var customerNotification = new Notification
+                {
+                    Message = customerMessage,
+                    CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")),
+                    IsRead = false,
+                    Role = "Customer",
+                    CustomerId = newOrderDetail.CustomerId
+                };
+                _unitOfWork.NotificationRepository.Insert(customerNotification);
+
+                // Send notifications via SignalR to connected clients
+                await _hubContext.Clients.All.SendAsync("ReceiveOrderNotification", staffMessage);
+                await _hubContext.Clients.All.SendAsync("NotiCustomer", customerMessage);
+
+                // Duplicate TrackingOrderD for the new OrderDetail
+                var trackingOrderD = new TrackingOrderD
+                {
+                    OrderDetailId = newOrderDetail.OrderDetailId,
+                    TrackingId = 1, // Default tracking ID
+                    Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"))
+                };
+                _unitOfWork.TrackingOrderDRepository.Insert(trackingOrderD);
+
+                // Duplicate AserviceOrderD records for the new OrderDetail
+                var existingAdvancedServices = _unitOfWork.AserviceOrderDRepository
+                    .Get(a => a.OrderDetailId == existingOrderDetail.OrderDetailId);
+
+                foreach (var aserviceOrderD in existingAdvancedServices)
+                {
+                    var newAserviceOrderD = new AserviceOrderD
+                    {
+                        OrderDetailId = newOrderDetail.OrderDetailId,
+                        AdvancedServiceId = aserviceOrderD.AdvancedServiceId
+                    };
+                    _unitOfWork.AserviceOrderDRepository.Insert(newAserviceOrderD);
+                }
+
+                await _unitOfWork.SaveAsync(); // Save changes to Notification, TrackingOrderD, and AserviceOrderD tables
+
+                // Return a success message
+                return Ok("Order detail duplicated successfully, with associated notifications and services.");
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions and return an error message
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+
+
         [HttpPost("update")]
         public async Task UpdateOrderDetailStatusAsync()
         {
@@ -492,9 +681,19 @@ namespace KoiShipping.API.Controllers
             if (request.Price.HasValue) orderDetail.Price = request.Price.Value;
             if (!string.IsNullOrWhiteSpace(request.KoiStatus)) orderDetail.KoiStatus = request.KoiStatus;
             if (!string.IsNullOrWhiteSpace(request.AttachedItem)) orderDetail.AttachedItem = request.AttachedItem;
-            if (!string.IsNullOrWhiteSpace(request.Image)) orderDetail.Image = request.Image;
-            if (!string.IsNullOrWhiteSpace(request.ConfirmationImage)) orderDetail.ConfirmationImage = request.ConfirmationImage;
-            if (!string.IsNullOrWhiteSpace(request.DeliveryPerson)) orderDetail.DeliveryPerson = request.DeliveryPerson;
+            if (request.Image != null || request.Image == null)
+            {
+                orderDetail.Image = request.Image; // Cho phép gán giá trị null
+            }
+            if (request.ConfirmationImage != null || request.ConfirmationImage == null)
+            {
+                orderDetail.ConfirmationImage = request.ConfirmationImage; // Cho phép gán giá trị null
+            }
+
+            if (request.DeliveryPerson != null || request.DeliveryPerson == null)
+            {
+                orderDetail.DeliveryPerson = request.DeliveryPerson; // Cho phép gán giá trị null
+            }
             if (!string.IsNullOrWhiteSpace(request.Status))
             {
                 orderDetail.Status = request.Status; // Cập nhật trạng thái
